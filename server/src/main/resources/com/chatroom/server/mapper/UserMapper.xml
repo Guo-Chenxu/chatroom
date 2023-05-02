@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chatroom.server.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.chatroom.common.entity.User">
+        <result column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="avatar_id" property="avatarId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,
+        username,
+        `password`,
+        avatar_id
+    </sql>
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="user_id" keyProperty="userId"
+            parameterType="com.chatroom.common.entity.User">
+        INSERT INTO user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != username and '' != username">
+                username,
+            </if>
+            <if test="null != password and '' != password">
+                `password`,
+            </if>
+            <if test="null != avatarId and '' != avatarId">
+                avatar_id
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="null != username and '' != username">
+                #{username},
+            </if>
+            <if test="null != password and '' != password">
+                #{password},
+            </if>
+            <if test="null != avatarId and '' != avatarId">
+                #{avatarId}
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteById">
+        DELETE
+        FROM user
+        WHERE user_id = #{userId}
+    </delete>
+
+    <update id="update" parameterType="com.chatroom.common.entity.User">
+        UPDATE user
+        <set>
+            username = #{username},
+            `password` = #{password},
+            avatar_id = #{avatarId}
+        </set>
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="getByUserId" resultType="com.chatroom.common.entity.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="getByUsername" resultType="com.chatroom.common.entity.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        WHERE username = #{username}
+    </select>
+
+    <select id="getAll" resultType="com.chatroom.common.entity.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+    </select>
+
+</mapper>
