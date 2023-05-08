@@ -1,4 +1,4 @@
-package com.chatroom.common.entity;
+package com.chatroom.server.entity;
 
 import lombok.Data;
 
@@ -30,4 +30,13 @@ public class User implements Serializable {
      * 用户头像
      */
     private String avatarId;
+
+    public User() {
+    }
+
+    public User(String username, String password, String avatarId) {
+        this.username = username;
+        this.password = password;
+        this.avatarId = avatarId;
+    }
 }

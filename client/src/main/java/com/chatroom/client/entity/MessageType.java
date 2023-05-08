@@ -1,4 +1,4 @@
-package com.chatroom.common.entity;
+package com.chatroom.client.entity;
 
 /**
  * @program: chatroom
@@ -14,14 +14,17 @@ public enum MessageType {
     CHANGE_PWD("3"),// 修改密码
     INFO_ERROR("4"),// 账号或密码错误
     GET_FRIENDS("5"),// 获取好友列表
-    ADD_FRIEND("6"),// 请求添加好友
-    ADD_AGREE("7"),// 好友申请通过
-    CHAT_MESSAGE("8"),// 普通聊天信息
-    GROUP_MESSAGE("9"),// 群聊信息
-    FILE_MESSAGE("10"), // 文件类型消息
-    GET_CHAT_LIST("11"),// 获取聊天记录
-    USER_OFFLINE("12"),// 用户不在线
-    OFFLINE("13");// 下线
+    GET_GROUPS("6"),// 获取群聊列表
+    ADD_FRIEND("7"),// 请求添加好友
+    ADD_AGREE("8"),// 好友申请通过
+    CHAT_MESSAGE("9"),// 普通聊天信息
+    GROUP_MESSAGE("10"),// 群聊信息
+    FILE_MESSAGE("11"), // 文件类型消息
+    GET_CHAT_LIST("12"),// 获取聊天记录
+    USER_OFFLINE("13"),// 用户不在线
+    OFFLINE("14"),// 下线
+    LOGIN_SUCCESS("15"), //登录成功
+    LOGIN_FAIL("16"); // 登录失败
     private String value;
 
     private MessageType(String value) {

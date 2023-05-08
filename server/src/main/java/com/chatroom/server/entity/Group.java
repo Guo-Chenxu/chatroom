@@ -1,4 +1,4 @@
-package com.chatroom.common.entity;
+package com.chatroom.server.entity;
 
 import lombok.Data;
 
@@ -30,4 +30,20 @@ public class Group implements Serializable {
      * 群头像
      */
     private String avatarId;
+
+    /**
+     * 群等级
+     * 一级最多500人, 二级1000人, 三级2000人
+     */
+    private int level;
+
+    public Group(String groupName, Integer leaderId, String avatarId, int level) {
+        this.groupName = groupName;
+        this.leaderId = leaderId;
+        this.avatarId = avatarId;
+        this.level = level;
+    }
+
+    public Group() {
+    }
 }

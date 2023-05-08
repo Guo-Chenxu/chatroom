@@ -15,18 +15,13 @@
 
     <properties>
         <java.version>8</java.version>
-        <spring-cloud.version>2.2.5.RELEASE</spring-cloud.version>
-        <spring.cloud.alibaba.version>2.2.5.RELEASE</spring.cloud.alibaba.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <spring-cloud-alibaba.version>2.2.5.RELEASE</spring-cloud-alibaba.version>
         <spring.framework.version>5.2.8.RELEASE</spring.framework.version>
         <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
-        <nacos-spring-context.version>1.0.0</nacos-spring-context.version>
-        <nacos-discovery-spring-boot-starter.version>0.2.7</nacos-discovery-spring-boot-starter.version>
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
         <shardingsphere.version>5.0.0-alpha</shardingsphere.version>
         <sentinel-core.version>1.8.0</sentinel-core.version>
@@ -46,12 +41,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>com.chatroom</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,4 +1,4 @@
-package com.chatroom.common.entity;
+package com.chatroom.client.entity;
 
 import lombok.Data;
 
@@ -24,4 +24,12 @@ public class GroupUserRelation implements Serializable {
      * 用户id
      */
     private Integer userId;
+
+    public GroupUserRelation(Integer groupId, Integer userId) {
+        this.groupId = groupId;
+        this.userId = userId;
+    }
+
+    public GroupUserRelation() {
+    }
 }

@@ -1,6 +1,6 @@
 package com.chatroom.server.mapper;
 
-import com.chatroom.common.entity.User;
+import com.chatroom.server.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

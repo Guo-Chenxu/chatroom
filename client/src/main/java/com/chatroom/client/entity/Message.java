@@ -1,4 +1,4 @@
-package com.chatroom.common.entity;
+package com.chatroom.client.entity;
 
 import lombok.Data;
 
@@ -39,7 +39,7 @@ public class Message implements Serializable {
     /**
      * 发送时间
      */
-    private String sendTime;
+    private Long sendTime;
     /**
      * 消息类型
      */
@@ -49,4 +49,7 @@ public class Message implements Serializable {
      * 1表示一睹, 0表示未读
      */
     private Integer state;
+
+    public Message() {
+    }
 }

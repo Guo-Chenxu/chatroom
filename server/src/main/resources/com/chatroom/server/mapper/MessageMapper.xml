@@ -1,119 +1,108 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
-<!--<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"-->
-<!--        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">-->
-<!--<mapper namespace="com.chatroom.server.mapper.MessageMapper">-->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chatroom.server.mapper.MessageMapper">
 
-<!--    <resultMap id="BaseResultMap" type="com.chatroom.common.entity.Message">-->
-<!--        <result column="message_id" property="messageId"/>-->
-<!--        <result column="sender_id" property="senderId"/>-->
-<!--        <result column="receiver_id" property="receiverId"/>-->
-<!--        <result column="content" property="content"/>-->
-<!--        <result column="file" property="file"/>-->
-<!--        <result column="send_time" property="sendTime"/>-->
-<!--        <result column="message_type" property="messageType"/>-->
-<!--        <result column="state" property="state"/>-->
-<!--    </resultMap>-->
+    <resultMap id="BaseResultMap" type="com.chatroom.server.entity.Message">
+        <result column="message_id" property="messageId"/>
+        <result column="sender_id" property="senderId"/>
+        <result column="receiver_id" property="receiverId"/>
+        <result column="group_id" property="groupId"/>
+        <result column="content" property="content"/>
+        <result column="file" property="file"/>
+        <result column="send_time" property="sendTime"/>
+        <result column="message_type" property="messageType"/>
+        <result column="state" property="state"/>
+    </resultMap>
 
-<!--    <sql id="Base_Column_List">-->
-<!--        message_id,-->
-<!--        sender_id,-->
-<!--        receiver_id,-->
-<!--        content,-->
-<!--        `file`,-->
-<!--        send_time,-->
-<!--        message_type,-->
-<!--        state-->
-<!--    </sql>-->
+    <sql id="Base_Column_List">
+        message_id,
+        sender_id,
+        receiver_id,
+        group_id,
+        content,
+        `file`,
+        send_time,
+        message_type,
+        state
+    </sql>
 
-<!--    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id"-->
-<!--            parameterType="com.chatroom.common.entity.Message">-->
-<!--        INSERT INTO message-->
-<!--        <trim prefix="(" suffix=")" suffixOverrides=",">-->
-<!--            <if test="null != senderId and '' != senderId">-->
-<!--                sender_id,-->
-<!--            </if>-->
-<!--            <if test="null != receiverId and '' != receiverId">-->
-<!--                receiver_id,-->
-<!--            </if>-->
-<!--            <if test="null != content and '' != content">-->
-<!--                content,-->
-<!--            </if>-->
-<!--            <if test="null != file and '' != file">-->
-<!--                file,-->
-<!--            </if>-->
-<!--            <if test="null != sendTime and '' != sendTime">-->
-<!--                send_time,-->
-<!--            </if>-->
-<!--            <if test="null != messageType and '' != messageType">-->
-<!--                message_type,-->
-<!--            </if>-->
-<!--            <if test="null != state and '' != state">-->
-<!--                state-->
-<!--            </if>-->
-<!--        </trim>-->
-<!--        <trim prefix="values (" suffix=")" suffixOverrides=",">-->
-<!--            <if test="null != senderId and '' != senderId">-->
-<!--                #{senderId},-->
-<!--            </if>-->
-<!--            <if test="null != receiverId and '' != receiverId">-->
-<!--                #{receiverId},-->
-<!--            </if>-->
-<!--            <if test="null != content and '' != content">-->
-<!--                #{content},-->
-<!--            </if>-->
-<!--            <if test="null != file and '' != file">-->
-<!--                #{file},-->
-<!--            </if>-->
-<!--            <if test="null != sendTime and '' != sendTime">-->
-<!--                #{sendTime},-->
-<!--            </if>-->
-<!--            <if test="null != messageType and '' != messageType">-->
-<!--                #{messageType},-->
-<!--            </if>-->
-<!--            <if test="null != state and '' != state">-->
-<!--                #{state}-->
-<!--            </if>-->
-<!--        </trim>-->
-<!--    </insert>-->
+    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="com.chatroom.server.entity.Message">
+        INSERT INTO message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != senderId and '' != senderId">
+                sender_id,
+            </if>
+            <if test="null != receiverId and '' != receiverId">
+                receiver_id,
+            </if>
+            <if test="null != groupId and '' != groupId">
+                group_id,
+            </if>
+            <if test="null != content and '' != content">
+                content,
+            </if>
+            <if test="null != file and '' != file">
+                `file`,
+            </if>
+            <if test="null != sendTime and '' != sendTime">
+                send_time,
+            </if>
+            <if test="null != messageType and '' != messageType">
+                message_type,
+            </if>
+            <if test="null != state and '' != state">
+                state
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="null != senderId and '' != senderId">
+                #{senderId},
+            </if>
+            <if test="null != receiverId and '' != receiverId">
+                #{receiverId},
+            </if>
+            <if test="null != groupId and '' != groupId">
+                #{groupId},
+            </if>
+            <if test="null != content and '' != content">
+                #{content},
+            </if>
+            <if test="null != file and '' != file">
+                #{file},
+            </if>
+            <if test="null != sendTime and '' != sendTime">
+                #{sendTime},
+            </if>
+            <if test="null != messageType and '' != messageType">
+                #{messageType},
+            </if>
+            <if test="null != state and '' != state">
+                #{state}
+            </if>
+        </trim>
+    </insert>
 
-<!--    <delete id="delete">-->
-<!--        DELETE-->
-<!--        FROM message-->
-<!--        WHERE id = #{id}-->
-<!--    </delete>-->
+    <delete id="delete">
+        DELETE
+        FROM message
+        where send_time &lt; #{time}
+          and group_id is not null
+    </delete>
 
-<!--    <update id="update" parameterType="com.server.mapper.entity.MessageEntity">-->
-<!--        UPDATE message-->
-<!--        <set>-->
-<!--            <if test="null != senderId and '' != senderId">sender_id = #{senderId},</if>-->
-<!--            <if test="null != receiverId and '' != receiverId">receiver_id = #{receiverId},</if>-->
-<!--            <if test="null != content and '' != content">content = #{content},</if>-->
-<!--            <if test="null != file and '' != file">file = #{file},</if>-->
-<!--            <if test="null != sendTime and '' != sendTime">send_time = #{sendTime},</if>-->
-<!--            <if test="null != messageType and '' != messageType">message_type = #{messageType},</if>-->
-<!--            <if test="null != state and '' != state">state = #{state}</if>-->
-<!--        </set>-->
-<!--        WHERE id = #{id}-->
-<!--    </update>-->
+    <select id="getFriendMessage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM message
+        WHERE (sender_id = #{id1} and receiver_id = #{id2})
+        or (sender_id = #{id2} and receiver_id = #{id1})
+    </select>
 
-
-<!--    <select id="load" resultMap="BaseResultMap">-->
-<!--        SELECT-->
-<!--        <include refid="Base_Column_List"/>-->
-<!--        FROM message-->
-<!--        WHERE id = #{id}-->
-<!--    </select>-->
-
-<!--    <select id="pageList" resultMap="BaseResultMap">-->
-<!--        SELECT-->
-<!--        <include refid="Base_Column_List"/>-->
-<!--        FROM message-->
-<!--        LIMIT #{offset}, #{pageSize}-->
-<!--    </select>-->
-
-<!--    <select id="pageListCount" resultType="java.lang.Integer">-->
-<!--        SELECT count(1)-->
-<!--        FROM message-->
-<!--    </select>-->
-
-<!--</mapper>-->
+    <select id="getGroupMessage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM message
+        WHERE group_id = #{groupId}
+    </select>
+</mapper>

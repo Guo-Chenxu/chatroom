@@ -1,6 +1,6 @@
 package com.chatroom.server;
 
-import com.chatroom.common.entity.User;
+import com.chatroom.server.entity.User;
 import com.chatroom.server.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

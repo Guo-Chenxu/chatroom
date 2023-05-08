@@ -1,4 +1,4 @@
-package com.chatroom.common.entity;
+package com.chatroom.client.entity;
 
 import lombok.Data;
 
@@ -18,4 +18,12 @@ public class Friends implements Serializable {
     private Integer id;
     private Integer userId;
     private Integer friendId;
+
+    public Friends() {
+    }
+
+    public Friends(Integer userId, Integer friendId) {
+        this.userId = userId;
+        this.friendId = friendId;
+    }
 }
