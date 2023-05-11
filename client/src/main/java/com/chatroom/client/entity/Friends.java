@@ -16,7 +16,13 @@ public class Friends implements Serializable {
     private static final long serialVersionUID = 174098509489871L;
 
     private Integer id;
+    /**
+     * 自己的id
+     */
     private Integer userId;
+    /**
+     * 好友的id
+     */
     private Integer friendId;
 
     public Friends() {

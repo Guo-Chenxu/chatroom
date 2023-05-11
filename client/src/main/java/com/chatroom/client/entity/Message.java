@@ -46,7 +46,7 @@ public class Message implements Serializable {
     private String messageType;
     /**
      * 消息状态
-     * 1表示一睹, 0表示未读
+     * 1表示已读, 0表示未读
      */
     private Integer state;
 
