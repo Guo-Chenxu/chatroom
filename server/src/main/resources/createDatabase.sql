@@ -14,23 +14,23 @@ create table chat_room.message
     message_id   int auto_increment comment '消息id' primary key,
     sender_id    int comment '发送方id',
     receiver_id  int comment '接收方id',
-    group_id     int null comment '群id',
     content      varchar(255) comment '消息内容',
     `file`       binary comment '文件数组',
     send_time    bigint comment '发送时间',
     message_type varchar(3) comment '消息类型',
+    is_group_message int comment '是否是群聊消息',
     state        int comment '消息状态, 是否已读'
 );
 create index sender_index
     on chat_room.message (sender_id);
 create index receiver_index
     on chat_room.message (receiver_id);
-create index group_index
-    on chat_room.message (group_id);
 create index time_index
     on chat_room.message (send_time);
 create index type_index
     on chat_room.message (message_type);
+create index group_message_index
+    on chat_room.message (is_group_message);
 create index state_index
     on chat_room.message (state);
 

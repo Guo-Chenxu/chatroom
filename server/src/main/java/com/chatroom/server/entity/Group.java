@@ -30,7 +30,6 @@ public class Group implements Serializable {
      * 群头像
      */
     private String avatarId;
-
     /**
      * 群等级
      * 一级最多500人, 二级1000人, 三级2000人

@@ -22,12 +22,10 @@ public class Message implements Serializable {
     private Integer senderId;
     /**
      * 接收者
+     * 如果是好友聊天, 则为对方的id;
+     * 如果是群聊, 则是群的id
      */
     private Integer receiverId;
-    /**
-     * 如果是群消息的话, 则表示消息是哪个群发的
-     */
-    private Integer groupId;
     /**
      * 消息内容
      */
@@ -44,6 +42,11 @@ public class Message implements Serializable {
      * 消息类型
      */
     private String messageType;
+    /**
+     * 是否是群消息
+     * 1表示是, 0表示否
+     */
+    private Integer isGroupMessage;
     /**
      * 消息状态
      * 1表示已读, 0表示未读

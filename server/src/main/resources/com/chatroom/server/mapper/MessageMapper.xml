@@ -7,11 +7,11 @@
         <result column="message_id" property="messageId"/>
         <result column="sender_id" property="senderId"/>
         <result column="receiver_id" property="receiverId"/>
-        <result column="group_id" property="groupId"/>
         <result column="content" property="content"/>
         <result column="file" property="file"/>
         <result column="send_time" property="sendTime"/>
         <result column="message_type" property="messageType"/>
+        <result column="is_group_message" property="isGroupMessage"/>
         <result column="state" property="state"/>
     </resultMap>
 
@@ -19,11 +19,11 @@
         message_id,
         sender_id,
         receiver_id,
-        group_id,
         content,
         `file`,
         send_time,
         message_type,
+        is_group_message,
         state
     </sql>
 
@@ -37,9 +37,6 @@
             <if test="null != receiverId and '' != receiverId">
                 receiver_id,
             </if>
-            <if test="null != groupId and '' != groupId">
-                group_id,
-            </if>
             <if test="null != content and '' != content">
                 content,
             </if>
@@ -52,6 +49,9 @@
             <if test="null != messageType and '' != messageType">
                 message_type,
             </if>
+            <if test="null != isGroupMessage and '' != isGroupMessage">
+                is_group_message,
+            </if>
             <if test="null != state and '' != state">
                 state
             </if>
@@ -62,9 +62,6 @@
             </if>
             <if test="null != receiverId and '' != receiverId">
                 #{receiverId},
-            </if>
-            <if test="null != groupId and '' != groupId">
-                #{groupId},
             </if>
             <if test="null != content and '' != content">
                 #{content},
@@ -78,6 +75,9 @@
             <if test="null != messageType and '' != messageType">
                 #{messageType},
             </if>
+            <if test="null != isGroupMessage and '' != isGroupMessage">
+                #{isGroupMessage},
+            </if>
             <if test="null != state and '' != state">
                 #{state}
             </if>
@@ -87,8 +87,8 @@
     <delete id="delete">
         DELETE
         FROM message
-        where send_time &lt; #{time}
-          and group_id is not null
+        where is_group_message = 1
+          and send_time &lt; #{time}
     </delete>
 
     <select id="getFriendMessage" resultMap="BaseResultMap">
@@ -103,6 +103,6 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM message
-        WHERE group_id = #{groupId}
+        WHERE is_group_message = 1 and receiver_id = #{groupId}
     </select>
 </mapper>
