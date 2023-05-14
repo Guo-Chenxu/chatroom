@@ -30,6 +30,10 @@ public class User implements Serializable {
      * 用户头像
      */
     private String avatarId;
+    /**
+     * 用户的脸部信息
+     */
+    private String faceId;
 
     public User() {
     }
