@@ -16,7 +16,7 @@ create table chat_room.message
     receiver_id  int comment '接收方id',
     content      varchar(255) comment '消息内容',
     `file`       binary comment '文件数组',
-    send_time    bigint comment '发送时间',
+    send_time    timestamp comment '发送时间',
     message_type varchar(3) comment '消息类型',
     is_group_message int comment '是否是群聊消息',
     state        int comment '消息状态, 是否已读'

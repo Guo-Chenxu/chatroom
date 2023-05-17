@@ -1,5 +1,12 @@
-import com.chatroom.client.entity.Message;
-import com.chatroom.client.entity.MessageType;
+import com.alibaba.fastjson2.JSON;
+import com.chatroom.entity.Message;
+import com.chatroom.entity.MessageType;
+import com.chatroom.entity.User;
+import com.chatroom.service.UserService;
+import com.chatroom.service.impl.UserServiceImpl;
+import org.junit.Test;
+
+import java.io.IOException;
 
 /**
  * @program: chatroom
@@ -14,5 +21,18 @@ public class Test01 {
         Message message = new Message();
         message.setMessageType(MessageType.COMMON_MESSAGE.getValue());
         System.out.println(message.getMessageType());
+    }
+
+    @Test
+    public void testSocket() throws IOException, ClassNotFoundException {
+        UserService userService = new UserServiceImpl();
+        Message msg = new Message();
+        User user = new User();
+        user.setUserId(12);
+        String string = JSON.toJSONString(user);
+        msg.setContent(string);
+        msg.setMessageType(MessageType.LOGIN_BY_PWD.getValue());
+        System.out.println(msg);
+        userService.testSend(msg);
     }
 }
