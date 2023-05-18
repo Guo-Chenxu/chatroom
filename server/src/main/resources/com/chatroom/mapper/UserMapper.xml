@@ -8,13 +8,15 @@
         <result column="username" property="username"/>
         <result column="password" property="password"/>
         <result column="avatar_id" property="avatarId"/>
+        <result column="face_id" property="faceId"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         user_id,
         username,
         `password`,
-        avatar_id
+        avatar_id,
+        face_id
     </sql>
 
     <insert id="add" useGeneratedKeys="true" keyColumn="user_id" keyProperty="userId"
@@ -28,7 +30,10 @@
                 `password`,
             </if>
             <if test="null != avatarId and '' != avatarId">
-                avatar_id
+                avatar_id,
+            </if>
+            <if test="null != faceId and '' != faceId">
+                face_id
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -40,6 +45,9 @@
             </if>
             <if test="null != avatarId and '' != avatarId">
                 #{avatarId}
+            </if>
+            <if test="null != faceId and '' != faceId">
+                #{faceId}
             </if>
         </trim>
     </insert>
@@ -55,7 +63,8 @@
         <set>
             username = #{username},
             `password` = #{password},
-            avatar_id = #{avatarId}
+            avatar_id = #{avatarId},
+            face_id = #{faceId}
         </set>
         WHERE user_id = #{userId}
     </update>

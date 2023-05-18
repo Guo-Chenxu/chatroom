@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chatroom.mapper.FriendsMapper">
+
+    <resultMap id="BaseResultMap" type="com.chatroom.entity.Friends">
+        <result column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="friend_id" property="friendId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        user_id,
+        friend_id
+    </sql>
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="com.chatroom.entity.Friends">
+        INSERT INTO friends
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != id1 and '' != id1">
+                user_id,
+            </if>
+            <if test="null != id2 and '' != id2">
+                friend_id
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="null != id1 and '' != id1">
+                #{id1},
+            </if>
+            <if test="null != id2 and '' != id2">
+                #{id2}
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        DELETE
+        FROM friends
+        WHERE (user_id = #{id1} and friend_id = #{id2})
+           or (user_id = #{id2} and friend_id = #{id1})
+    </delete>
+
+    <select id="getByUserId" resultType="java.lang.Integer">
+        SELECT friend_id
+        FROM friends
+        WHERE user_id = #{userId}
+        UNION
+        SELECT user_id
+        FROM friends
+        WHERE friend_id = #{userId}
+    </select>
+
+</mapper>

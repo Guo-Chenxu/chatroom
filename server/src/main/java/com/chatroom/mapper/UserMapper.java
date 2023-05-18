@@ -23,7 +23,7 @@ public interface UserMapper {
      * @param user 用户信息
      * @return 改变行数
      */
-    Integer add(User user);
+    int add(User user);
 
     /**
      * 根据用户id删除用户

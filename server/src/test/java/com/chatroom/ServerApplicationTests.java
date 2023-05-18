@@ -51,8 +51,8 @@ class ServerApplicationTests {
     void testMessageMapper() {
         Message msg = new Message();
         long l = System.currentTimeMillis();
-        msg.setGroupMessage(false);
-        msg.setRead(false);
+        msg.setIsGroupMessage(false);
+        msg.setIsRead(false);
         msg.setSendTime(new Date(l + 3600L * 24 * 10 * 1000));
         System.out.println(new Date(l + 3600 * 24 * 10 * 1000));
         int add = messagesMapper.add(msg);

@@ -7,6 +7,8 @@ import com.chatroom.service.impl.UserServiceImpl;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @program: chatroom
@@ -29,7 +31,11 @@ public class Test01 {
         Message msg = new Message();
         User user = new User();
         user.setUserId(12);
-        String string = JSON.toJSONString(user);
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(1);
+        list.add(1);
+        String string = JSON.toJSONString(list);
         msg.setContent(string);
         msg.setMessageType(MessageType.LOGIN_BY_PWD.getValue());
         System.out.println(msg);

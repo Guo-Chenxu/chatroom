@@ -21,7 +21,7 @@ public interface GroupMapper {
      * @param group 群信息
      * @return 改变行数
      */
-    Integer add(Group group);
+    int add(Group group);
 
     /**
      * 根据群id删除群聊
