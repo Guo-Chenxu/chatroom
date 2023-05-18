@@ -11,6 +11,7 @@ import com.chatroom.service.UserService;
 import com.chatroom.utils.ThreadManage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -57,16 +58,11 @@ public class ConnectController implements Runnable {
             // 设置服务器套接字 ServerSocket(int port)创建绑定到指定端口的服务器套接字
             server = new ServerSocket(9623);
             while (loop) {
-                System.out.println(userService);
-                System.out.println(messageService);
-
                 // 调用accept()方法开始监听，等待客户端的连接
                 Socket client = server.accept();
                 log.info("客户端连接：" + client.getInetAddress());
                 ObjectInputStream input = new ObjectInputStream(client.getInputStream());
                 ObjectOutputStream output = new ObjectOutputStream(client.getOutputStream());
-                System.out.println(input);
-                System.out.println(output);
 
                 // 等待获取用户信息
                 Message message = (Message) input.readObject();

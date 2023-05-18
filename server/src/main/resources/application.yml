@@ -4,7 +4,8 @@ spring:
     url: jdbc:mysql://localhost:3306/chat_room?useUnicode=true&characterEncoding=utf8&serverTimezone=CST
     username: root
     password: 101325
+  jackson:
+    time-zone: Asia/Shanghai
 
 server:
-  port: 12376
-
+  port: 12377

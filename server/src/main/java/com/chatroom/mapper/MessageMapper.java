@@ -47,4 +47,9 @@ public interface MessageMapper {
      * @return 消息列表
      */
     List<Message> getGroupMessage(@Param("groupId") int groupId);
+
+    /**
+     * 获取所有信息
+     */
+    List<Message> getAllMessages();
 }

@@ -18,8 +18,8 @@ create table chat_room.message
     `file`       binary comment '文件数组',
     send_time    timestamp comment '发送时间',
     message_type varchar(3) comment '消息类型',
-    is_group_message int comment '是否是群聊消息',
-    state        int comment '消息状态, 是否已读'
+    is_group_message tinyint comment '是否是群聊消息',
+    is_read        tinyint comment '消息状态, 是否已读'
 );
 create index sender_index
     on chat_room.message (sender_id);
@@ -31,8 +31,8 @@ create index type_index
     on chat_room.message (message_type);
 create index group_message_index
     on chat_room.message (is_group_message);
-create index state_index
-    on chat_room.message (state);
+create index read_index
+    on chat_room.message (is_read);
 
 create table chat_room.group
 (

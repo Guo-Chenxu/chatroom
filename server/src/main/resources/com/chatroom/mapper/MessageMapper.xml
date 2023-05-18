@@ -11,8 +11,8 @@
         <result column="file" property="file"/>
         <result column="send_time" property="sendTime" jdbcType="TIMESTAMP"/>
         <result column="message_type" property="messageType"/>
-        <result column="is_group_message" property="isGroupMessage"/>
-        <result column="state" property="state"/>
+        <result column="is_group_message" property="isGroupMessage" jdbcType="TINYINT"/>
+        <result column="is_read" property="isRead" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -24,7 +24,7 @@
         send_time,
         message_type,
         is_group_message,
-        state
+        is_read
     </sql>
 
     <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
@@ -52,8 +52,8 @@
             <if test="null != isGroupMessage and '' != isGroupMessage">
                 is_group_message,
             </if>
-            <if test="null != state and '' != state">
-                state
+            <if test="null != isRead and '' != isRead">
+                is_read
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -78,8 +78,8 @@
             <if test="null != isGroupMessage and '' != isGroupMessage">
                 #{isGroupMessage},
             </if>
-            <if test="null != state and '' != state">
-                #{state}
+            <if test="null != isRead and '' != isRead">
+                #{isRead}
             </if>
         </trim>
     </insert>
@@ -95,8 +95,8 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM message
-        WHERE (sender_id = #{id1} and receiver_id = #{id2})
-        or (sender_id = #{id2} and receiver_id = #{id1})
+        WHERE (sender_id = #{id1} and receiver_id = #{id2} and is_group_message = 0)
+        or (sender_id = #{id2} and receiver_id = #{id1} and is_group_message = 0)
     </select>
 
     <select id="getGroupMessage" resultMap="BaseResultMap">
@@ -104,5 +104,11 @@
         <include refid="Base_Column_List"/>
         FROM message
         WHERE is_group_message = 1 and receiver_id = #{groupId}
+    </select>
+
+    <select id="getAllMessages" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM message
     </select>
 </mapper>

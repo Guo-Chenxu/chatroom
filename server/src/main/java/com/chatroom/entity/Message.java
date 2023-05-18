@@ -47,14 +47,12 @@ public class Message implements Serializable {
     private String messageType;
     /**
      * 是否是群消息
-     * 1表示是, 0表示否
      */
-    private Integer isGroupMessage;
+    private Boolean isGroupMessage;
     /**
-     * 消息状态
-     * 1表示已读, 0表示未读
+     * 是否已读
      */
-    private Integer state;
+    private Boolean isRead;
 
     public Message() {
     }
