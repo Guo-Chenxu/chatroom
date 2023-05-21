@@ -21,7 +21,7 @@ public class Test01 {
     @org.junit.Test
     public void contextLoads() {
         Message message = new Message();
-        message.setMessageType(MessageType.COMMON_MESSAGE.getValue());
+        message.setMessageType(MessageType.COMMON_MESSAGE);
         System.out.println(message.getMessageType());
     }
 
@@ -37,7 +37,7 @@ public class Test01 {
         list.add(1);
         String string = JSON.toJSONString(list);
         msg.setContent(string);
-        msg.setMessageType(MessageType.LOGIN_BY_PWD.getValue());
+        msg.setMessageType(MessageType.LOGIN_BY_PWD);
         System.out.println(msg);
         userService.testSend(msg);
     }

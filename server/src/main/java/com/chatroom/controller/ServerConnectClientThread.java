@@ -1,10 +1,6 @@
 package com.chatroom.controller;
 
 import com.chatroom.entity.Message;
-import com.chatroom.entity.User;
-import com.chatroom.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

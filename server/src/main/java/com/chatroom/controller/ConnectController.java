@@ -69,7 +69,7 @@ public class ConnectController implements Runnable {
                 Message res = new Message();
                 System.out.println(message);
 
-                if (MessageType.LOGIN_BY_PWD.getValue().equals(message.getMessageType())) {
+                if (MessageType.LOGIN_BY_PWD.equals(message.getMessageType())) {
                     // 使用密码登录
                     User user = JSON.parseObject(message.getContent(), User.class);
                     System.out.println("--------------\n" + userService);
@@ -83,18 +83,18 @@ public class ConnectController implements Runnable {
                         // 发送登录成功的消息
                         log.info("用户 " + user.getUserId() + " 在 " + new Date() + " 登录成功, " +
                                 "用户ip为: " + client.getRemoteSocketAddress());
-                        res.setMessageType(MessageType.LOGIN_SUCCESS.getValue());
+                        res.setMessageType(MessageType.LOGIN_SUCCESS);
                         output.writeObject(res);
                     } else {
                         // 登陆失败
                         log.info("用户 " + user.getUserId() + " 在 " + new Date() + " 登录失败, " +
                                 "用户ip为: " + client.getRemoteSocketAddress());
-                        res.setMessageType(MessageType.LOGIN_FAIL.getValue());
+                        res.setMessageType(MessageType.LOGIN_FAIL);
                         output.writeObject(res);
                     }
-                } else if (MessageType.LOGIN_BY_FACE.getValue().equals(message.getMessageType())) {
+                } else if (MessageType.LOGIN_BY_FACE.equals(message.getMessageType())) {
 
-                } else if (MessageType.REGISTER.getValue().equals(message.getMessageType())) {
+                } else if (MessageType.REGISTER.equals(message.getMessageType())) {
 
                 }
             }

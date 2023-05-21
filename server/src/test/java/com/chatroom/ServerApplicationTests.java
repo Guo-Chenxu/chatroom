@@ -38,8 +38,8 @@ class ServerApplicationTests {
             System.out.println(i);
         }
         Message message = new Message();
-        message.setMessageType(MessageType.COMMON_MESSAGE.getValue());
-        Assert.assertEquals(message.getMessageType(), MessageType.COMMON_MESSAGE.getValue());
+        message.setMessageType(MessageType.COMMON_MESSAGE);
+        Assert.assertEquals(message.getMessageType(), MessageType.COMMON_MESSAGE);
     }
 
     @Test
