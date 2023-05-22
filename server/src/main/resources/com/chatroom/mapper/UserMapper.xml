@@ -69,21 +69,21 @@
         WHERE user_id = #{userId}
     </update>
 
-    <select id="getByUserId" resultType="com.chatroom.entity.User">
+    <select id="getByUserId" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user
         WHERE user_id = #{userId}
     </select>
 
-    <select id="getByUsername" resultType="com.chatroom.entity.User">
+    <select id="getByUsername" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user
         WHERE username = #{username}
     </select>
 
-    <select id="getAll" resultType="com.chatroom.entity.User">
+    <select id="getAll" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user

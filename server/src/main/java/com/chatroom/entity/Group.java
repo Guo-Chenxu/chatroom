@@ -3,6 +3,7 @@ package com.chatroom.entity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @program: chatroom
@@ -27,12 +28,22 @@ public class Group implements Serializable {
      */
     private Integer leaderId;
     /**
+     * 群主名字
+     * 仅用于前后端交互
+     */
+    private String leaderName;
+    /**
+     * 群组成员的信息
+     * 仅用于前后端交互
+     */
+    private List<User> users;
+    /**
      * 群头像
      */
     private String avatarId;
     /**
      * 群等级
-     * 一级最多500人, 二级1000人, 三级2000人
+     * 一级最多500人, 二级1000人, 三级2000人, 四级3000人
      */
     private int level;
 

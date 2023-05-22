@@ -17,45 +17,45 @@ public class ThreadManage {
     /**
      * 在线用户线程集合
      */
-    private static Map<Integer, ServerConnectClientThread> map = new ConcurrentHashMap<>();
+    private static Map<String, ServerConnectClientThread> map = new ConcurrentHashMap<>();
 
     /**
      * 将某个线程添加到集合中
      *
-     * @param userId                    用户名
+     * @param username                  用户名
      * @param serverConnectClientThread 服务器连接到客户端的线程
      */
-    public static void addThread(Integer userId, ServerConnectClientThread serverConnectClientThread) {
-        map.put(userId, serverConnectClientThread);
+    public static void addThread(String username, ServerConnectClientThread serverConnectClientThread) {
+        map.put(username, serverConnectClientThread);
     }
 
     /**
      * 通过用户名获取对应线程
      *
-     * @param userId 用户id
+     * @param username 用户名
      * @return 服务器连接到客服端的线程
      */
-    public static ServerConnectClientThread getThread(Integer userId) {
-        return map.get(userId);
+    public static ServerConnectClientThread getThread(String username) {
+        return map.get(username);
     }
 
     /**
      * 用户退出系统, 删除该用户的线程
      *
-     * @param userId 用户Id
+     * @param username 用户名
      */
-    public static void deleteUser(Integer userId) {
-        map.remove(userId);
+    public static void deleteUser(String username) {
+        map.remove(username);
     }
 
     /**
      * 判断该用户当前是否在线
      *
-     * @param userId 用户id
+     * @param username 用户名
      * @return 在线返回true, 否则返回false
      */
-    public static boolean userIsOnline(Integer userId) {
-        return map.containsKey(userId);
+    public static boolean userIsOnline(String username) {
+        return map.containsKey(username);
     }
 }
 

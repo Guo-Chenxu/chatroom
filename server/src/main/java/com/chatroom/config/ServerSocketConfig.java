@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 
 @Component
 public class ServerSocketConfig {
@@ -26,7 +27,7 @@ public class ServerSocketConfig {
 
     @Bean
     public void socketCreate() throws UnknownHostException {
-        log.info("服务器开启, 当前服务器ip地址为: " + InetAddress.getLocalHost());
+        log.info(new Date() + " 服务器开启, 当前服务器ip地址为: " + InetAddress.getLocalHost());
         server = new ConnectController();
     }
 }

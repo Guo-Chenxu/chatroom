@@ -120,4 +120,12 @@ public interface MessageType {
      * 获取好友申请信息
      */
     String GET_FRIENDS_ADD = "27";
+    /**
+     * 注册成功
+     */
+    String REGISTER_SUCCESS = "28";
+    /**
+     * 注册失败
+     */
+    String REGISTER_FAIL = "29";
 }

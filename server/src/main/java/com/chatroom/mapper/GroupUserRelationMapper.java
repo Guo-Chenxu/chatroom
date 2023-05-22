@@ -47,4 +47,19 @@ public interface GroupUserRelationMapper {
      * @return 群id
      */
     List<Integer> getByUserId(@Param("userId") Integer userId);
+
+    /**
+     * 根据群组id获取群当前人数
+     * @param groupId 群组id
+     * @return 群人数
+     */
+    int getGroupCounts(@Param("groupId") Integer groupId);
+
+    /**
+     * 根据群组id和用户id判断该用户是否在该群聊内
+     * @param groupId 群组id
+     * @param userId 用户id
+     * @return 获取到的行数
+     */
+    int getByGroupAndUser(@Param("groupId") Integer groupId, @Param("userId") Integer userId);
 }

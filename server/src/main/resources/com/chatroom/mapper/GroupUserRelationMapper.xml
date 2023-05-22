@@ -54,5 +54,16 @@
         from group_user_relation
         where user_id = #{userId}
     </select>
+    <select id="getGroupCounts" resultType="java.lang.Integer">
+        SELECT count(*)
+        from group_user_relation
+        where group_id = #{groupId}
+    </select>
+    <select id="getByGroupAndUser" resultType="java.lang.Integer">
+        SELECT count(*)
+        from group_user_relation
+        where group_id = #{groupId}
+          and user_id = #{userId}
+    </select>
 
 </mapper>

@@ -2,7 +2,6 @@ package com.chatroom.controller;
 
 
 import com.alibaba.fastjson2.JSON;
-import com.chatroom.config.ServerSocketConfig;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
@@ -11,7 +10,6 @@ import com.chatroom.service.UserService;
 import com.chatroom.utils.ThreadManage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -45,7 +43,7 @@ public class ConnectController implements Runnable {
     @Resource
     MessageService messageService;
 
-    private static Logger log = LoggerFactory.getLogger(ServerSocketConfig.class);
+    private static Logger log = LoggerFactory.getLogger(ConnectController.class);
 
     public ConnectController() {
         loop = true;
@@ -66,38 +64,69 @@ public class ConnectController implements Runnable {
 
                 // 等待获取用户信息
                 Message message = (Message) input.readObject();
+                User user = JSON.parseObject(message.getContent(), User.class);
                 Message res = new Message();
-                System.out.println(message);
 
                 if (MessageType.LOGIN_BY_PWD.equals(message.getMessageType())) {
                     // 使用密码登录
-                    User user = JSON.parseObject(message.getContent(), User.class);
-                    System.out.println("--------------\n" + userService);
                     if (userService.loginByPwd(user)) {
                         // 登录成功, 创建线程并添加管理
                         ServerConnectClientThread serverConnectClientThread
-                                = new ServerConnectClientThread(user.getUserId(), client);
+                                = new ServerConnectClientThread(user.getUsername(), client);
                         new Thread(serverConnectClientThread).start();
-                        ThreadManage.addThread(user.getUserId(), serverConnectClientThread);
+                        ThreadManage.addThread(user.getUsername(), serverConnectClientThread);
 
                         // 发送登录成功的消息
-                        log.info("用户 " + user.getUserId() + " 在 " + new Date() + " 登录成功, " +
+                        log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 使用密码登录成功, " +
                                 "用户ip为: " + client.getRemoteSocketAddress());
                         res.setMessageType(MessageType.LOGIN_SUCCESS);
                         output.writeObject(res);
                     } else {
                         // 登陆失败
-                        log.info("用户 " + user.getUserId() + " 在 " + new Date() + " 登录失败, " +
+                        log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 使用密码登录失败, " +
                                 "用户ip为: " + client.getRemoteSocketAddress());
                         res.setMessageType(MessageType.LOGIN_FAIL);
                         output.writeObject(res);
                     }
                 } else if (MessageType.LOGIN_BY_FACE.equals(message.getMessageType())) {
+                    // 使用人脸登录
+                    if (userService.loginByFace(user)) {
+                        // 登录成功, 创建线程并添加管理
+                        ServerConnectClientThread serverConnectClientThread
+                                = new ServerConnectClientThread(user.getUsername(), client);
+                        new Thread(serverConnectClientThread).start();
+                        ThreadManage.addThread(user.getUsername(), serverConnectClientThread);
 
+                        // 发送登录成功的消息
+                        log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 使用人脸登录成功, " +
+                                "用户ip为: " + client.getRemoteSocketAddress());
+                        res.setMessageType(MessageType.LOGIN_SUCCESS);
+                        output.writeObject(res);
+                    } else {
+                        // 登陆失败
+                        log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 使用人脸登录失败, " +
+                                "用户ip为: " + client.getRemoteSocketAddress());
+                        res.setMessageType(MessageType.LOGIN_FAIL);
+                        output.writeObject(res);
+                    }
                 } else if (MessageType.REGISTER.equals(message.getMessageType())) {
-
+                    // 用户注册
+                    if (userService.register(user)) {
+                        // 发送注册成功的消息
+                        log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 注册成功, " +
+                                "用户ip为: " + client.getRemoteSocketAddress());
+                        res.setMessageType(MessageType.REGISTER_SUCCESS);
+                        output.writeObject(res);
+                    } else {
+                        // 注册失败
+                        log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 注册失败, " +
+                                "用户ip为: " + client.getRemoteSocketAddress());
+                        res.setMessageType(MessageType.REGISTER_FAIL);
+                        output.writeObject(res);
+                    }
                 }
             }
+            log.info(new Date() + "服务器关闭");
         } catch (IOException | ClassNotFoundException e) {
             myStop();
             e.printStackTrace();

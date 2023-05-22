@@ -69,21 +69,21 @@
         WHERE group_id = #{groupId}
     </update>
 
-    <select id="getByGroupId" resultType="com.chatroom.entity.Group">
+    <select id="getByGroupId" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM `group`
         WHERE group_id = #{groupId}
     </select>
 
-    <select id="getByGroupName" resultType="com.chatroom.entity.Group">
+    <select id="getByGroupName" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM `group`
         WHERE group_name = #{groupName}
     </select>
 
-    <select id="getByLeaderId" resultType="com.chatroom.entity.Group">
+    <select id="getByLeaderId" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM `group`

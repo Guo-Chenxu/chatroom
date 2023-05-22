@@ -24,6 +24,16 @@ public class Friends implements Serializable {
      * 好友的id
      */
     private Integer friendId;
+    /**
+     * 自己的用户名
+     * 仅用于前后端交互
+     */
+    private String username;
+    /**
+     * 好友的用户名
+     * 仅用于前后端交互
+     */
+    private String friendName;
 
     public Friends() {
     }

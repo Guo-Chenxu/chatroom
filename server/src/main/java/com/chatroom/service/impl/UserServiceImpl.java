@@ -1,5 +1,6 @@
 package com.chatroom.service.impl;
 
+import com.chatroom.controller.ServerConnectClientThread;
 import com.chatroom.entity.User;
 import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.GroupUserRelationMapper;
@@ -35,17 +36,55 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     /**
-     * 根据密码登录
-     *
-     * @param user 用户对象
-     * @return 登陆成功返回true, 否则返回false
+     * 正则匹配, 6-20位字母数字下划线组合, 必须以字母开头
      */
+    private static final String reg = "^[a-zA-Z]\\w{5,17}$";
+
     @Override
     public boolean loginByPwd(User user) {
-        if (ThreadManage.userIsOnline(user.getUserId())) {
+        if (ThreadManage.userIsOnline(user.getUsername())) {
             return false;
         }
-        User u = userMapper.getByUserId(user.getUserId());
+        User u = userMapper.getByUsername(user.getUsername());
         return u != null && u.getPassword().equals(user.getPassword());
+    }
+
+    /**
+     * todo 暂时没有实现
+     * 根据人脸登录
+     *
+     * @param user 用户对象
+     * @return 登录成功返回true, 否则返回false
+     */
+    @Override
+    public boolean loginByFace(User user) {
+        return false;
+    }
+
+    @Override
+    public boolean register(User user) {
+        String name = user.getUsername();
+        String pwd = user.getPassword();
+        if (userMapper.getByUsername(name) != null) {
+            return false;
+        }
+
+        if (name.matches(reg) && pwd.matches(reg)) {
+            userMapper.add(user);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean offline(User user) {
+        ServerConnectClientThread thread = ThreadManage.getThread(user.getUsername());
+        thread.myStop();
+        ThreadManage.deleteUser(user.getUsername());
+        return false;
+    }
+
+    @Override
+    public Integer getIdByName(String username) {
+        return userMapper.getByUsername(username).getUserId();
     }
 }

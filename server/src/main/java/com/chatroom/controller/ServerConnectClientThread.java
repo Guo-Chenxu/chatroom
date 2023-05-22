@@ -1,11 +1,14 @@
 package com.chatroom.controller;
 
 import com.chatroom.entity.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Date;
 
 /**
  * @program: chatroom
@@ -17,9 +20,9 @@ import java.net.Socket;
 
 public class ServerConnectClientThread implements Runnable {
     /**
-     * 用户id
+     * 用户名
      */
-    private Integer userId;
+    private String username;
     /**
      * 用户socket
      */
@@ -28,8 +31,10 @@ public class ServerConnectClientThread implements Runnable {
     private ObjectInputStream input;
     private ObjectOutputStream output;
 
-    public ServerConnectClientThread(Integer userId, Socket client) {
-        this.userId = userId;
+    private static Logger log = LoggerFactory.getLogger(ServerConnectClientThread.class);
+
+    public ServerConnectClientThread(String username, Socket client) {
+        this.username = username;
         this.client = client;
         this.loop = true;
     }
@@ -53,6 +58,9 @@ public class ServerConnectClientThread implements Runnable {
             while (loop) {
                 input = new ObjectInputStream(client.getInputStream());
                 Message msg = (Message) input.readObject();
+                switch (msg.getMessageType()) {
+
+                }
 //                //判断消息类型
 //                switch (msg.getType()) {
 //                    case GET_FRIENDS:// 获取好友列表
@@ -77,6 +85,7 @@ public class ServerConnectClientThread implements Runnable {
 //                        System.out.println("未知类型");
 //                }
             }
+            log.info(new Date() + "用户 " + username + " 下线, 用户ip为: " + client.getRemoteSocketAddress());
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
