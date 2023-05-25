@@ -4,8 +4,8 @@ create table chat_room.user
         primary key,
     `username` varchar(30)  not null comment '用户名',
     `password` varchar(255) not null comment '密码',
-    avatar_id  varchar(255) not null default '1' comment '头像',
-    face_id    varchar(255) not null comment '人脸信息'
+    avatar_id  varchar(255) null default '1' comment '头像',
+    face_id    varchar(255) null comment '人脸信息'
 ) auto_increment = 1001;
 create index username_index
     on chat_room.user (username);
@@ -13,14 +13,14 @@ create index username_index
 create table chat_room.message
 (
     message_id       int auto_increment comment '消息id' primary key,
-    sender_id        int comment '发送方id',
-    receiver_id      int comment '接收方id',
-    content          varchar(255) comment '消息内容',
-    `file`           binary comment '文件数组',
-    send_time        timestamp comment '发送时间',
-    message_type     varchar(3) comment '消息类型',
-    is_group_message tinyint comment '是否是群聊消息',
-    is_read          tinyint comment '消息状态, 是否已读'
+    sender_id        int          null comment '发送方id',
+    receiver_id      int          null comment '接收方id',
+    content          varchar(255) null comment '消息内容',
+    `file`           binary       null comment '文件数组',
+    send_time        timestamp    null comment '发送时间',
+    message_type     varchar(3)   null comment '消息类型',
+    is_group_message tinyint      null comment '是否是群聊消息',
+    is_read          tinyint      null comment '消息状态, 是否已读'
 );
 create index sender_index
     on chat_room.message (sender_id);
@@ -40,7 +40,7 @@ create table chat_room.group
     group_id   int auto_increment comment '群组id' primary key,
     group_name varchar(30)  not null comment '群名',
     leader_id  int          not null comment '群主id',
-    avatar_id  varchar(255) not null comment '头像',
+    avatar_id  varchar(255) null comment '头像',
     `level`    int          not null comment '群聊等级, 不同等级有不同人数上限'
 ) auto_increment = 1001;
 create index group_name_index

@@ -1,7 +1,9 @@
 package com.chatroom;
 
+import com.chatroom.entity.Group;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
+import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.MessageMapper;
 import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.UserService;
@@ -26,6 +28,9 @@ class ServerApplicationTests {
 
     @Resource
     MessageMapper messagesMapper;
+
+    @Resource
+    GroupMapper groupMapper;
 
     @Test
     void contextLoads() {
@@ -58,8 +63,18 @@ class ServerApplicationTests {
         int add = messagesMapper.add(msg);
         System.out.println(add);
         List<Message> groupMessage = messagesMapper.getAllMessages();
-        for (var m : groupMessage){
+        for (var m : groupMessage) {
             System.out.println(m);
         }
+    }
+
+    @Test
+    void testGroupAdd() {
+        Group g = new Group();
+        g.setGroupName("123");
+        g.setLeaderId(123);
+        g.setAvatarId("123");
+        g.setLevel(1);
+        groupMapper.add(g);
     }
 }

@@ -30,7 +30,7 @@
                 leader_id,
             </if>
             <if test="null != avatarId and '' != avatarId">
-                avatar_id
+                avatar_id,
             </if>
             <if test="null != level and '' != level">
                 `level`
@@ -44,7 +44,7 @@
                 #{leaderId},
             </if>
             <if test="null != avatarId and '' != avatarId">
-                #{avatarId}
+                #{avatarId},
             </if>
             <if test="null != level and '' != level">
                 #{level}
