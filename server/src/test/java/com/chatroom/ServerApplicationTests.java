@@ -1,5 +1,7 @@
 package com.chatroom;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
@@ -18,7 +20,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-@SpringBootTest
+//@SpringBootTest
 class ServerApplicationTests {
     @Resource
     UserMapper userMapper;
@@ -76,5 +78,28 @@ class ServerApplicationTests {
         g.setAvatarId("123");
         g.setLevel(1);
         groupMapper.add(g);
+    }
+
+    @Test
+    void testJson() {
+        Message m = new Message();
+        List<Message> l = new ArrayList<>();
+        m.setContent("111");
+        m.setMessageType(MessageType.COMMON_MESSAGE);
+        l.add(m);
+        m.setContent("222");
+        l.add(m);
+        m.setContent("333");
+        l.add(m);
+        m.setContent("444");
+        l.add(m);
+        System.out.println(l);
+        String s = JSON.toJSONString(l);
+        System.out.println(s);
+        List<Message> ll = JSON.parseArray(s, Message.class);
+        Message mm = ll.get(0);
+        System.out.println(mm.getMessageType());
+        System.out.println(mm.getContent());
+        Assert.assertEquals(l ,ll);
     }
 }

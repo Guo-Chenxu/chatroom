@@ -52,4 +52,20 @@ public interface MessageMapper {
      * 获取所有信息
      */
     List<Message> getAllMessages();
+
+    /**
+     * 获取指定用户的所有好友的未读消息
+     *
+     * @param userId 用户id
+     * @return 消息列表
+     */
+    List<Message> getNotReadMessage(@Param("userId") Integer userId);
+
+    /**
+     * 设置指定用户所有消息为已读状态
+     *
+     * @param userId 用户id
+     * @return 改变行数
+     */
+    int setMessageReaded(@Param("userId") Integer userId);
 }

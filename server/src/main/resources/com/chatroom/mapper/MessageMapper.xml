@@ -11,8 +11,8 @@
         <result column="file" property="file"/>
         <result column="send_time" property="sendTime" jdbcType="TIMESTAMP"/>
         <result column="message_type" property="messageType"/>
-        <result column="is_group_message" property="isGroupMessage" jdbcType="TINYINT"/>
-        <result column="is_read" property="isRead" jdbcType="TINYINT"/>
+        <result column="is_group_message" property="isGroupMessage"/>
+        <result column="is_read" property="isRead"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -83,6 +83,11 @@
             </if>
         </trim>
     </insert>
+    <update id="setMessageReaded">
+        update message
+        set is_read = 1
+        where receiver_id = #{userId}
+    </update>
 
     <delete id="delete">
         DELETE
@@ -110,5 +115,12 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM message
+    </select>
+
+    <select id="getNotReadMessage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM message
+        where is_read = 0 and receiver_id = #{userId}
     </select>
 </mapper>

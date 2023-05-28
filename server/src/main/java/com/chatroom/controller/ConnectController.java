@@ -10,7 +10,7 @@ import com.chatroom.service.UserService;
 import com.chatroom.utils.ThreadManage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.Closeable;
@@ -20,6 +20,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @program: chatroom
@@ -29,17 +30,18 @@ import java.util.Date;
  * @version: 1.0
  **/
 
-@RestController
+@Component
 public class ConnectController implements Runnable {
     /**
      * 服务端socket
      */
     private ServerSocket server;
+    private ObjectInputStream input;
+    private ObjectOutputStream output;
     private boolean loop;
 
     @Resource
     UserService userService;
-
     @Resource
     MessageService messageService;
 
@@ -59,58 +61,30 @@ public class ConnectController implements Runnable {
                 // 调用accept()方法开始监听，等待客户端的连接
                 Socket client = server.accept();
                 log.info("客户端连接：" + client.getInetAddress());
-                ObjectInputStream input = new ObjectInputStream(client.getInputStream());
-                ObjectOutputStream output = new ObjectOutputStream(client.getOutputStream());
+                input = new ObjectInputStream(client.getInputStream());
+                output = new ObjectOutputStream(client.getOutputStream());
 
                 // 等待获取用户信息
                 Message message = (Message) input.readObject();
                 User user = JSON.parseObject(message.getContent(), User.class);
-                Message res = new Message();
 
                 if (MessageType.LOGIN_BY_PWD.equals(message.getMessageType())) {
                     // 使用密码登录
                     if (userService.loginByPwd(user)) {
-                        // 登录成功, 创建线程并添加管理
-                        ServerConnectClientThread serverConnectClientThread
-                                = new ServerConnectClientThread(user.getUsername(), client);
-                        new Thread(serverConnectClientThread).start();
-                        ThreadManage.addThread(user.getUsername(), serverConnectClientThread);
-
-                        // 发送登录成功的消息
-                        log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 使用密码登录成功, " +
-                                "用户ip为: " + client.getRemoteSocketAddress());
-                        res.setMessageType(MessageType.LOGIN_SUCCESS);
-                        output.writeObject(res);
+                        loginSuccess(user, client);
                     } else {
-                        // 登陆失败
-                        log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 使用密码登录失败, " +
-                                "用户ip为: " + client.getRemoteSocketAddress());
-                        res.setMessageType(MessageType.LOGIN_FAIL);
-                        output.writeObject(res);
+                        loginFail(user, client);
                     }
                 } else if (MessageType.LOGIN_BY_FACE.equals(message.getMessageType())) {
                     // 使用人脸登录
                     if (userService.loginByFace(user)) {
-                        // 登录成功, 创建线程并添加管理
-                        ServerConnectClientThread serverConnectClientThread
-                                = new ServerConnectClientThread(user.getUsername(), client);
-                        new Thread(serverConnectClientThread).start();
-                        ThreadManage.addThread(user.getUsername(), serverConnectClientThread);
-
-                        // 发送登录成功的消息
-                        log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 使用人脸登录成功, " +
-                                "用户ip为: " + client.getRemoteSocketAddress());
-                        res.setMessageType(MessageType.LOGIN_SUCCESS);
-                        output.writeObject(res);
+                        loginSuccess(user, client);
                     } else {
-                        // 登陆失败
-                        log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 使用人脸登录失败, " +
-                                "用户ip为: " + client.getRemoteSocketAddress());
-                        res.setMessageType(MessageType.LOGIN_FAIL);
-                        output.writeObject(res);
+                        loginFail(user, client);
                     }
                 } else if (MessageType.REGISTER.equals(message.getMessageType())) {
                     // 用户注册
+                    Message res = new Message();
                     if (userService.register(user)) {
                         // 发送注册成功的消息
                         log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 注册成功, " +
@@ -134,11 +108,49 @@ public class ConnectController implements Runnable {
     }
 
     /**
+     * 用户登录成功
+     *
+     * @param user   用户
+     * @param client 客户端socket
+     */
+    private void loginSuccess(User user, Socket client) throws IOException {
+        // 登录成功, 创建线程并添加管理
+        ServerConnectClientThread serverConnectClientThread
+                = new ServerConnectClientThread(user.getUsername(), client);
+        new Thread(serverConnectClientThread).start();
+        ThreadManage.addThread(user.getUsername(), serverConnectClientThread);
+
+        // 发送登录成功的消息
+        log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 登录成功, " +
+                "用户ip为: " + client.getRemoteSocketAddress());
+        Message res = new Message();
+        res.setMessageType(MessageType.LOGIN_SUCCESS);
+        List<Message> notRead = messageService.getNotReadMessages(user);
+        res.setContent(JSON.toJSONString(notRead));
+        output.writeObject(res);
+    }
+
+    /**
+     * 用户登录失败
+     *
+     * @param user   用户
+     * @param client 客户端socket
+     */
+    private void loginFail(User user, Socket client) throws IOException {
+        // 登陆失败
+        log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 登录失败, " +
+                "用户ip为: " + client.getRemoteSocketAddress());
+        Message res = new Message();
+        res.setMessageType(MessageType.LOGIN_FAIL);
+        output.writeObject(res);
+    }
+
+    /**
      * 结束线程运行
      */
     public void myStop() {
         loop = false;
-        close(server);
+        close(server, input, output);
     }
 
     /**

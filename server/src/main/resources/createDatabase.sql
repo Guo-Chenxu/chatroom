@@ -13,14 +13,14 @@ create index username_index
 create table chat_room.message
 (
     message_id       int auto_increment comment '消息id' primary key,
-    sender_id        int          null comment '发送方id',
-    receiver_id      int          null comment '接收方id',
-    content          varchar(255) null comment '消息内容',
-    `file`           binary       null comment '文件数组',
-    send_time        timestamp    null comment '发送时间',
-    message_type     varchar(3)   null comment '消息类型',
-    is_group_message tinyint      null comment '是否是群聊消息',
-    is_read          tinyint      null comment '消息状态, 是否已读'
+    sender_id        int                  null comment '发送方id',
+    receiver_id      int                  null comment '接收方id',
+    content          varchar(255)         null comment '消息内容',
+    `file`           longblob             null comment '文件数组',
+    send_time        timestamp            null comment '发送时间',
+    message_type     varchar(3)           null comment '消息类型',
+    is_group_message tinyint(1) default 0 null comment '是否是群聊消息',
+    is_read          tinyint(1) default 0 null comment '消息状态, 是否已读'
 );
 create index sender_index
     on chat_room.message (sender_id);
