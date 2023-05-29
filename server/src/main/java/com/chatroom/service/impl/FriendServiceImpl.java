@@ -32,27 +32,23 @@ public class FriendServiceImpl implements FriendService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public List<User> getFriendList(User user) {
-        List<Integer> friendsIds = friendsMapper.getByUserId(user.getUserId());
+        List<String> friendsNames = friendsMapper.getByUsername(user.getUsername());
         List<User> res = new ArrayList<>();
-        for (Integer id : friendsIds) {
-            res.add(userMapper.getByUserId(id));
+        for (String name : friendsNames) {
+            res.add(userMapper.getByUsername(name));
         }
         return res;
     }
 
     @Override
     public boolean addFriend(User user, User friend) {
-        Integer userId = userService.getIdByName(user.getUsername());
-        Integer friendId = userService.getIdByName(friend.getUsername());
-        int change = friendsMapper.add(userId, friendId);
+        int change = friendsMapper.add(user.getUsername(), friend.getUsername());
         return change > 0;
     }
 
     @Override
     public boolean removeFriend(User user, User friend) {
-        Integer userId = userService.getIdByName(user.getUsername());
-        Integer friendId = userService.getIdByName(friend.getUsername());
-        int change = friendsMapper.delete(userId, friendId);
+        int change = friendsMapper.delete(user.getUsername(), friend.getUsername());
         return change > 0;
     }
 }

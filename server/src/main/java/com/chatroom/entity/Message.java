@@ -19,32 +19,18 @@ public class Message implements Serializable {
 
     private Integer messageId;
     /**
-     * 发送者用户id
-     */
-    private Integer senderId;
-    /**
-     * 接收者
-     * 如果是好友聊天, 则为对方的id;
-     * 如果是群聊, 则是群的id
-     */
-    private Integer receiverId;
-    /**
      * 发送者用户名
      */
     private String senderName;
     /**
      * 接收者用户名
-     * 仅用于前后端交互
+     * 如果时群聊则是群名
      */
     private String receiverName;
     /**
      * 消息内容
      */
     private String content;
-    /**
-     * 文件数组
-     */
-    private byte[] file;
     /**
      * 发送时间
      */

@@ -4,7 +4,6 @@
 <mapper namespace="com.chatroom.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="com.chatroom.entity.User">
-        <result column="user_id" property="userId"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
         <result column="avatar_id" property="avatarId"/>
@@ -12,14 +11,13 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        user_id,
         username,
         `password`,
         avatar_id,
         face_id
     </sql>
 
-    <insert id="add" useGeneratedKeys="true" keyColumn="user_id" keyProperty="userId"
+    <insert id="add" useGeneratedKeys="true" keyColumn="username" keyProperty="username"
             parameterType="com.chatroom.entity.User">
         INSERT INTO user
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -52,29 +50,21 @@
         </trim>
     </insert>
 
-    <delete id="deleteById">
+    <delete id="delete">
         DELETE
         FROM user
-        WHERE user_id = #{userId}
+        WHERE username = #{username}
     </delete>
 
     <update id="update" parameterType="com.chatroom.entity.User">
         UPDATE user
         <set>
-            username = #{username},
             `password` = #{password},
             avatar_id = #{avatarId},
             face_id = #{faceId}
         </set>
-        WHERE user_id = #{userId}
+        WHERE username = #{username}
     </update>
-
-    <select id="getByUserId" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM user
-        WHERE user_id = #{userId}
-    </select>
 
     <select id="getByUsername" resultMap="BaseResultMap">
         SELECT

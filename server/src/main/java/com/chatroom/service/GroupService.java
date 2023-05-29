@@ -35,11 +35,4 @@ public interface GroupService {
      * @return 退出成功返回true, 否则返回false
      */
     boolean leaveGroup(String groupName, String username);
-
-    /**
-     * 根据群组名获取群组id
-     * @param groupName 群组名
-     * @return 群组id
-     */
-    Integer getIdByName(String groupName);
 }

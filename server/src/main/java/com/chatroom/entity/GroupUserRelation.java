@@ -17,17 +17,17 @@ public class GroupUserRelation implements Serializable {
 
     private Integer id;
     /**
-     * 群id
+     * 群名称
      */
-    private Integer groupId;
+    private String groupName;
     /**
-     * 用户id
+     * 用户名
      */
-    private Integer userId;
+    private String username;
 
-    public GroupUserRelation(Integer groupId, Integer userId) {
-        this.groupId = groupId;
-        this.userId = userId;
+    public GroupUserRelation(String groupName, String username) {
+        this.groupName = groupName;
+        this.username = username;
     }
 
     public GroupUserRelation() {

@@ -5,33 +5,33 @@
 
     <resultMap id="BaseResultMap" type="com.chatroom.entity.Friends">
         <result column="id" property="id"/>
-        <result column="user_id" property="userId"/>
-        <result column="friend_id" property="friendId"/>
+        <result column="user_id" property="username"/>
+        <result column="friend_name" property="friendName"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,
-        user_id,
-        friend_id
+        username,
+        friend_name
     </sql>
 
     <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
             parameterType="com.chatroom.entity.Friends">
         INSERT INTO friends
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="null != id1 and '' != id1">
-                user_id,
+            <if test="null != name1 and '' != name1">
+                username,
             </if>
-            <if test="null != id2 and '' != id2">
-                friend_id
+            <if test="null != name2 and '' != name2">
+                friend_name
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="null != id1 and '' != id1">
-                #{id1},
+            <if test="null != name1 and '' != name1">
+                #{name1},
             </if>
-            <if test="null != id2 and '' != id2">
-                #{id2}
+            <if test="null != name2 and '' != name2">
+                #{name2}
             </if>
         </trim>
     </insert>
@@ -39,18 +39,18 @@
     <delete id="delete">
         DELETE
         FROM friends
-        WHERE (user_id = #{id1} and friend_id = #{id2})
-           or (user_id = #{id2} and friend_id = #{id1})
+        WHERE (username = #{name1} and friend_name = #{name2})
+           or (username = #{name2} and friend_name = #{name1})
     </delete>
 
-    <select id="getByUserId" resultType="java.lang.Integer">
-        SELECT friend_id
+    <select id="getByUsername" resultType="java.lang.String">
+        SELECT friend_name
         FROM friends
-        WHERE user_id = #{userId}
+        WHERE username = #{username}
         UNION
-        SELECT user_id
+        SELECT username
         FROM friends
-        WHERE friend_id = #{userId}
+        WHERE friend_name = #{username}
     </select>
 
 </mapper>

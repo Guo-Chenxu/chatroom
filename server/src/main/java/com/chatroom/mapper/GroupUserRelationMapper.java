@@ -19,47 +19,51 @@ public interface GroupUserRelationMapper {
     /**
      * 添加一对映射关系
      *
-     * @param groupId 群id
-     * @param userId  用户id
+     * @param groupName 群名
+     * @param username  用户名
      * @return 改变行数
      */
-    int add(@Param("groupId") Integer groupId, @Param("userId") Integer userId);
+    int add(@Param("groupName") String groupName, @Param("username") String username);
 
     /**
      * 删除一对映射关系
      *
-     * @param groupId 群id
-     * @param userId  用户id
+     * @param groupName 群名
+     * @param username  用户名
      * @return 改变行数
      */
-    int delete(@Param("groupId") Integer groupId, @Param("userId") Integer userId);
+    int delete(@Param("groupName") String groupName, @Param("username") String username);
 
     /**
-     * 根据群id获取该群的所有成员id
-     * @param groupId 群id
+     * 根据群名获取该群的所有用户名
+     *
+     * @param groupName 群名
      * @return 成员id
      */
-    List<Integer> getByGroupId(@Param("groupId") Integer groupId);
+    List<String> getUsersByGroupName(@Param("groupName") String groupName);
 
     /**
-     * 根据用户id获取该用户参加的所有群
-     * @param userId 用户id
-     * @return 群id
+     * 根据用户名获取该用户参加的所有群
+     *
+     * @param username 用户名
+     * @return 群名
      */
-    List<Integer> getByUserId(@Param("userId") Integer userId);
+    List<String> getGroupsByUsername(@Param("username") String username);
 
     /**
-     * 根据群组id获取群当前人数
-     * @param groupId 群组id
+     * 根据群名获取群当前人数
+     *
+     * @param groupName 群组id
      * @return 群人数
      */
-    int getGroupCounts(@Param("groupId") Integer groupId);
+    int getGroupCounts(@Param("groupName") String groupName);
 
     /**
-     * 根据群组id和用户id判断该用户是否在该群聊内
-     * @param groupId 群组id
-     * @param userId 用户id
-     * @return 获取到的行数
+     * 根据群名和用户名判断该用户是否在该群聊内
+     *
+     * @param groupName 群组id
+     * @param username  用户名
+     * @return 获取到的行数, 大于1表示在
      */
-    int getByGroupAndUser(@Param("groupId") Integer groupId, @Param("userId") Integer userId);
+    int getByGroupAndUser(@Param("groupName") String groupName, @Param("username") String username);
 }

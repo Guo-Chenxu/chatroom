@@ -24,12 +24,12 @@ public interface GroupMapper {
     int add(Group group);
 
     /**
-     * 根据群id删除群聊
+     * 根据群名删除群聊
      *
-     * @param groupId 群id
+     * @param groupName 群名
      * @return 改变行数
      */
-    int deleteByGroupId(@Param("groupId") Integer groupId);
+    int deleteByGroupName(@Param("groupName") String groupName);
 
     /**
      * 修改群群聊信息
@@ -38,14 +38,6 @@ public interface GroupMapper {
      * @return 改变行数
      */
     int update(Group group);
-
-    /**
-     * 根据群id获取群聊
-     *
-     * @param groupId 群id
-     * @return 群组信息
-     */
-    Group getByGroupId(@Param("groupId") Integer groupId);
 
     /**
      * 根据群名获取群聊

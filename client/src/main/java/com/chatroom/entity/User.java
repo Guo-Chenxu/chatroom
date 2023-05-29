@@ -15,10 +15,6 @@ import java.io.Serializable;
 public class User implements Serializable {
     private static final long serialVersionUID = 897689780087967678L;
     /**
-     * 用户的id号
-     */
-    private Integer userId;
-    /**
      * 用户名
      */
     private String username;

@@ -19,26 +19,26 @@ public interface FriendsMapper {
     /**
      * 添加好友信息
      *
-     * @param id1 用户id
-     * @param id2 用户id
+     * @param name1 用户名
+     * @param name2 用户名
      * @return 改变行数
      */
-    int add(@Param("id1") Integer id1, @Param("id2") Integer id2);
+    int add(@Param("name1") String name1, @Param("name2") String name2);
 
     /**
      * 删除好友
      *
-     * @param id1 用户id
-     * @param id2 用户id
+     * @param name1 用户名
+     * @param name2 用户名
      * @return 改变行数
      */
-    int delete(@Param("id1") Integer id1, @Param("id2") Integer id2);
+    int delete(@Param("name1") String name1, @Param("name2") String name2);
 
     /**
-     * 获取用户的所有好友id
+     * 获取用户的所有好友名
      *
-     * @param userId 用户id
-     * @return 好友id列表
+     * @param username 用户名
+     * @return 好友名列表
      */
-    List<Integer> getByUserId(@Param("userId") Integer userId);
+    List<String> getByUsername(@Param("username") String username);
 }

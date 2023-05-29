@@ -82,9 +82,4 @@ public class UserServiceImpl implements UserService {
         ThreadManage.deleteUser(user.getUsername());
         return false;
     }
-
-    @Override
-    public Integer getIdByName(String username) {
-        return userMapper.getByUsername(username).getUserId();
-    }
 }

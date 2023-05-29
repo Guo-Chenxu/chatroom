@@ -26,29 +26,20 @@ public interface UserMapper {
     int add(User user);
 
     /**
-     * 根据用户id删除用户
+     * 根据用户名删除用户
      *
-     * @param userId 用户id
+     * @param username 用户名
      * @return 改变行数
      */
-    int deleteById(@Param("userId") Integer userId);
+    int delete(@Param("username") String username);
 
     /**
-     * todo 或许可能会有问题, 注意测试
      * 修改用户信息
      *
      * @param user 用户
      * @return 改变行数
      */
     int update(User user);
-
-    /**
-     * 根据用户id获取用户信息
-     *
-     * @param userId 用户id
-     * @return 用户信息
-     */
-    User getByUserId(@Param("userId") Integer userId);
 
     /**
      * 根据用户名获取用户信息

@@ -39,11 +39,4 @@ public interface UserService {
      * @return 下线成功返回true, 否则返回false
      */
     boolean offline(User user);
-
-    /**
-     * 根据用户名获取用户id
-     * @param username 用户名
-     * @return 用户id
-     */
-    Integer getIdByName(String username);
 }

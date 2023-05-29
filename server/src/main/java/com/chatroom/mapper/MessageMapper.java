@@ -38,15 +38,15 @@ public interface MessageMapper {
      *
      * @return 消息列表
      */
-    List<Message> getFriendMessage(@Param("id1") int id1, @Param("id2") int id2);
+    List<Message> getFriendMessage(@Param("name1") String name1, @Param("name2") String name2);
 
     /**
      * 获取群聊消息
      *
-     * @param groupId 群id
+     * @param groupName 群名
      * @return 消息列表
      */
-    List<Message> getGroupMessage(@Param("groupId") int groupId);
+    List<Message> getGroupMessage(@Param("groupName") String groupName);
 
     /**
      * 获取所有信息
@@ -56,16 +56,16 @@ public interface MessageMapper {
     /**
      * 获取指定用户的所有好友的未读消息
      *
-     * @param userId 用户id
+     * @param username 用户名
      * @return 消息列表
      */
-    List<Message> getNotReadMessage(@Param("userId") Integer userId);
+    List<Message> getNotReadMessage(@Param("username") String username);
 
     /**
      * 设置指定用户所有消息为已读状态
      *
-     * @param userId 用户id
+     * @param username 用户名
      * @return 改变行数
      */
-    int setMessageReaded(@Param("userId") Integer userId);
+    int setMessageReaded(@Param("username") String username);
 }

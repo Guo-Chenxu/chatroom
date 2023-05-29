@@ -4,30 +4,28 @@
 <mapper namespace="com.chatroom.mapper.GroupMapper">
 
     <resultMap id="BaseResultMap" type="com.chatroom.entity.Group">
-        <result column="group_id" property="groupId"/>
         <result column="group_name" property="groupName"/>
-        <result column="leader_id" property="leaderId"/>
+        <result column="leader_name" property="leaderName"/>
         <result column="avatar_id" property="avatarId"/>
         <result column="level" property="level"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        group_id,
         group_name,
-        leader_id,
+        leader_name,
         avatar_id,
         `level`
     </sql>
 
-    <insert id="add" useGeneratedKeys="true" keyColumn="group_id" keyProperty="groupId"
+    <insert id="add" useGeneratedKeys="true" keyColumn="group_name" keyProperty="groupName"
             parameterType="com.chatroom.entity.Group">
         INSERT INTO `group`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="null != groupName and '' != groupName">
                 group_name,
             </if>
-            <if test="null != leaderId and '' != leaderId">
-                leader_id,
+            <if test="null != leaderName and '' != leaderName">
+                leader_name,
             </if>
             <if test="null != avatarId and '' != avatarId">
                 avatar_id,
@@ -40,8 +38,8 @@
             <if test="null != groupName and '' != groupName">
                 #{groupName},
             </if>
-            <if test="null != leaderId and '' != leaderId">
-                #{leaderId},
+            <if test="null != leaderName and '' != leaderName">
+                #{leaderName},
             </if>
             <if test="null != avatarId and '' != avatarId">
                 #{avatarId},
@@ -52,29 +50,21 @@
         </trim>
     </insert>
 
-    <delete id="deleteByGroupId">
+    <delete id="deleteByGroupName">
         DELETE
         FROM `group`
-        WHERE group_id = #{groupId}
+        WHERE group_name = #{groupName}
     </delete>
 
     <update id="update" parameterType="com.chatroom.entity.Group">
         UPDATE `group`
         <set>
-            <if test="null != groupName and '' != groupName">group_name = #{groupName},</if>
-            <if test="null != leaderId and '' != leaderId">leader_id = #{leaderId},</if>
+            <if test="null != leaderName and '' != leaderName">leader_name = #{leaderName},</if>
             <if test="null != avatarId and '' != avatarId">avatar_id = #{avatarId},</if>
             <if test="null != level and '' != level">`level` = #{level}</if>
         </set>
-        WHERE group_id = #{groupId}
+        WHERE groupName = #{groupName}
     </update>
-
-    <select id="getByGroupId" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM `group`
-        WHERE group_id = #{groupId}
-    </select>
 
     <select id="getByGroupName" resultMap="BaseResultMap">
         SELECT
@@ -87,7 +77,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM `group`
-        WHERE leader_id = #{leaderId}
+        WHERE leader_name = #{leaderName}
     </select>
 
 </mapper>

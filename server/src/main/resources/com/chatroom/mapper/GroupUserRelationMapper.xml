@@ -5,33 +5,33 @@
 
     <resultMap id="BaseResultMap" type="com.chatroom.entity.GroupUserRelation">
         <result column="id" property="id"/>
-        <result column="group_id" property="groupId"/>
-        <result column="user_id" property="userId"/>
+        <result column="group_name" property="groupName"/>
+        <result column="username" property="username"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,
-        group_id,
-        user_id
+        group_name,
+        username
     </sql>
 
     <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
             parameterType="com.chatroom.entity.GroupUserRelation">
         INSERT INTO group_user_relation
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="null != groupId and '' != groupId">
-                group_id,
+            <if test="null != groupName and '' != groupName">
+                group_name,
             </if>
-            <if test="null != userId and '' != userId">
-                user_id
+            <if test="null != username and '' != username">
+                username
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="null != groupId and '' != groupId">
-                #{groupId},
+            <if test="null != groupName and '' != groupName">
+                #{groupName},
             </if>
-            <if test="null != userId and '' != userId">
-                #{userId}
+            <if test="null != username and '' != username">
+                #{username}
             </if>
         </trim>
     </insert>
@@ -39,31 +39,33 @@
     <delete id="delete">
         DELETE
         FROM group_user_relation
-        WHERE group_id = #{groupId}
-          and user_id = #{userId}
+        WHERE group_name = #{groupName}
+          and username = #{username}
     </delete>
 
-    <select id="getByGroupId" resultType="java.lang.Integer">
-        SELECT user_id
+    <select id="getUsersByGroupName" resultType="java.lang.String">
+        SELECT username
         from group_user_relation
-        where group_id = #{groupId}
+        where group_name = #{groupName}
     </select>
 
-    <select id="getByUserId" resultType="java.lang.Integer">
-        SELECT group_id
+    <select id="getGroupsByUsername" resultType="java.lang.String">
+        SELECT group_name
         from group_user_relation
-        where user_id = #{userId}
+        where username = #{username}
     </select>
+
     <select id="getGroupCounts" resultType="java.lang.Integer">
         SELECT count(*)
         from group_user_relation
-        where group_id = #{groupId}
+        where group_name = #{groupName}
     </select>
+
     <select id="getByGroupAndUser" resultType="java.lang.Integer">
         SELECT count(*)
         from group_user_relation
-        where group_id = #{groupId}
-          and user_id = #{userId}
+        where group_name = #{groupName}
+          and username = #{username}
     </select>
 
 </mapper>

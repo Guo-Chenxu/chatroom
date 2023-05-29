@@ -27,9 +27,8 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> getNotReadMessages(User user) {
-        Integer id = userMapper.getByUsername(user.getUsername()).getUserId();
-        List<Message> notRead = messageMapper.getNotReadMessage(id);
-        messageMapper.setMessageReaded(id);
+        List<Message> notRead = messageMapper.getNotReadMessage(user.getUsername());
+        messageMapper.setMessageReaded(user.getUsername());
         return notRead;
     }
 }
