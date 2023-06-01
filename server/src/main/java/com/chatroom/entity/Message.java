@@ -17,7 +17,7 @@ import java.util.Date;
 public class Message implements Serializable {
     private static final long serialVersionUID = 1740985094875904L;
 
-    private Integer messageId;
+    private Integer id;
     /**
      * 发送者用户名
      */

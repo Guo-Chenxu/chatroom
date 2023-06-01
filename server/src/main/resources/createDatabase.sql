@@ -1,8 +1,9 @@
 create table chat_room.user
 (
-    `username` varchar(30)  not null comment '用户名' primary key,
+    id         int auto_increment primary key,
+    `username` varchar(30)  not null comment '用户名' unique,
     `password` varchar(255) not null comment '密码',
-    avatar_id  varchar(255) null  comment '头像',
+    avatar_id  varchar(255) null comment '头像',
     face_id    varchar(255) null comment '人脸信息'
 );
 create index username_index
@@ -10,7 +11,7 @@ create index username_index
 
 create table chat_room.message
 (
-    message_id       int auto_increment comment '消息id' primary key,
+    id               int auto_increment primary key,
     sender_name      varchar(30)          null comment '发送方用户名',
     receiver_name    varchar(30)          null comment '接收方用户名',
     content          text                 null comment '消息内容',
@@ -34,7 +35,8 @@ create index read_index
 
 create table chat_room.group
 (
-    group_name  varchar(30)  not null comment '群名' primary key ,
+    id          int auto_increment primary key,
+    group_name  varchar(30)  not null comment '群名' unique,
     leader_name varchar(30)  not null comment '群主id',
     avatar_id   varchar(255) null comment '头像',
     `level`     int          not null comment '群聊等级, 不同等级有不同人数上限'

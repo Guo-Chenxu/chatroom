@@ -4,6 +4,7 @@
 <mapper namespace="com.chatroom.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="com.chatroom.entity.User">
+        <result column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
         <result column="avatar_id" property="avatarId"/>
@@ -11,13 +12,14 @@
     </resultMap>
 
     <sql id="Base_Column_List">
+        id,
         username,
         `password`,
         avatar_id,
         face_id
     </sql>
 
-    <insert id="add" useGeneratedKeys="true" keyColumn="username" keyProperty="username"
+    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
             parameterType="com.chatroom.entity.User">
         INSERT INTO user
         <trim prefix="(" suffix=")" suffixOverrides=",">

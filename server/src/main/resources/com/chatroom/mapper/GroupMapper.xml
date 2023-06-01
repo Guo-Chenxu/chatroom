@@ -4,6 +4,7 @@
 <mapper namespace="com.chatroom.mapper.GroupMapper">
 
     <resultMap id="BaseResultMap" type="com.chatroom.entity.Group">
+        <result column="id" property="id"/>
         <result column="group_name" property="groupName"/>
         <result column="leader_name" property="leaderName"/>
         <result column="avatar_id" property="avatarId"/>
@@ -11,13 +12,14 @@
     </resultMap>
 
     <sql id="Base_Column_List">
+        id,
         group_name,
         leader_name,
         avatar_id,
         `level`
     </sql>
 
-    <insert id="add" useGeneratedKeys="true" keyColumn="group_name" keyProperty="groupName"
+    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
             parameterType="com.chatroom.entity.Group">
         INSERT INTO `group`
         <trim prefix="(" suffix=")" suffixOverrides=",">

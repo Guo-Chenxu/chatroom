@@ -15,6 +15,7 @@ import java.util.List;
 @Data
 public class Group implements Serializable {
     private static final long serialVersionUID = 174098509487131L;
+    private Integer id;
     /**
      * 群名
      */

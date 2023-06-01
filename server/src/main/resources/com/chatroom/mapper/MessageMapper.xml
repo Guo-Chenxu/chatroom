@@ -4,11 +4,10 @@
 <mapper namespace="com.chatroom.mapper.MessageMapper">
 
     <resultMap id="BaseResultMap" type="com.chatroom.entity.Message">
-        <result column="message_id" property="messageId"/>
+        <result column="id" property="id"/>
         <result column="sender_name" property="senderName"/>
         <result column="receiver_name" property="receiverName"/>
         <result column="content" property="content"/>
-        <result column="file" property="file"/>
         <result column="send_time" property="sendTime" jdbcType="TIMESTAMP"/>
         <result column="message_type" property="messageType"/>
         <result column="is_group_message" property="isGroupMessage"/>
