@@ -28,6 +28,7 @@ public interface UserService {
 
     /**
      * 用户注册
+     *
      * @param user 用户信息
      * @return 注册成功返回true, 否则返回false
      */
@@ -35,8 +36,17 @@ public interface UserService {
 
     /**
      * 用户下线
+     *
      * @param user 用户
      * @return 下线成功返回true, 否则返回false
      */
     boolean offline(User user);
+
+    /**
+     * 用户添加人脸
+     *
+     * @param user 用户信息
+     * @return 是否添加成功
+     */
+    boolean addFace(User user);
 }

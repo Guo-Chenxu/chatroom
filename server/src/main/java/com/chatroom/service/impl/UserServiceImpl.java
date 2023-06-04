@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (name.matches(reg) && pwd.matches(reg)) {
-            userMapper.add(user);
+            return userMapper.add(user) > 0;
         }
         return false;
     }
@@ -84,6 +84,13 @@ public class UserServiceImpl implements UserService {
         ServerConnectClientThread thread = ThreadManage.getThread(user.getUsername());
         thread.myStop();
         ThreadManage.deleteUser(user.getUsername());
-        return false;
+        return true;
     }
+
+    @Override
+    public boolean addFace(User user) {
+        return userMapper.addFace(user.getUsername(), user.getFaceId()) > 0;
+    }
+
+
 }
