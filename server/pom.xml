@@ -7,6 +7,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>server</name>
     <description>server</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>8</java.version>
@@ -170,19 +171,38 @@
             <artifactId>fastjson2</artifactId>
             <version>2.0.31</version>
         </dependency>
+
         <dependency>
-            <groupId>com.chatroom</groupId>
-            <artifactId>client</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20230227</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Springboot打包插件。使用 mvn package 进行打包。 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <!-- main方法所在类。 -->
+                    <mainClass>com.chatroom.ServerApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

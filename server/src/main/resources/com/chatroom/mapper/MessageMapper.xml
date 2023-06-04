@@ -15,7 +15,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        message_id,
+        id,
         sender_name,
         receiver_name,
         content,

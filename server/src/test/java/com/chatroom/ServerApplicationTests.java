@@ -73,7 +73,6 @@ class ServerApplicationTests {
     void testGroupAdd() {
         Group g = new Group();
         g.setGroupName("123");
-        g.setLeaderId(123);
         g.setAvatarId("123");
         g.setLevel(1);
         groupMapper.add(g);

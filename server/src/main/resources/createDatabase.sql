@@ -4,7 +4,7 @@ create table chat_room.user
     `username` varchar(30)  not null comment '用户名' unique,
     `password` varchar(255) not null comment '密码',
     avatar_id  varchar(255) null comment '头像',
-    face_id    varchar(255) null comment '人脸信息'
+    face_id    longtext null comment '人脸信息'
 );
 create index username_index
     on chat_room.user (username);

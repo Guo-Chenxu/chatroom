@@ -52,6 +52,14 @@
         </trim>
     </insert>
 
+    <update id="addFace">
+        UPDATE user
+        <set>
+            face_id = #{face}
+        </set>
+        where username = #{username}
+    </update>
+
     <delete id="delete">
         DELETE
         FROM user

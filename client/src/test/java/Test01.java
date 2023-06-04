@@ -30,7 +30,6 @@ public class Test01 {
         UserService userService = new UserServiceImpl();
         Message msg = new Message();
         User user = new User();
-        user.setUserId(12);
         List<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(1);

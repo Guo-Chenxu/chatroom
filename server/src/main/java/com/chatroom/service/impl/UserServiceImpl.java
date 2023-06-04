@@ -7,6 +7,7 @@ import com.chatroom.mapper.GroupUserRelationMapper;
 import com.chatroom.mapper.MessageMapper;
 import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.UserService;
+import com.chatroom.utils.FaceMatchUtil;
 import com.chatroom.utils.ThreadManage;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +51,6 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * todo 暂时没有实现
      * 根据人脸登录
      *
      * @param user 用户对象
@@ -58,7 +58,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean loginByFace(User user) {
-        return false;
+        User u = userMapper.getByUsername(user.getUsername());
+        if (u == null || u.getFaceId() == null) {
+            return false;
+        }
+        return FaceMatchUtil.faceMatch(u.getFaceId(), user.getFaceId());
     }
 
     @Override

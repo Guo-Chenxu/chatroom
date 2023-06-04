@@ -50,6 +50,14 @@ public interface UserMapper {
     User getByUsername(@Param("userName") String username);
 
     /**
+     * 用户添加人脸
+     *
+     * @param face 人脸信息
+     * @return 改变行数
+     */
+    int addFace(@Param("username") String username, @Param("face") String face);
+
+    /**
      * 获取所有用户信息
      *
      * @return 用户列表
