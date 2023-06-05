@@ -109,4 +109,18 @@ class ServerApplicationTests {
         messagesMapper.add(m);
         System.out.println(messagesMapper.getAllMessages());
     }
+
+    @Test
+    void testAddList() {
+        List<Message> m = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Message mm = new Message();
+            mm.setContent(1 + "");
+            mm.setIsGroupMessage(i % 2 == 1);
+            mm.setIsRead(i % 2 == 0);
+//            messagesMapper.add(mm);
+        }
+        messagesMapper.addList(m);
+        System.out.println(messagesMapper.getAllMessages());
+    }
 }

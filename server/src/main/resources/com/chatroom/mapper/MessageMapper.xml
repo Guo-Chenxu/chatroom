@@ -19,7 +19,6 @@
         sender_name,
         receiver_name,
         content,
-        `file`,
         send_time,
         message_type,
         is_group_message,
@@ -38,9 +37,6 @@
             </if>
             <if test="null != content and '' != content">
                 content,
-            </if>
-            <if test="null != file and '' != file">
-                `file`,
             </if>
             <if test="null != sendTime">
                 send_time,
@@ -65,9 +61,6 @@
             <if test="null != content and '' != content">
                 #{content},
             </if>
-            <if test="null != file and '' != file">
-                #{file},
-            </if>
             <if test="null != sendTime">
                 #{sendTime},
             </if>
@@ -83,10 +76,21 @@
         </trim>
     </insert>
 
+    <!--    todo 这个for each有问题, 读不到里面的语句-->
+    <insert id="addList" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO message(sender_name, receiver_name,content, send_time, message_type, is_group_message, is_read)
+        VALUES
+        <foreach item="item" collection="list" separator=",">
+            (#{item.senderName}, #{item.receiverName},
+            #{item.content}, #{item.sendTime},#{item.messageType},
+            #{item.isGroupMessage}, #{item.isRead})
+        </foreach>
+    </insert>
+
     <update id="setMessageReaded">
         update message
         set is_read = 1
-        where receiver_name = #{userId}
+        where receiver_name = #{username}
     </update>
 
     <delete id="delete">
@@ -102,6 +106,7 @@
         FROM message
         WHERE (sender_name = #{name1} and receiver_name = #{name2} and is_group_message = 0)
         or (sender_name = #{name2} and receiver_name = #{name1} and is_group_message = 0)
+        Order by send_time
     </select>
 
     <select id="getGroupMessage" resultMap="BaseResultMap">
@@ -109,12 +114,14 @@
         <include refid="Base_Column_List"/>
         FROM message
         WHERE is_group_message = 1 and receiver_name = #{groupName}
+        Order by send_time
     </select>
 
     <select id="getAllMessages" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM message
+        Order by send_time
     </select>
 
     <select id="getNotReadMessage" resultMap="BaseResultMap">
@@ -122,5 +129,6 @@
         <include refid="Base_Column_List"/>
         FROM message
         where is_read = 0 and receiver_name = #{username}
+        Order by send_time
     </select>
 </mapper>

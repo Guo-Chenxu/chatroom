@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl() {
         try {
             // todo ip会变, 所以需要改
-            client = new Socket("10.28.251.102", 9623);
+            client = new Socket("10.28.236.228", 9623);
             output = new ObjectOutputStream(client.getOutputStream());
             input = new ObjectInputStream(client.getInputStream());
             System.out.println("连接服务器成功！");

@@ -5,10 +5,7 @@ import com.chatroom.service.FriendService;
 import com.chatroom.service.GroupService;
 import com.chatroom.service.MessageService;
 import com.chatroom.service.UserService;
-import com.chatroom.service.impl.FriendServiceImpl;
-import com.chatroom.service.impl.GroupServiceImpl;
-import com.chatroom.service.impl.MessageServiceImpl;
-import com.chatroom.service.impl.UserServiceImpl;
+import com.chatroom.service.impl.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,9 +53,13 @@ public class ServerConnectClientThread implements Runnable {
      */
     private GroupService groupService;
     /**
-     * 消息服务
+     * 好友消息服务
      */
-    private MessageService messageService;
+    private MessageService friendMessageService;
+    /**
+     * 群组消息服务
+     */
+    private MessageService groupMessageService;
     /**
      * 用户服务
      */
@@ -72,7 +73,8 @@ public class ServerConnectClientThread implements Runnable {
         this.loop = true;
         this.friendService = new FriendServiceImpl();
         this.groupService = new GroupServiceImpl();
-        this.messageService = new MessageServiceImpl();
+        this.friendMessageService = new FriendMessageServiceImpl();
+        this.groupMessageService = new GroupMessageServiceImpl();
         this.userService = new UserServiceImpl();
     }
 

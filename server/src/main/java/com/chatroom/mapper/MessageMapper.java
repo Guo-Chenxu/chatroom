@@ -26,6 +26,14 @@ public interface MessageMapper {
     int add(Message message);
 
     /**
+     * 将一个消息列表添加到数据库中
+     *
+     * @param messages 消息列表
+     * @return 改变行数
+     */
+    int addList(List<Message> messages);
+
+    /**
      * 删除此时间之前的群聊消息
      *
      * @param time 时间点

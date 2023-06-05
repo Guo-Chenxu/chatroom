@@ -1,6 +1,7 @@
 package com.chatroom.service;
 
 import com.chatroom.entity.Message;
+import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
 
 import java.util.List;
@@ -20,4 +21,11 @@ public interface MessageService {
      * @return 消息列表
      */
     List<Message> getNotReadMessages(User user);
+
+    /**
+     * 发送消息的服务
+     * @param message 消息
+     * @return 返回发送结果
+     */
+    Message sendMessage(Message message) throws CloneNotSupportedException;
 }

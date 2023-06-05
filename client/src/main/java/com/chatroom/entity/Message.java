@@ -14,7 +14,7 @@ import java.util.Date;
  * @version: 1.0
  **/
 @Data
-public class Message implements Serializable {
+public class Message implements Serializable, Cloneable {
     private static final long serialVersionUID = 1740985094875904L;
 
     private Integer id;
@@ -50,5 +50,9 @@ public class Message implements Serializable {
     private Boolean isRead;
 
     public Message() {
+    }
+
+    public Message cloneMessage() throws CloneNotSupportedException {
+        return (Message) this.clone();
     }
 }

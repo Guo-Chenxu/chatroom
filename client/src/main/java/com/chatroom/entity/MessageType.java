@@ -65,7 +65,7 @@ public interface MessageType {
      */
     String USER_OFFLINE = "13";
     /**
-     * 下线
+     * 下线 (用户请求下线)
      */
     String OFFLINE = "14";
     /**

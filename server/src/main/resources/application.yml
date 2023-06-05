@@ -9,3 +9,8 @@ spring:
 
 server:
   port: 12377
+logging:
+  level:
+    com.chatroom.mapper: debug
+#  file:
+#    path: ./logs
