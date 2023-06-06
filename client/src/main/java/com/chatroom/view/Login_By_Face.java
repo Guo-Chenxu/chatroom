@@ -1,4 +1,5 @@
 package com.chatroom.view;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +12,6 @@ public class Login_By_Face extends JFrame implements ActionListener  {
     }
 
     private void initComponents() {
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // 定义窗体的宽高
         int windowsWedth = 420;
@@ -30,15 +30,15 @@ public class Login_By_Face extends JFrame implements ActionListener  {
         jlb_top.setBackground(new Color(3, 37, 108));
         contentPane.add(jlb_top);
 
+
         this.setSize(windowsWedth, windowsHeight);
-        this.setLocationRelativeTo(null);
+        setLocationRelativeTo(getOwner());
         this.setResizable(false);
         this.setVisible(true);
     }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        this.dispose();
     }
 }

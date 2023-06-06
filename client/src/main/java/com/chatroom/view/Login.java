@@ -1,16 +1,14 @@
 package com.chatroom.view;
 
-
 import com.chatroom.view.components.Avatar;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.regex.Pattern;
 
 public class Login extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
-
     private JLabel jlb_title;
     private JLabel jlb_north;
     private JLabel jlb_photo;
@@ -19,7 +17,7 @@ public class Login extends JFrame implements ActionListener {
     private JButton btn_login;
     private JLabel jlb_register;
     private JLabel jlb_forget;
-
+    private JLabel jlb_faceLogin;
     private JButton btn_faceLogin;
     public Login() {
 
@@ -47,7 +45,7 @@ public class Login extends JFrame implements ActionListener {
         jlb_north.setBounds(0, 0, windowsWedth, 150);
         contentPane.add(jlb_north);
 
-        // 处理账号密码框左边企鹅图片标签
+        // 处理账号密码框左边图片标签
         jlb_photo = new Avatar("tx4012", 80, 80);
         jlb_photo.setBounds(25, 170, 80, 80);
         contentPane.add(jlb_photo);
@@ -113,8 +111,6 @@ public class Login extends JFrame implements ActionListener {
         });
         contentPane.add(passWord);
 
-
-
         // 注册账号
         jlb_register = new JLabel("<html><u>" + "注册账号" + "</u></html>");
         jlb_register.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));//设置鼠标样式
@@ -123,9 +119,8 @@ public class Login extends JFrame implements ActionListener {
         jlb_register.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //new Register();
+                new Register();
             }
-
             @Override
             public void mousePressed(MouseEvent e) {
 
@@ -148,11 +143,11 @@ public class Login extends JFrame implements ActionListener {
         });
         contentPane.add(jlb_register);
         // 人脸登录
-        JLabel jlb_faceLogin = new JLabel("<html><u>人脸登录</u></html>");
+        jlb_faceLogin = new JLabel("<html><u>人脸登录</u></html>");
         jlb_faceLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jlb_faceLogin.setBounds((windowsWedth - 90), 260, 100, 30);
         jlb_faceLogin.setForeground(new Color(3, 37, 108));
-        jlb_faceLogin.addMouseListener(new MouseAdapter() {
+        jlb_faceLogin.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // 进行人脸登录处理
@@ -235,6 +230,18 @@ public class Login extends JFrame implements ActionListener {
             // 获取账号密码
             String qq = userName.getText().trim();
             String pwd = new String(passWord.getPassword());
+
+            // 正则表达式
+            String regex = "^[a-zA-Z0-9_]{6,20}$";
+
+            // 检查信息是否输入正确
+            if (!qq.equals("请输入QQ号") && !pwd.equals("请输入密码") &&  qq.length() >= 6 && qq.length() <= 20 &&  Pattern.matches(regex, qq)) {
+
+
+            } else {
+                JOptionPane.showMessageDialog(this, "请输入正确的QQ号和密码！");
+            }
         }
     }
+
 }
