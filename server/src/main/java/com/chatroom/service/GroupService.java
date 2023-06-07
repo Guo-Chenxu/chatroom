@@ -2,6 +2,8 @@ package com.chatroom.service;
 
 import com.chatroom.entity.Group;
 
+import java.util.List;
+
 /**
  * @program: chatroom
  * @description: 群组服务接口
@@ -35,4 +37,12 @@ public interface GroupService {
      * @return 退出成功返回true, 否则返回false
      */
     boolean leaveGroup(String groupName, String username);
+
+    /**
+     * 根据用户名获取他的所有群聊
+     *
+     * @param username 用户名
+     * @return 群聊列表
+     */
+    List<String> getGroupsByUsername(String username);
 }

@@ -76,6 +76,14 @@
         WHERE username = #{username}
     </update>
 
+    <update id="changePassword">
+        UPDATE user
+        <set>
+            `password` = #{password}
+        </set>
+        WHERE username = #{username}
+    </update>
+
     <select id="getByUsername" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>

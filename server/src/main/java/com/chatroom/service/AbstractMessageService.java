@@ -27,7 +27,4 @@ public abstract class AbstractMessageService implements MessageService {
         messageMapper.setMessageReaded(user.getUsername());
         return notRead;
     }
-
-    @Override
-    public abstract Message sendMessage(Message message) throws CloneNotSupportedException;
 }

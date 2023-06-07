@@ -35,12 +35,20 @@ public interface UserService {
     boolean register(User user);
 
     /**
+     * 用户修改密码
+     * @param username 用户名
+     * @param password 密码
+     * @return 修改成功返回true, 否则返回false
+     */
+    boolean changePassword(String username, String password);
+
+    /**
      * 用户下线
      *
-     * @param user 用户
+     * @param username 用户
      * @return 下线成功返回true, 否则返回false
      */
-    boolean offline(User user);
+    boolean offline(String username);
 
     /**
      * 用户添加人脸

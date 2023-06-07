@@ -3,6 +3,7 @@ package com.chatroom.service;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
+import com.chatroom.utils.ThreadManage;
 
 import java.util.List;
 
@@ -28,4 +29,12 @@ public interface MessageService {
      * @return 返回发送结果
      */
     Message sendMessage(Message message) throws CloneNotSupportedException;
+
+    /**
+     * 请求添加的消息
+     *
+     * @param message 请求消息
+     * @return 是否添加成功
+     */
+    Message addRequest(Message message);
 }

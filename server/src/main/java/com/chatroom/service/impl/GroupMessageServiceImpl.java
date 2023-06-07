@@ -60,4 +60,19 @@ public class GroupMessageServiceImpl extends AbstractMessageService {
 
         return message;
     }
+
+    /**
+     * 群内成员拉用户进群(不需要经过同意)
+     *
+     * @param message 请求消息
+     * @return message
+     */
+    @Override
+    public Message addRequest(Message message) {
+        String username = message.getSenderName();
+        String groupName = message.getReceiverName();
+        groupUserRelationMapper.add(groupName, username);
+        messageMapper.add(message);
+        return message;
+    }
 }

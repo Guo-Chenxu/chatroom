@@ -35,7 +35,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean setGroup(Group group) {
-        List<User> users = group.getUsers();
+        List<String> users = group.getUsers();
         if (users.size() > group.getGroupMaxNumber()
                 || !group.getGroupName().matches(reg)
                 || groupMapper.getByGroupName(group.getGroupName()) != null) {
@@ -47,11 +47,11 @@ public class GroupServiceImpl implements GroupService {
 
         int groupChange = groupMapper.add(group);
         int relationChange = 0;
-        for (User u : users) {
-            groupUserRelationMapper.add(group.getGroupName(), u.getUsername());
+        for (String u : users) {
+            groupUserRelationMapper.add(group.getGroupName(), u);
             ++relationChange;
         }
-        return groupChange > 0 || relationChange >= users.size();
+        return groupChange > 0 && relationChange >= users.size();
     }
 
     @Override
@@ -73,5 +73,10 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public boolean leaveGroup(String groupName, String username) {
         return false;
+    }
+
+    @Override
+    public List<String> getGroupsByUsername(String username) {
+        return groupUserRelationMapper.getGroupsByUsername(username);
     }
 }

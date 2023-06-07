@@ -1,11 +1,15 @@
 package com.chatroom.controller;
 
+import com.alibaba.fastjson2.JSON;
+import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
+import com.chatroom.entity.MessageType;
 import com.chatroom.service.FriendService;
 import com.chatroom.service.GroupService;
 import com.chatroom.service.MessageService;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.*;
+import com.chatroom.utils.ThreadManage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +18,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @program: chatroom
@@ -82,10 +87,11 @@ public class ServerConnectClientThread implements Runnable {
         this.loop = false;
     }
 
-    public void send(Message message) {
+    private void send(Boolean flag, Message message) {
         try {
+            Chat chat = new Chat(flag, message);
             output = new ObjectOutputStream(client.getOutputStream());
-            output.writeObject(message);
+            output.writeObject(chat);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -97,32 +103,45 @@ public class ServerConnectClientThread implements Runnable {
             while (loop) {
                 input = new ObjectInputStream(client.getInputStream());
                 Message msg = (Message) input.readObject();
+                Message res = new Message(msg.getMessageType());
+                boolean flag;
                 switch (msg.getMessageType()) {
-
+                    case MessageType.CHANGE_PWD:
+                        flag = userService.changePassword(username, msg.getContent());
+                        if (!flag) {
+                            res.setContent("修改失败, 格式不符合要求");
+                        }
+                        send(flag, res);
+                        break;
+                    case MessageType.GET_FRIENDS:
+                        List<String> friends = friendService.getFriendList(msg.getSenderName());
+                        res.setContent(JSON.toJSONString(friends));
+                        send(true, res);
+                        break;
+                    case MessageType.GET_GROUPS:
+                        List<String> groups = groupService.getGroupsByUsername(msg.getSenderName());
+                        res.setContent(JSON.toJSONString(groups));
+                        send(true, res);
+                        break;
+                    case MessageType.ADD_FRIEND:
+                        res = friendMessageService.addRequest(msg);
+                        if (res != null) {
+                            ServerConnectClientThread thread = ThreadManage.getThread(res.getReceiverName());
+                            thread.send(true, res);
+                        } else {
+                            res = new Message();
+                            res.setContent("消息已送达, 对方将在上线后收到");
+                            send(false, res);
+                        }
+                        break;
+                    case MessageType.ADD_AGREE:
+                        flag = friendService.addAgree(msg.getSenderName(), msg.getReceiverName());
+                        send(flag, res);
+                        break;
+                    case MessageType.OFFLINE:
+                        userService.offline(msg.getSenderName());
+                        break;
                 }
-//                //判断消息类型
-//                switch (msg.getType()) {
-//                    case GET_FRIENDS:// 获取好友列表
-//                        User user = (User) msg.getContent();
-//                        new UserService().getFriends(user.getQq());
-//                        break;
-//                    case CHAT_MESSAGE:// 普通聊天信息
-//                        Chat chat = (Chat) msg.getContent();
-//                        new ChatService().receiveChat(chat);
-//                        break;
-//                    case GET_CHAT_LIST:// 获取聊天记录
-//                        ArrayList<User> content = (ArrayList<User>) msg.getContent();
-//                        User user1 = content.get(0);
-//                        User friend = content.get(1);
-//                        new ChatService().getChatList(user1.getQq(), friend.getQq());
-//                        break;
-//                    case OFFLINE:// 用户下线
-//                        User offlineUser = (User) msg.getContent();
-//                        new UserService().userOffline(offlineUser);
-//                        break;
-//                    default:
-//                        System.out.println("未知类型");
-//                }
             }
             log.info(new Date() + "用户 " + username + " 下线, 用户ip为: " + client.getRemoteSocketAddress());
         } catch (IOException | ClassNotFoundException e) {

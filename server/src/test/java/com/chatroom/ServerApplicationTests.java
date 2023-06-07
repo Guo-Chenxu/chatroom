@@ -8,6 +8,7 @@ import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.MessageMapper;
 import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.UserService;
+import com.chatroom.utils.GsonUtils;
 import lombok.var;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
