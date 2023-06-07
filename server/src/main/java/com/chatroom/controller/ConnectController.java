@@ -2,6 +2,7 @@ package com.chatroom.controller;
 
 
 import com.alibaba.fastjson2.JSON;
+import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
@@ -90,13 +91,13 @@ public class ConnectController implements Runnable {
                         log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 注册成功, " +
                                 "用户ip为: " + client.getRemoteSocketAddress());
                         res.setMessageType(MessageType.REGISTER_SUCCESS);
-                        output.writeObject(res);
+                        output.writeObject(new Chat(true, res));
                     } else {
                         // 注册失败
                         log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 注册失败, " +
                                 "用户ip为: " + client.getRemoteSocketAddress());
-                        res.setMessageType(MessageType.REGISTER_FAIL);
-                        output.writeObject(res);
+                        res.setContent("注册失败, 请检查用户名/密码格式是否正确");
+                        output.writeObject(new Chat(false, res));
                     }
                 }
             }
@@ -127,7 +128,7 @@ public class ConnectController implements Runnable {
         res.setMessageType(MessageType.LOGIN_SUCCESS);
         List<Message> notRead = messageService.getNotReadMessages(user);
         res.setContent(JSON.toJSONString(notRead));
-        output.writeObject(res);
+        output.writeObject(new Chat(true, res));
     }
 
     /**
@@ -141,8 +142,8 @@ public class ConnectController implements Runnable {
         log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 登录失败, " +
                 "用户ip为: " + client.getRemoteSocketAddress());
         Message res = new Message();
-        res.setMessageType(MessageType.LOGIN_FAIL);
-        output.writeObject(res);
+        res.setContent("用户名/密码/人脸不正确");
+        output.writeObject(new Chat(false, res));
     }
 
     /**

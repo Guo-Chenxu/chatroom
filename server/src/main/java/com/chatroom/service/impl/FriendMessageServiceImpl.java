@@ -5,6 +5,7 @@ import com.chatroom.entity.MessageType;
 import com.chatroom.mapper.MessageMapper;
 import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.AbstractMessageService;
+import com.chatroom.service.MessageService;
 import com.chatroom.utils.ThreadManage;
 import org.springframework.stereotype.Service;
 
@@ -42,5 +43,25 @@ public class FriendMessageServiceImpl extends AbstractMessageService {
         }
         messageMapper.add(message);
         return message;
+    }
+
+    /**
+     * 用户添加好友(需要被请求方同意)
+     *
+     * @param message 请求消息
+     * @return 消息
+     */
+    @Override
+    public Message addRequest(Message message) {
+        String friendName = message.getReceiverName();
+        if (!ThreadManage.userIsOnline(friendName)){
+            message.setIsRead(false);
+            messageMapper.add(message);
+            return null;
+        }else{
+            message.setIsRead(true);
+            messageMapper.add(message);
+            return message;
+        }
     }
 }

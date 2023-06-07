@@ -58,6 +58,14 @@ public interface UserMapper {
     int addFace(@Param("username") String username, @Param("face") String face);
 
     /**
+     * 用户修改密码
+     * @param username 用户名
+     * @param password 密码
+     * @return 改变行数
+     */
+    int changePassword(@Param("username") String username, @Param("password") String password);
+
+    /**
      * 获取所有用户信息
      *
      * @return 用户列表

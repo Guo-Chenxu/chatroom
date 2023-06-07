@@ -80,11 +80,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean offline(User user) {
-        ServerConnectClientThread thread = ThreadManage.getThread(user.getUsername());
-        thread.myStop();
-        ThreadManage.deleteUser(user.getUsername());
-        return true;
+    public boolean changePassword(String username, String password) {
+        if (password.matches(reg)) {
+            return userMapper.changePassword(username, password) > 0;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean offline(String username) {
+        ServerConnectClientThread thread = ThreadManage.getThread(username);
+        if (thread != null) {
+            thread.myStop();
+            ThreadManage.deleteUser(username);
+            return true;
+        }
+        return false;
     }
 
     @Override
