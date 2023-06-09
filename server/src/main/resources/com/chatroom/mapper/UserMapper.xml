@@ -66,6 +66,14 @@
         WHERE username = #{username}
     </delete>
 
+    <update id="deleteFace">
+        UPDATE user
+        <set>
+            face_id = null
+        </set>
+        WHERE username = #{username}
+    </update>
+
     <update id="update" parameterType="com.chatroom.entity.User">
         UPDATE user
         <set>

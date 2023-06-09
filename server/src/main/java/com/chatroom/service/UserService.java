@@ -51,10 +51,18 @@ public interface UserService {
     boolean offline(String username);
 
     /**
-     * 用户添加人脸
+     * 用户添加/更新人脸
      *
      * @param user 用户信息
      * @return 是否添加成功
      */
     boolean addFace(User user);
+
+    /**
+     * 用户删除人脸
+     *
+     * @param username 用户名
+     * @return 操作结果是否成功
+     */
+    boolean deleteFace(String username);
 }

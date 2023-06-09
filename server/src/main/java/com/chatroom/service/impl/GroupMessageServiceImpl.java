@@ -37,8 +37,7 @@ public class GroupMessageServiceImpl extends AbstractMessageService {
      * @return 返回结果
      */
     @Override
-    public Message sendMessage(Message message) throws CloneNotSupportedException {
-        messageMapper.add(message);
+    public boolean sendMessage(Message message) throws CloneNotSupportedException {
         List<String> groupMembers = groupUserRelationMapper.getUsersByGroupName(message.getReceiverName());
         List<Message> messages = new ArrayList<>();
         for (String username : groupMembers) {
@@ -58,7 +57,7 @@ public class GroupMessageServiceImpl extends AbstractMessageService {
         // 给群组内每个用户都添加一条该消息
 //        messageMapper.addList(messages);
 
-        return message;
+        return messageMapper.add(message) > 0;
     }
 
     /**
@@ -74,5 +73,10 @@ public class GroupMessageServiceImpl extends AbstractMessageService {
         groupUserRelationMapper.add(groupName, username);
         messageMapper.add(message);
         return message;
+    }
+
+    @Override
+    public List<Message> getMessageList(String senderName, String receiverName) {
+        return messageMapper.getGroupMessage(receiverName);
     }
 }
