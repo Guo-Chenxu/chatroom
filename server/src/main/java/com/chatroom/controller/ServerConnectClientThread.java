@@ -72,12 +72,13 @@ public class ServerConnectClientThread implements Runnable {
         this.loop = false;
     }
 
-    private void send(Boolean flag, Message message) {
+    public void send(Boolean flag, Message message) {
         try {
             Chat chat = new Chat(flag, message);
             /*
              * 输出流
              */
+            log.info("服务器向 " + this.username + " 发送了一条效写, 内容为 " + message);
             ObjectOutputStream output = new ObjectOutputStream(client.getOutputStream());
             output.writeObject(chat);
         } catch (IOException e) {
@@ -134,6 +135,9 @@ public class ServerConnectClientThread implements Runnable {
                         if (!flag) {
                             res.setContent("消息已送达, 对方将在上线后收到");
                             send(false, res);
+                        } else {
+                            ServerConnectClientThread thread = ThreadManage.getThread(msg.getSenderName());
+                            thread.send(true, msg);
                         }
                         break;
                     case MessageType.GROUP_MESSAGE:

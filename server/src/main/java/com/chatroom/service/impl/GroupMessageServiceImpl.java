@@ -1,5 +1,6 @@
 package com.chatroom.service.impl;
 
+import com.chatroom.controller.ServerConnectClientThread;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
 import com.chatroom.mapper.GroupMapper;
@@ -48,6 +49,8 @@ public class GroupMessageServiceImpl extends AbstractMessageService {
                 message.setMessageType(MessageType.USER_OFFLINE);
             } else {
                 message.setIsRead(true);
+                ServerConnectClientThread thread = ThreadManage.getThread(username);
+                thread.send(true, message);
             }
             m.setReceiverName(username);
             messages.add(m);
