@@ -1,9 +1,9 @@
 package com.chatroom.service.impl;
 
 import com.chatroom.entity.Group;
-import com.chatroom.entity.User;
 import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.GroupUserRelationMapper;
+import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.GroupService;
 import com.chatroom.service.UserService;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +25,8 @@ public class GroupServiceImpl implements GroupService {
     @Resource
     GroupUserRelationMapper groupUserRelationMapper;
     @Resource
+    UserMapper userMapper;
+    @Resource
     UserService userService;
 
     /**
@@ -38,7 +40,8 @@ public class GroupServiceImpl implements GroupService {
         List<String> users = group.getUsers();
         if (users.size() > group.getGroupMaxNumber()
                 || !group.getGroupName().matches(reg)
-                || groupMapper.getByGroupName(group.getGroupName()) != null) {
+                || groupMapper.getByGroupName(group.getGroupName()) != null
+                || userMapper.getByUsername(group.getGroupName()) != null) {
             // 不能超过群聊最大人数
             // 群聊名称要符合规范
             // 群聊名称不能重复

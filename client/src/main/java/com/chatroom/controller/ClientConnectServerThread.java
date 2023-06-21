@@ -53,7 +53,6 @@ public class ClientConnectServerThread extends Thread {
         try {
             while (loop) {
                 input = new ObjectInputStream(client.getInputStream());
-                Message msg = (Message) input.readObject();
 //                // 判断消息类型
 //                switch (msg.getType()) {
 //                    case GET_FRIENDS:// 获取好友列表
@@ -76,7 +75,7 @@ public class ClientConnectServerThread extends Thread {
 //                        System.out.println("未知类型");
 //                }
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

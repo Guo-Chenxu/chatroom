@@ -69,7 +69,8 @@ public class UserServiceImpl implements UserService {
     public boolean register(User user) {
         String name = user.getUsername();
         String pwd = user.getPassword();
-        if (userMapper.getByUsername(name) != null) {
+        if (userMapper.getByUsername(name) != null
+                || groupMapper.getByGroupName(name) != null) {
             return false;
         }
 
@@ -101,6 +102,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean addFace(User user) {
         return userMapper.addFace(user.getUsername(), user.getFaceId()) > 0;
+    }
+
+    @Override
+    public boolean deleteFace(String username) {
+        return userMapper.deleteFace(username) > 0;
     }
 
 

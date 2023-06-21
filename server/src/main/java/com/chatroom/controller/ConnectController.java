@@ -30,7 +30,6 @@ import java.util.List;
  * @create: 2023-05-15 00:17
  * @version: 1.0
  **/
-
 @Component
 public class ConnectController implements Runnable {
     /**
@@ -46,7 +45,7 @@ public class ConnectController implements Runnable {
     @Resource
     MessageService messageService;
 
-    private static Logger log = LoggerFactory.getLogger(ConnectController.class);
+    private static final Logger log = LoggerFactory.getLogger(ConnectController.class);
 
     public ConnectController() {
         loop = true;

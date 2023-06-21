@@ -5,11 +5,11 @@ import com.chatroom.entity.MessageType;
 import com.chatroom.mapper.MessageMapper;
 import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.AbstractMessageService;
-import com.chatroom.service.MessageService;
 import com.chatroom.utils.ThreadManage;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @program: chatroom
@@ -33,7 +33,7 @@ public class FriendMessageServiceImpl extends AbstractMessageService {
      * @return 返回结果
      */
     @Override
-    public Message sendMessage(Message message) {
+    public boolean sendMessage(Message message) {
         // 根据用户是否在线判断消息是否已读
         if (ThreadManage.userIsOnline(message.getReceiverName())) {
             message.setIsRead(false);
@@ -41,8 +41,7 @@ public class FriendMessageServiceImpl extends AbstractMessageService {
         } else {
             message.setIsRead(true);
         }
-        messageMapper.add(message);
-        return message;
+        return message.getIsRead();
     }
 
     /**
@@ -54,14 +53,19 @@ public class FriendMessageServiceImpl extends AbstractMessageService {
     @Override
     public Message addRequest(Message message) {
         String friendName = message.getReceiverName();
-        if (!ThreadManage.userIsOnline(friendName)){
+        if (!ThreadManage.userIsOnline(friendName)) {
             message.setIsRead(false);
             messageMapper.add(message);
             return null;
-        }else{
+        } else {
             message.setIsRead(true);
             messageMapper.add(message);
             return message;
         }
+    }
+
+    @Override
+    public List<Message> getMessageList(String senderName, String receiverName) {
+        return messageMapper.getFriendMessage(senderName, receiverName);
     }
 }

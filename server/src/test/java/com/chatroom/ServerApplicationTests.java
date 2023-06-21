@@ -1,6 +1,7 @@
 package com.chatroom;
 
 import com.alibaba.fastjson2.JSON;
+import com.chatroom.controller.ServerConnectClientThread;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
@@ -8,13 +9,15 @@ import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.MessageMapper;
 import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.UserService;
-import com.chatroom.utils.GsonUtils;
 import lombok.var;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -123,5 +126,16 @@ class ServerApplicationTests {
         }
         messagesMapper.addList(m);
         System.out.println(messagesMapper.getAllMessages());
+    }
+
+    @Test
+    void testComponent() throws IOException {
+        ServerConnectClientThread serverConnectClientThread =
+                new ServerConnectClientThread("1223", new Socket(InetAddress.getLocalHost(), 9623));
+        System.out.println(serverConnectClientThread);
+        System.out.println("+++++++++++++++++++");
+        ServerConnectClientThread serverConnectClientThread01 =
+                new ServerConnectClientThread("1233", new Socket(InetAddress.getLocalHost(), 9623));
+        System.out.println(serverConnectClientThread01);
     }
 }
