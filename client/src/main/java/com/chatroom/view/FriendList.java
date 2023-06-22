@@ -100,7 +100,7 @@ public class FriendList extends JFrame{
     //向服务器请求好友列表
     public void updateFriendList(){
         Message message = new Message();
-        ThreadManage.getThread(user.getId()).send(message);
+        ThreadManage.getThread(user.getUsername()).send(message);
 
         friendList = new JPanel();
         friendList.setLayout(null);

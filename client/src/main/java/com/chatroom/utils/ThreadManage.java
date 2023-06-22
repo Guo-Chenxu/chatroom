@@ -17,26 +17,26 @@ public class ThreadManage {
     /**
      * 在线用户线程集合
      */
-    private static Map<Integer, ClientConnectServerThread> map = new ConcurrentHashMap<>();
+    private static Map<String, ClientConnectServerThread> map = new ConcurrentHashMap<>();
 
     /**
      * 将某个线程添加到集合中
      *
-     * @param userId                    用户名
+     * @param username                   用户名
      * @param clientConnectServerThread 客户端连接到服务器的线程
      */
-    public static void addThread(Integer userId, ClientConnectServerThread clientConnectServerThread) {
-        map.put(userId, clientConnectServerThread);
+    public static void addThread(String username, ClientConnectServerThread clientConnectServerThread) {
+        map.put(username, clientConnectServerThread);
     }
 
     /**
      * 通过用户名获取对应线程
      *
-     * @param userId 用户id
+     * @param username 用户id
      * @return 服务器连接到客服端的线程
      */
-    public static ClientConnectServerThread getThread(Integer userId) {
-        return map.get(userId);
+    public static ClientConnectServerThread getThread(String username) {
+        return map.get(username);
     }
 
     /**
@@ -47,5 +47,7 @@ public class ThreadManage {
     public static void deleteUser(Integer userId) {
         map.remove(userId);
     }
+
+
 }
 

@@ -1,24 +1,35 @@
 package com.chatroom.view;
 
-import com.chatroom.view.components.Avatar;
+import com.alibaba.fastjson2.JSON;
+import com.chatroom.controller.ClientConnectServerThread;
+import com.chatroom.entity.Message;
+import com.chatroom.service.UserService;
+import com.chatroom.service.impl.UserServiceImpl;
+import com.chatroom.entity.User;
+import static com.chatroom.entity.MessageType.*;
+import com.chatroom.utils.ThreadManage;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.regex.Pattern;
+import java.net.Socket;
+
+
 
 public class Login extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
-    private JLabel jlb_title;
-    private JLabel jlb_north;
-    private JLabel jlb_photo;
+    private JLabel jlbTitle;
+    private JLabel jlbNorth;
+    private JLabel jlbUserName;
+    private JLabel jlbPwd;
     private JTextField userName;
     private JPasswordField passWord;
-    private JButton btn_login;
-    private JLabel jlb_register;
-    private JLabel jlb_forget;
-    private JLabel jlb_faceLogin;
-    private JButton btn_faceLogin;
+    private JButton btnLogin;
+    private JLabel jlbRegister;
+    private JLabel jlbForget;
+    private JLabel jlbFaceLogin;
+
     public Login() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,23 +43,23 @@ public class Login extends JFrame implements ActionListener {
         contentPane.setLayout(null);
 
         // 设置标题
-        jlb_title = new JLabel("CHATROOM",JLabel.CENTER);
-        jlb_title.setFont(new Font("", Font.BOLD, 48));
-        jlb_title.setBounds((windowsWedth - 340) / 2, 20, 340, 100);
-        jlb_title.setForeground(Color.white);
-        contentPane.add(jlb_title, BorderLayout.CENTER);
+        jlbTitle = new JLabel("CHATROOM",JLabel.CENTER);
+        jlbTitle.setFont(new Font("", Font.BOLD, 48));
+        jlbTitle.setBounds((windowsWedth - 340) / 2, 20, 340, 100);
+        jlbTitle.setForeground(Color.white);
+        contentPane.add(jlbTitle, BorderLayout.CENTER);
 
         // 处理背景图片标签
-        jlb_north = new JLabel();
-        jlb_north.setOpaque(true);
-        jlb_north.setBackground(new Color(3, 37, 108));
-        jlb_north.setBounds(0, 0, windowsWedth, 150);
-        contentPane.add(jlb_north);
+        jlbNorth = new JLabel();
+        jlbNorth.setOpaque(true);
+        jlbNorth.setBackground(new Color(3, 37, 108));
+        jlbNorth.setBounds(0, 0, windowsWedth, 150);
+        contentPane.add(jlbNorth);
 
-        // 处理账号密码框左边图片标签
-        jlb_photo = new Avatar("tx4012", 80, 80);
-        jlb_photo.setBounds(25, 170, 80, 80);
-        contentPane.add(jlb_photo);
+        // 处理用户名标签
+        jlbUserName = new JLabel("用户名");
+        jlbUserName.setBounds((windowsWedth - 280) / 2, 170, 200, 30);
+        contentPane.add(jlbUserName);
 
         // 处理账号输入框
         userName = new JTextField();
@@ -78,6 +89,11 @@ public class Login extends JFrame implements ActionListener {
             }
         });
         contentPane.add(userName);
+
+        // 处理密码标签
+        jlbPwd = new JLabel("密码");
+        jlbPwd.setBounds((windowsWedth - 270) / 2, 220, 200, 30);
+        contentPane.add(jlbPwd);
 
         // 处理密码输入框
         passWord = new JPasswordField();
@@ -112,11 +128,11 @@ public class Login extends JFrame implements ActionListener {
         contentPane.add(passWord);
 
         // 注册账号
-        jlb_register = new JLabel("<html><u>" + "注册账号" + "</u></html>");
-        jlb_register.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));//设置鼠标样式
-        jlb_register.setBounds(windowsWedth - 90, 170, 100, 30);
-        jlb_register.setForeground(new Color(3, 37, 108));
-        jlb_register.addMouseListener(new MouseListener() {
+        jlbRegister = new JLabel("<html><u>" + "注册账号" + "</u></html>");
+        jlbRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));//设置鼠标样式
+        jlbRegister.setBounds(windowsWedth - 90, 170, 100, 30);
+        jlbRegister.setForeground(new Color(3, 37, 108));
+        jlbRegister.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 new Register();
@@ -125,64 +141,59 @@ public class Login extends JFrame implements ActionListener {
             public void mousePressed(MouseEvent e) {
 
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
 
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
 
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
 
             }
         });
-        contentPane.add(jlb_register);
+        contentPane.add(jlbRegister);
+
         // 人脸登录
-        jlb_faceLogin = new JLabel("<html><u>人脸登录</u></html>");
-        jlb_faceLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        jlb_faceLogin.setBounds((windowsWedth - 90), 260, 100, 30);
-        jlb_faceLogin.setForeground(new Color(3, 37, 108));
-        jlb_faceLogin.addMouseListener(new MouseListener() {
+        jlbFaceLogin = new JLabel("<html><u>人脸登录</u></html>");
+        jlbFaceLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        jlbFaceLogin.setBounds((windowsWedth - 90), 260, 100, 30);
+        jlbFaceLogin.setForeground(new Color(3, 37, 108));
+        jlbFaceLogin.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // 进行人脸登录处理
-                new Login_By_Face();
+                new LoginByFace();
             }
             public void mousePressed(MouseEvent e) {
 
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
 
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
 
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
 
             }
         });
-        contentPane.add(jlb_faceLogin);
+        contentPane.add(jlbFaceLogin);
 
         // 忘记密码
-        jlb_forget = new JLabel("<html><u>" + "忘记密码" + "</u></html>");
-        jlb_forget.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));//设置鼠标样式
-        jlb_forget.setBounds(windowsWedth - 90, 220, 200, 30);
-        jlb_forget.setForeground(new Color(3, 37, 108));
-        jlb_forget.addMouseListener(new MouseListener() {
+        jlbForget = new JLabel("<html><u>" + "忘记密码" + "</u></html>");
+        jlbForget.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));//设置鼠标样式
+        jlbForget.setBounds(windowsWedth - 90, 220, 200, 30);
+        jlbForget.setForeground(new Color(3, 37, 108));
+        jlbForget.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //new Forget();
+                new Forget();
             }
 
             @Override
@@ -205,17 +216,17 @@ public class Login extends JFrame implements ActionListener {
 
             }
         });
-        contentPane.add(jlb_forget);
+        contentPane.add(jlbForget);
 
         // 处理南部登录按钮
-        btn_login = new JButton("登录");
-        btn_login.setForeground(Color.black);
-        btn_login.setBackground(new Color(108, 71, 3));
-        btn_login.setBounds((windowsWedth - 200) / 2 + 10, 260, 200, 30);
-        btn_login.addActionListener(this);
-        contentPane.add(btn_login);
+        btnLogin = new JButton("登录");
+        btnLogin.setForeground(Color.black);
+        btnLogin.setBackground(new Color(108, 71, 3));
+        btnLogin.setBounds((windowsWedth - 200) / 2 + 10, 260, 200, 30);
+        btnLogin.addActionListener(this);
+        contentPane.add(btnLogin);
 
-        this.setSize(windowsWedth, windowsHeight);// 设置窗体大小'
+        this.setSize(windowsWedth, windowsHeight);// 设置窗体大小
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);// 设置窗体可见
@@ -226,22 +237,70 @@ public class Login extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btn_login) {//点击登录
+        if (e.getSource() == btnLogin) {//点击登录
             // 获取账号密码
-            String qq = userName.getText().trim();
+            String username = userName.getText().trim();
             String pwd = new String(passWord.getPassword());
 
             // 正则表达式
-            String regex = "^[a-zA-Z0-9_]{6,20}$";
+            String pattern = "^[a-zA-Z0-9_]{6,20}$";
 
             // 检查信息是否输入正确
-            if (!qq.equals("请输入QQ号") && !pwd.equals("请输入密码") &&  qq.length() >= 6 && qq.length() <= 20 &&  Pattern.matches(regex, qq)) {
+            if (!username.equals("请输入用户名") && !pwd.equals("请输入密码")
+                    && username.matches(pattern) && pwd.matches(pattern)) {
 
+                // 检查与服务器的连接
+                UserService userService = new UserServiceImpl();
+                Socket client = userService.getClient();
+
+                if (client != null && !client.isClosed()) {
+                    // 将登录消息发送至服务器
+                    Message msg = userService.login(username, pwd);
+                    // 处理服务器返回的结果
+                    User loginUser = null;
+                    switch (msg.getMessageType()) {
+                        case LOGIN_BY_PWD:// 登录成功
+                            // 创建与服务器通信的线程
+                            loginUser = JSON.parseObject(msg.getContent(), User.class);
+                            ClientConnectServerThread clientThread = new ClientConnectServerThread(username,userService.getClient());
+                            clientThread.start();
+                            ThreadManage.addThread(loginUser.getUsername(), clientThread);
+
+                            // 将用户信息和好友列表控件保存至通信线程中
+                            ClientConnectServerThread thread = ThreadManage.getThread(loginUser.getUsername());
+                            FriendList friendList = new FriendList(loginUser);// 创建好友列表主界面
+                            thread.setFriendList(friendList);
+                            thread.setUser(loginUser);
+                            friendList.updateFriendList();// 获取好友列表
+                            this.dispose();// 关闭登录界面
+                            break;
+
+                        case LOGIN_BY_FACE:
+
+                            break;
+                        case USER_ONLINE:// 用户已经登录
+                            JOptionPane.showMessageDialog(this, "用户已经登录！");
+                            userService.myStop();
+                            break;
+                        case INFO_ERROR:// qq或密码错误
+                            JOptionPane.showMessageDialog(this, "qq或密码错误！");
+                            userService.myStop();
+                            break;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "无法连接服务器！");
+                }
 
             } else {
                 JOptionPane.showMessageDialog(this, "请输入正确的QQ号和密码！");
             }
         }
     }
-
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new Login();
+            }
+        });
+    }
 }

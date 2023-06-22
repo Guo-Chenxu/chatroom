@@ -52,6 +52,10 @@ public class Message implements Serializable, Cloneable {
     public Message() {
     }
 
+    public Message(String messageType) {
+        this.messageType = messageType;
+    }
+
     public Message cloneMessage() throws CloneNotSupportedException {
         return (Message) this.clone();
     }

@@ -2,6 +2,8 @@ package com.chatroom.controller;
 
 
 import com.chatroom.entity.Message;
+import com.chatroom.entity.User;
+import com.chatroom.view.FriendList;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,18 +21,19 @@ public class ClientConnectServerThread extends Thread {
     /**
      * 用户id
      */
-    private Integer userId;
+    private final String username;
     /**
      * 客户端socket
      */
     private Socket client;
     private boolean loop;
+    private User user;
     private ObjectInputStream input;
     private ObjectOutputStream output;
 
 
-    public ClientConnectServerThread(Integer userId, Socket client) {
-        this.userId = userId;
+    public ClientConnectServerThread(String username, Socket client) {
+        this.username = username;
         this.client = client;
         this.loop = true;
     }
@@ -78,6 +81,13 @@ public class ClientConnectServerThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setFriendList(FriendList friendList) {
+    }
+
+    public void setUser(User loginUser) {
+        this.user = user;
     }
 
 //    public FriendList getFriendList() {

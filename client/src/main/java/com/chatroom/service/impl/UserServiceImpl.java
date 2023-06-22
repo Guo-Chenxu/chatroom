@@ -1,7 +1,13 @@
 package com.chatroom.service.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.chatroom.entity.Message;
+import static com.chatroom.entity.MessageType.*;
+
+import com.chatroom.entity.MessageType;
+import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
+import com.chatroom.utils.ThreadManage;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -43,11 +49,11 @@ public class UserServiceImpl implements UserService {
         Message mmsg = (Message) input.readObject();
         System.out.println(mmsg);
     }
-
+    @Override
     public Socket getClient() {
         return client;
     }
-
+    @Override
     public void myStop() {
         close(client, input, output);
         client = null;
@@ -69,6 +75,24 @@ public class UserServiceImpl implements UserService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public Message login(String userName, String pwd) {
+        try {
+            // 将用户信息发送服务器登录
+            User user = new User(userName, pwd);
+            Message message = new Message(LOGIN_BY_PWD);
+            message.setContent((JSON.toJSONString(user)));
+            output.writeObject(message);
+            // 接收服务器返回到结果
+            Message msg = (Message) input.readObject();
+            return msg;
+        } catch (IOException | ClassNotFoundException e) {
+            close(client, output, input);
+            e.printStackTrace();
+            return null;
         }
     }
 }
