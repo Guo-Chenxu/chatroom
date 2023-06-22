@@ -47,7 +47,7 @@ public interface UserMapper {
      * @param username 用户名
      * @return 用户信息
      */
-    User getByUsername(@Param("userName") String username);
+    User getByUsername(@Param("username") String username);
 
     /**
      * 用户添加/修改人脸

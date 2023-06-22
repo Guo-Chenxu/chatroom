@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @program: chatroom
  * @description: 消息的传输类
@@ -15,7 +17,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Chat {
+public class Chat implements Serializable {
+    private static final long serialVersionUID = 17409850948912331L;
     /**
      * 操作是否成功
      */

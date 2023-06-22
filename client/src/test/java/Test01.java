@@ -40,4 +40,11 @@ public class Test01 {
         System.out.println(msg);
         userService.testSend(msg);
     }
+
+    @Test
+    void testSetterAndGetter(){
+        User user = new User();
+        user.setAvatarId("111");
+        System.out.println(user.getAvatarId());
+    }
 }
