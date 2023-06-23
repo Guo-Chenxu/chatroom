@@ -7,8 +7,10 @@ import com.chatroom.entity.Message;
 import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.UserServiceImpl;
+import com.chatroom.utils.MyImageUtil;
 import com.chatroom.utils.ThreadManage;
-import com.github.sarxos.webcam.*;
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,19 +20,17 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Base64;
 
 import static com.chatroom.entity.MessageType.*;
-import static com.chatroom.entity.MessageType.INFO_ERROR;
 
 public class LoginByFace extends JFrame implements ActionListener {
 
     private Webcam webcam; // 声明为成员变量
     private final JTextField userName; // 声明为成员变量
+
     public LoginByFace() {
 
         webcam = Webcam.getDefault(); // 初始化 webcam 对象
@@ -109,21 +109,28 @@ public class LoginByFace extends JFrame implements ActionListener {
         });
 
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
         // 获取用户名
         String username = userName.getText().trim();
         // 检查是否输入用户名
-        if(username.equals("")){
-            JOptionPane.showMessageDialog(this, "用户名不能为空!","warning",JOptionPane.WARNING_MESSAGE);
-        }
-        else{
+        if (username.equals("")) {
+            JOptionPane.showMessageDialog(this, "用户名不能为空!", "warning", JOptionPane.WARNING_MESSAGE);
+        } else {
             // 获取当前相机图像
             BufferedImage image = webcam.getImage();
+            // 图片压缩
+            try {
+                image = MyImageUtil.imageCompress(image.getWidth() * image.getHeight(), image);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
             JOptionPane.showMessageDialog(null, "拍照成功");
             // 将图片转换为BASE64编码
             String base64Image = toBase64(image);
+
             // 检查与服务器的连接
             UserService userService = new UserServiceImpl();
             Socket client = userService.getClient();
@@ -133,14 +140,14 @@ public class LoginByFace extends JFrame implements ActionListener {
                 Boolean flag = chat.getFlag();
                 Message msg = chat.getMessage();
                 // 判断操作是否成功
-                if(flag){
+                if (flag) {
                     // 处理服务器返回的结果
                     User loginUser = null;
                     switch (msg.getMessageType()) {
                         case LOGIN_BY_FACE:// 登录成功
                             // 创建与服务器通信的线程
                             loginUser = JSON.parseObject(msg.getContent(), User.class);
-                            ClientConnectServerThread clientThread = new ClientConnectServerThread(username,userService.getClient());
+                            ClientConnectServerThread clientThread = new ClientConnectServerThread(username, userService.getClient());
                             clientThread.start();
                             ThreadManage.addThread(loginUser.getUsername(), clientThread);
 
@@ -169,6 +176,7 @@ public class LoginByFace extends JFrame implements ActionListener {
             }
         }
     }
+
     public static String toBase64(BufferedImage image) {
         String base64Image = null;
         try {
@@ -182,6 +190,7 @@ public class LoginByFace extends JFrame implements ActionListener {
         }
         return base64Image;
     }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

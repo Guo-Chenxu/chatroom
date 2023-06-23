@@ -54,7 +54,7 @@ public class FaceMatchUtil {
             // 获取人脸比对的结果
             String result1 = JSON.toJSONString(JSONObject.parseObject(result).get("result"));
             double score = Double.parseDouble(String.valueOf(JSONObject.parseObject(result1).get("score")));
-            System.out.println(score);
+
             return score >= THRESHOLD;
         } catch (Exception e) {
             e.printStackTrace();

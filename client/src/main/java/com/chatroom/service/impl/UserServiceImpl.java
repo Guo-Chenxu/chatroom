@@ -3,18 +3,16 @@ package com.chatroom.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
-import static com.chatroom.entity.MessageType.*;
-
-import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
-import com.chatroom.utils.ThreadManage;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import static com.chatroom.entity.MessageType.*;
 
 /**
  * @program: chatroom
@@ -50,10 +48,12 @@ public class UserServiceImpl implements UserService {
         Message mmsg = (Message) input.readObject();
         System.out.println(mmsg);
     }
+
     @Override
     public Socket getClient() {
         return client;
     }
+
     @Override
     public void myStop() {
         close(client, input, output);
@@ -78,6 +78,7 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
+
     /**
      * 用户登录
      *
@@ -102,6 +103,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
     /**
      * 用户注册
      *
@@ -110,7 +112,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Chat register(String userName,  String pwd) {
+    public Chat register(String userName, String pwd) {
         try {
             // 将用户信息发送服务器
             User user = new User(userName, pwd);
@@ -125,11 +127,13 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
     @Override
-    public Chat loginByFace(String userName, String faceId){
+    public Chat loginByFace(String userName, String faceId) {
         try {
             // 将用户信息发送服务器登录
-            User user = new User(userName, faceId);
+            User user = new User(userName);
+            user.setFaceId(faceId);
             Message message = new Message(LOGIN_BY_FACE);
             message.setContent((JSON.toJSONString(user)));
             output.writeObject(message);
