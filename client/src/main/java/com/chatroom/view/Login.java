@@ -2,6 +2,7 @@ package com.chatroom.view;
 
 import com.alibaba.fastjson2.JSON;
 import com.chatroom.controller.ClientConnectServerThread;
+import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.UserServiceImpl;
@@ -13,6 +14,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.Socket;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 
@@ -138,21 +141,13 @@ public class Login extends JFrame implements ActionListener {
                 new Register();
             }
             @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
+            public void mousePressed(MouseEvent e) {}
             @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
+            public void mouseReleased(MouseEvent e) {}
             @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
+            public void mouseEntered(MouseEvent e) {}
             @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
+            public void mouseExited(MouseEvent e) {}
         });
         contentPane.add(jlbRegister);
 
@@ -167,21 +162,13 @@ public class Login extends JFrame implements ActionListener {
                 // 进行人脸登录处理
                 new LoginByFace();
             }
-            public void mousePressed(MouseEvent e) {
-
-            }
+            public void mousePressed(MouseEvent e) {}
             @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
+            public void mouseReleased(MouseEvent e) {}
             @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
+            public void mouseEntered(MouseEvent e) {}
             @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
+            public void mouseExited(MouseEvent e) {}
         });
         contentPane.add(jlbFaceLogin);
 
@@ -197,31 +184,23 @@ public class Login extends JFrame implements ActionListener {
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
+            public void mousePressed(MouseEvent e) {}
 
             @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
+            public void mouseReleased(MouseEvent e) {}
 
             @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
+            public void mouseEntered(MouseEvent e) {}
 
             @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
+            public void mouseExited(MouseEvent e) {}
         });
         contentPane.add(jlbForget);
 
         // 处理南部登录按钮
         btnLogin = new JButton("登录");
-        btnLogin.setForeground(Color.black);
-        btnLogin.setBackground(new Color(108, 71, 3));
+        btnLogin.setForeground(Color.white);
+        btnLogin.setBackground(new Color(3, 17, 108));
         btnLogin.setBounds((windowsWedth - 200) / 2 + 10, 260, 200, 30);
         btnLogin.addActionListener(this);
         contentPane.add(btnLogin);
@@ -248,54 +227,55 @@ public class Login extends JFrame implements ActionListener {
             // 检查信息是否输入正确
             if (!username.equals("请输入用户名") && !pwd.equals("请输入密码")
                     && username.matches(pattern) && pwd.matches(pattern)) {
-
                 // 检查与服务器的连接
                 UserService userService = new UserServiceImpl();
                 Socket client = userService.getClient();
-
                 if (client != null && !client.isClosed()) {
                     // 将登录消息发送至服务器
-                    Message msg = userService.login(username, pwd);
-                    // 处理服务器返回的结果
-                    User loginUser = null;
-                    switch (msg.getMessageType()) {
-                        case LOGIN_BY_PWD:// 登录成功
-                            // 创建与服务器通信的线程
-                            loginUser = JSON.parseObject(msg.getContent(), User.class);
-                            ClientConnectServerThread clientThread = new ClientConnectServerThread(username,userService.getClient());
-                            clientThread.start();
-                            ThreadManage.addThread(loginUser.getUsername(), clientThread);
+                    Chat chat = userService.loginByPwd(username, pwd);
+                    Boolean flag = chat.getFlag();
+                    Message msg = chat.getMessage();
+                    // 判断操作是否成功
+                    if(flag){
+                        // 处理服务器返回的结果
+                        User loginUser = null;
+                        switch (msg.getMessageType()) {
+                            case LOGIN_BY_PWD:// 登录成功
+                                // 创建与服务器通信的线程
+                                loginUser = JSON.parseObject(msg.getContent(), User.class);
+                                ClientConnectServerThread clientThread = new ClientConnectServerThread(username,userService.getClient());
+                                clientThread.start();
+                                ThreadManage.addThread(loginUser.getUsername(), clientThread);
 
-                            // 将用户信息和好友列表控件保存至通信线程中
-                            ClientConnectServerThread thread = ThreadManage.getThread(loginUser.getUsername());
-                            FriendList friendList = new FriendList(loginUser);// 创建好友列表主界面
-                            thread.setFriendList(friendList);
-                            thread.setUser(loginUser);
-                            friendList.updateFriendList();// 获取好友列表
-                            this.dispose();// 关闭登录界面
-                            break;
-
-                        case LOGIN_BY_FACE:
-
-                            break;
-                        case USER_ONLINE:// 用户已经登录
-                            JOptionPane.showMessageDialog(this, "用户已经登录！");
-                            userService.myStop();
-                            break;
-                        case INFO_ERROR:// qq或密码错误
-                            JOptionPane.showMessageDialog(this, "qq或密码错误！");
-                            userService.myStop();
-                            break;
+                                // 将用户信息和好友列表控件保存至通信线程中
+                                ClientConnectServerThread thread = ThreadManage.getThread(loginUser.getUsername());
+                                FriendList friendList = new FriendList(loginUser);// 创建好友列表主界面
+                                thread.setFriendList(friendList);
+                                thread.setUser(loginUser);
+                                friendList.updateFriendList();// 获取好友列表
+                                this.dispose();// 关闭登录界面
+                                break;
+                            case USER_ONLINE:// 用户已经登录
+                                JOptionPane.showMessageDialog(this, "用户已经登录！");
+                                userService.myStop();
+                                break;
+                            case INFO_ERROR:// qq或密码错误
+                                JOptionPane.showMessageDialog(this, "qq或密码错误！");
+                                userService.myStop();
+                                break;
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, msg.getContent());
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "无法连接服务器！");
                 }
-
             } else {
                 JOptionPane.showMessageDialog(this, "请输入正确的QQ号和密码！");
             }
         }
     }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

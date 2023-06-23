@@ -21,11 +21,9 @@ public class Forget extends JFrame implements ActionListener {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
         button1 = new JButton();
-        label1 = new JLabel();
         label2 = new JLabel();
         label3 = new JLabel();
         label4 = new JLabel();
-        textField1 = new JTextField();
         passwordField1 = new JPasswordField();
         passwordField2 = new JPasswordField();
         passwordField3 = new JPasswordField();
@@ -39,7 +37,7 @@ public class Forget extends JFrame implements ActionListener {
         contentPane.add(button1);
         button1.setBounds(145, 190, 110, 35);
         button1.setBackground(new Color(3, 37, 108));
-        button1.setForeground(Color.black);
+        button1.setForeground(Color.white);
         button1.addActionListener(this);
 
         // 创建最上方的JLabel
@@ -69,7 +67,7 @@ public class Forget extends JFrame implements ActionListener {
         contentPane.add(label4);
         label4.setBounds(70, 154, 65, 15);
         contentPane.add(passwordField1);
-        passwordField1.setBounds(145, 70, 175, passwordField1.getPreferredSize().height);
+        passwordField1.setBounds(145, 70, 175, 27);
         contentPane.add(passwordField2);
         passwordField2.setBounds(145, 110, 175, 27);
         contentPane.add(passwordField3);
@@ -85,8 +83,6 @@ public class Forget extends JFrame implements ActionListener {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
     private JButton button1;
-    private JLabel label1;
-    private JTextField textField1;
     private JLabel label2;
     private JLabel label3;
     private JLabel label4;
