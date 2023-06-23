@@ -119,7 +119,7 @@ public class Register extends JFrame implements ActionListener {
                         User register = JSON.parseObject(msg.getContent(), User.class);
                         // 判断操作是否成功
                         if (flag) {
-                            JOptionPane.showMessageDialog(this, "注册成功!\n您的QQ号为：" + register.getUsername());
+                            JOptionPane.showMessageDialog(this, "注册成功!");
                             this.dispose();
                         } else {
                             JOptionPane.showMessageDialog(this,  msg.getContent());
