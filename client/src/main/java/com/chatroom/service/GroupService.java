@@ -1,14 +1,16 @@
 package com.chatroom.service;
 
-import java.io.IOException;
+import com.chatroom.entity.Chat;
+
 import java.net.Socket;
 
 /**
  * @author Ye peixin
  */
-public interface ChatService {
-
+public interface GroupService {
     Socket getClient();
 
     void myStop();
+
+    Chat getGroupList(String userName);
 }

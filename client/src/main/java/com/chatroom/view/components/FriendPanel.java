@@ -33,8 +33,8 @@ public class FriendPanel extends JPanel implements MouseListener {
         this.addMouseListener(this);
 
         // 头像
-        avatar = new Avatar(friend.getAvatarId(), 40, 40);
-        avatar.setBounds(10, 10, 40, 40);
+//        avatar = new Avatar(friend.getAvatarId(), 40, 40);
+//        avatar.setBounds(10, 10, 40, 40);
 
         // 昵称
         nickname = new JLabel();
@@ -42,7 +42,7 @@ public class FriendPanel extends JPanel implements MouseListener {
         nickname.setForeground(new Color(0, 0, 0));
         nickname.setText(friend.getUsername() + "(" + friend.getId() + ")");
 
-        this.add(avatar);
+//        this.add(avatar);
         this.add(nickname);
         this.add(sign);
     }

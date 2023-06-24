@@ -7,7 +7,9 @@ import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType.*;
 import com.chatroom.entity.User;
+import com.chatroom.service.FriendsService;
 import com.chatroom.service.UserService;
+import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.service.impl.UserServiceImpl;
 import com.chatroom.utils.ThreadManage;
 import com.chatroom.view.components.Avatar;
@@ -94,13 +96,13 @@ public class FriendList extends JFrame{
 
     //向服务器请求好友列表
     public void updateFriendList(){
-        UserService userService = new UserServiceImpl();
-        Socket client = userService.getClient();
+        FriendsService friendsService = new FriendsServiceImpl();
+        Socket client = friendsService.getClient();
         String userName = user.getUsername();
         JSONObject myFriendList = null;
 
         if(client!=null && !client.isClosed()){
-            Chat chat = userService.getFriendList(userName);
+            Chat chat = friendsService.getFriendList(userName);
             Message msg = chat.getMessage();
             if(chat.getFlag()){
                 myFriendList = JSON.parseObject(msg.getContent());
