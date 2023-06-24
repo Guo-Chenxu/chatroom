@@ -5,10 +5,14 @@ import com.chatroom.controller.ServerConnectClientThread;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
+import com.chatroom.entity.User;
 import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.MessageMapper;
 import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.UserService;
+import com.chatroom.utils.Base64Util;
+import com.chatroom.utils.FaceMatchUtil;
+import com.chatroom.utils.FileUtil;
 import lombok.var;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -137,5 +141,14 @@ class ServerApplicationTests {
         ServerConnectClientThread serverConnectClientThread01 =
                 new ServerConnectClientThread("1233", new Socket(InetAddress.getLocalHost(), 9623));
         System.out.println(serverConnectClientThread01);
+    }
+
+    @Test
+    void testFaceMatch() throws IOException {
+        User u = userMapper.getByUsername("guochenxu123");
+//        String str = Base64Util.encode(FileUtil.readFileByBytes("D:\\Screenshot 2023-06-24 001429.png"));
+        String str = FileUtil.readFileAsString("D:\\token.txt");
+        System.out.println(str.length());
+        System.out.println(FaceMatchUtil.faceMatch(u.getFaceId(), str));
     }
 }
