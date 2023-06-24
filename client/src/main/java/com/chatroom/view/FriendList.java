@@ -12,7 +12,6 @@ import com.chatroom.service.impl.UserServiceImpl;
 import com.chatroom.utils.ThreadManage;
 import com.chatroom.view.components.Avatar;
 import com.chatroom.view.components.FriendPanel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -35,7 +34,6 @@ public class FriendList extends JFrame{
     private JPanel bottom;// 底部面板
     private JButton addFriend;// 添加好友
     private User user;// 用户对象
-
     public FriendList(User user){
         this.user = user;
         this.setSize(windowsWedth, windowsHeight);
@@ -43,32 +41,27 @@ public class FriendList extends JFrame{
         // 本窗口面板
         container = this.getContentPane();
         container.setLayout(null);
-
         //用户头像
         JLabel jlbPhoto = new Avatar(user.getAvatarId(), 80, 80);
         jlbPhoto.setBounds(20, 22, 80, 80);
         container.add(jlbPhoto);
-
         //用户昵称
         JLabel jlbName = new JLabel(user.getUsername() + "(" + user.getId() + ")");
         jlbName.setForeground(Color.WHITE);
         jlbName.setFont(new Font("", Font.BOLD, 18));
         jlbName.setBounds(120, 30, 140, 20);
         container.add(jlbName);
-
         //
         JLabel jlbBackground = new JLabel();
         jlbBackground.setBackground(new Color(3, 37, 108));
         jlbBackground.setOpaque(true);
         jlbBackground.setBounds(0, 0, windowsWedth, 128);
         container.add(jlbBackground);
-
         //设置窗体居中
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
         this.setBounds((width - windowsWedth) / 2, (height - windowsHeight) / 2, 0, 0);
         this.setMinimumSize(new Dimension(windowsWedth, windowsHeight));
-
         //添加好友按钮
         addFriend = new JButton("添加好友");
         addFriend.setBackground(new Color(3,37,108));
@@ -79,13 +72,11 @@ public class FriendList extends JFrame{
                 new AddFriend();
             }
         });
-
         //窗体底部面板
         bottom = new JPanel(new GridLayout(1, 0));
         bottom.setBounds(0, 542, windowsWedth, 30);
         bottom.add(addFriend);
         container.add(bottom);
-
         //窗体关闭事件
         this.addWindowListener(new WindowAdapter(){
             @Override
@@ -95,14 +86,11 @@ public class FriendList extends JFrame{
                 Message message = new Message();
 //                message.setContent(user);
 //                message.Content = '1';
-
             }
         });
         //设置窗体为可见
         this.setVisible(true);
-
     }
-
 
     //向服务器请求好友列表
     public void updateFriendList(){
@@ -126,7 +114,6 @@ public class FriendList extends JFrame{
 
         friendList = new JPanel();
         friendList.setLayout(null);
-
         if(jScrollPane != null){
             container.remove(jScrollPane);
         }
@@ -138,11 +125,9 @@ public class FriendList extends JFrame{
         jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);// 从不显示
         container.add(jScrollPane);
     }
-
     public void showFriendList(ArrayList<User> list){
         int panelHeight = 60;
         friendList.removeAll();
-
         for(int i=0; i<list.size(); i++){
             User friend = list.get(i);
             // 创建好友面板
@@ -161,19 +146,16 @@ public class FriendList extends JFrame{
             label1 = new JLabel();
             textField1 = new JTextField();
             button1 = new JButton();
-
             //======== this ========
             setVisible(true);
             Container contentPane = getContentPane();
             contentPane.setLayout(null);
-
             //---- label1 ----
             label1.setText("好友账号");
             contentPane.add(label1);
             label1.setBounds(new Rectangle(new Point(70, 35), label1.getPreferredSize()));
             contentPane.add(textField1);
             textField1.setBounds(140, 30, 200, textField1.getPreferredSize().height);
-
             //---- button1 ----
             button1.setText("添加");
             contentPane.add(button1);
@@ -181,7 +163,6 @@ public class FriendList extends JFrame{
             button1.setForeground(Color.white);
             button1.setBounds(160, 75, 80, button1.getPreferredSize().height);
             button1.addActionListener(this);
-
             contentPane.setPreferredSize(new Dimension(400, 140));
             pack();
             setLocationRelativeTo(getOwner());

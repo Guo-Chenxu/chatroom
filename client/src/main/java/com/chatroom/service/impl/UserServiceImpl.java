@@ -1,6 +1,7 @@
 package com.chatroom.service.impl;
 
 import com.alibaba.fastjson2.JSON;
+import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
 import static com.chatroom.entity.MessageType.*;
 
@@ -77,9 +78,15 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
-
+    /**
+     * 用户登录
+     *
+     * @param userName
+     * @param pwd
+     * @return
+     */
     @Override
-    public Message login(String userName, String pwd) {
+    public Chat loginByPwd(String userName, String pwd) {
         try {
             // 将用户信息发送服务器登录
             User user = new User(userName, pwd);
@@ -87,12 +94,53 @@ public class UserServiceImpl implements UserService {
             message.setContent((JSON.toJSONString(user)));
             output.writeObject(message);
             // 接收服务器返回到结果
-            Message msg = (Message) input.readObject();
-            return msg;
+            Chat chat = (Chat) input.readObject();
+            return chat;
         } catch (IOException | ClassNotFoundException e) {
             close(client, output, input);
             e.printStackTrace();
             return null;
         }
     }
+    /**
+     * 用户注册
+     *
+     * @param userName
+     * @param pwd
+     * @return
+     */
+    @Override
+    public Chat register(String userName,  String pwd) {
+        try {
+            // 将用户信息发送服务器
+            User user = new User(userName, pwd);
+            Message message = new Message(REGISTER);
+            message.setContent((JSON.toJSONString(user)));
+            output.writeObject(message);
+            // 接收服务器返回到结果
+            Chat chat = (Chat) input.readObject();
+            return chat;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    @Override
+    public Chat loginByFace(String userName, String faceId){
+        try {
+            // 将用户信息发送服务器登录
+            User user = new User(userName, faceId);
+            Message message = new Message(LOGIN_BY_FACE);
+            message.setContent((JSON.toJSONString(user)));
+            output.writeObject(message);
+            // 接收服务器返回到结果
+            Chat chat = (Chat) input.readObject();
+            return chat;
+        } catch (IOException | ClassNotFoundException e) {
+            close(client, output, input);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
