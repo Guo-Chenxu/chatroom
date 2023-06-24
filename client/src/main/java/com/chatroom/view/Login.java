@@ -1,22 +1,21 @@
 package com.chatroom.view;
 
-import com.alibaba.fastjson2.JSON;
 import com.chatroom.controller.ClientConnectServerThread;
 import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
+import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.UserServiceImpl;
-import com.chatroom.entity.User;
-import static com.chatroom.entity.MessageType.*;
 import com.chatroom.utils.ThreadManage;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.Socket;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.util.List;
 
 
 public class Login extends JFrame implements ActionListener {
@@ -220,7 +219,9 @@ public class Login extends JFrame implements ActionListener {
             // 获取账号密码
             String username = userName.getText().trim();
             String pwd = new String(passWord.getPassword());
-
+            User loginUser = null;
+            loginUser.setUsername(username);
+            loginUser.setPassword(pwd);
             // 正则表达式
             String pattern = "^[a-zA-Z0-9_]{6,20}$";
 
@@ -238,32 +239,31 @@ public class Login extends JFrame implements ActionListener {
                     // 判断操作是否成功
                     if(flag){
                         // 处理服务器返回的结果
-                        User loginUser = null;
-                        switch (msg.getMessageType()) {
-                            case LOGIN_BY_PWD:// 登录成功
-                                // 创建与服务器通信的线程
-                                loginUser = JSON.parseObject(msg.getContent(), User.class);
-                                ClientConnectServerThread clientThread = new ClientConnectServerThread(username,userService.getClient());
-                                clientThread.start();
-                                ThreadManage.addThread(loginUser.getUsername(), clientThread);
-
-                                // 将用户信息和好友列表控件保存至通信线程中
-                                ClientConnectServerThread thread = ThreadManage.getThread(loginUser.getUsername());
-                                FriendList friendList = new FriendList(loginUser);// 创建好友列表主界面
-                                thread.setFriendList(friendList);
-                                thread.setUser(loginUser);
-                                friendList.updateFriendList();// 获取好友列表
-                                this.dispose();// 关闭登录界面
-                                break;
-                            case USER_ONLINE:// 用户已经登录
-                                JOptionPane.showMessageDialog(this, "用户已经登录！");
-                                userService.myStop();
-                                break;
-                            case INFO_ERROR:// qq或密码错误
-                                JOptionPane.showMessageDialog(this, "qq或密码错误！");
-                                userService.myStop();
-                                break;
+                        // 登录成功
+                        // 创建与服务器通信的线程
+                        String jsonContent = msg.getContent();
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        List<Message> messageList = null;
+                        try {
+                            messageList = objectMapper.readValue(jsonContent, new TypeReference<List<Message>>(){});
+                        } catch (JsonProcessingException ex) {
+                            throw new RuntimeException(ex);
                         }
+
+                        ClientConnectServerThread clientThread = new ClientConnectServerThread(username,userService.getClient());
+                        clientThread.start();
+                        ThreadManage.addThread(username, clientThread);
+
+                        // 将用户信息和好友列表控件保存至通信线程中
+                        ClientConnectServerThread thread = ThreadManage.getThread(username);
+                        FriendList friendList = new FriendList(loginUser);// 创建好友列表主界面
+                        thread.setFriendList(friendList);
+                        thread.setUser(loginUser);
+                        friendList.updateFriendList();// 获取好友列表
+                        NotRead unReadList = new NotRead(loginUser,messageList);
+
+                        this.dispose();// 关闭登录界面
+
                     } else {
                         JOptionPane.showMessageDialog(this, msg.getContent());
                     }
