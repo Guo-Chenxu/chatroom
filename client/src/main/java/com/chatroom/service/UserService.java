@@ -1,5 +1,6 @@
 package com.chatroom.service;
 
+import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.User;
 
@@ -18,5 +19,10 @@ public interface UserService {
     public void myStop();
     public Socket getClient();
     public Message login(String userName, String pwd);
+    public Chat getFriendList(String userName);
     public void testSend(Message msg) throws IOException, ClassNotFoundException;
+
+    Chat getGroupList(String userName);
+
+    Chat addNewFriend(String userName);
 }

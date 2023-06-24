@@ -1,9 +1,14 @@
 package com.chatroom.view;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.chatroom.controller.ClientConnectServerThread;
+import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
-import com.chatroom.entity.MessageType;
+import com.chatroom.entity.MessageType.*;
 import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
+import com.chatroom.service.impl.UserServiceImpl;
 import com.chatroom.utils.ThreadManage;
 import com.chatroom.view.components.Avatar;
 import com.chatroom.view.components.FriendPanel;
@@ -14,7 +19,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Ye peixin
@@ -99,8 +106,23 @@ public class FriendList extends JFrame{
 
     //向服务器请求好友列表
     public void updateFriendList(){
-        Message message = new Message();
-        ThreadManage.getThread(user.getUsername()).send(message);
+        UserService userService = new UserServiceImpl();
+        Socket client = userService.getClient();
+        String userName = user.getUsername();
+        JSONObject myFriendList = null;
+
+        if(client!=null && !client.isClosed()){
+            Chat chat = userService.getFriendList(userName);
+            Message msg = chat.getMessage();
+            if(chat.getFlag()){
+                myFriendList = JSON.parseObject(msg.getContent());
+                ClientConnectServerThread thread = ThreadManage.getThread(user.getUsername());
+
+            }
+        }
+
+//        Message message = new Message();
+//        ThreadManage.getThread(user.getUsername()).send(message);
 
         friendList = new JPanel();
         friendList.setLayout(null);
@@ -188,5 +210,4 @@ public class FriendList extends JFrame{
             }
         }
     }
-
 }

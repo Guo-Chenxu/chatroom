@@ -1,13 +1,12 @@
 package com.chatroom.service.impl;
 
 import com.alibaba.fastjson2.JSON;
+import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
 import static com.chatroom.entity.MessageType.*;
 
-import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
-import com.chatroom.utils.ThreadManage;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -93,6 +92,49 @@ public class UserServiceImpl implements UserService {
             close(client, output, input);
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public Chat getFriendList(String userName){
+        Message message = new Message(GET_FRIENDS);
+        message.setSenderName(userName);
+        try {
+            output.writeObject(message);
+            //接收服务器返回的结果
+            Chat chat = (Chat)input.readObject();
+            return chat;
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Chat getGroupList(String userName){
+        Message message = new Message(GET_GROUPS);
+        message.setSenderName(userName);
+        try {
+            output.writeObject(message);
+
+            Chat chat = (Chat)input.readObject();
+            return chat;
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Chat addNewFriend(String userName){
+        Message message = new Message(ADD_FRIEND);
+        message.setSenderName(userName);
+//        message.setReceiverName(friendUsername);
+        try {
+            output.writeObject(message);
+
+            Chat chat = (Chat)input.readObject();
+            return chat;
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }
