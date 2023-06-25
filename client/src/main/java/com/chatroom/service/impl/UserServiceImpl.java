@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
         // 将用户信息发送服务器登录
         User user = new User(userName);
         user.setFaceId(faceId);
-        Message message = new Message(ADD_FACE);
+        Message message = new Message(userName, "", new Date(), ADD_FACE);
         message.setContent((JSON.toJSONString(user)));
         ThreadManage.send(userName, message);
     }

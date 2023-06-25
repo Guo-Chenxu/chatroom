@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addFace(User user) {
+        System.out.println(userMapper);
         return userMapper.addFace(user.getUsername(), user.getFaceId()) > 0;
     }
 

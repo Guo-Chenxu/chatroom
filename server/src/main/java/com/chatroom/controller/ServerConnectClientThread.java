@@ -7,6 +7,7 @@ import com.chatroom.service.GroupService;
 import com.chatroom.service.MessageService;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.*;
+import com.chatroom.utils.GetBeanUtil;
 import com.chatroom.utils.ThreadManage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,26 +40,27 @@ public class ServerConnectClientThread implements Runnable {
      * 控制线程
      */
     private boolean loop;
+
     /**
      * 好友服务
      */
-    private static final FriendService friendService = new FriendServiceImpl();
+    private FriendService friendService = GetBeanUtil.getBean(FriendServiceImpl.class);
     /**
      * 群组服务
      */
-    private static final GroupService groupService = new GroupServiceImpl();
+    private GroupService groupService = GetBeanUtil.getBean(GroupServiceImpl.class);
     /**
      * 好友消息服务
      */
-    private static final MessageService friendMessageService = new FriendMessageServiceImpl();
+    private MessageService friendMessageService = GetBeanUtil.getBean(FriendMessageServiceImpl.class);
     /**
      * 群组消息服务
      */
-    private static final MessageService groupMessageService = new GroupMessageServiceImpl();
+    private MessageService groupMessageService = GetBeanUtil.getBean(GroupMessageServiceImpl.class);
     /**
      * 用户服务
      */
-    private static final UserService userService = new UserServiceImpl();
+    private UserService userService = GetBeanUtil.getBean(UserServiceImpl.class);
 
     private static final Logger log = LoggerFactory.getLogger(ServerConnectClientThread.class);
 
