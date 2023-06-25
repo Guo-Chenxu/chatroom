@@ -1,19 +1,9 @@
 package com.chatroom.view;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import com.alibaba.fastjson2.JSON;
-import com.chatroom.controller.ClientConnectServerThread;
-import com.chatroom.entity.Chat;
-import com.chatroom.entity.Message;
+
 import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.UserServiceImpl;
-import com.chatroom.utils.MyImageUtil;
-import com.chatroom.utils.ThreadManage;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 
@@ -23,12 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.net.Socket;
-import java.util.Base64;
-import java.util.List;
 
-import static com.chatroom.entity.MessageType.*;
+
 
 public class AddFace extends JFrame implements ActionListener {
 
@@ -129,19 +116,13 @@ public class AddFace extends JFrame implements ActionListener {
 
         // 拍照并转换为 BASE64 编码
         String base64Image = Camera.captureAndEncodeImage(webcam);
-        System.out.println(base64Image);
         // 检查与服务器的连接
         UserService userService = new UserServiceImpl();
         Socket client = userService.getClient();
         if (client != null && !client.isClosed()) {
             // 将登录消息发送至服务器
-            Chat chat = userService.addFace(username, base64Image);
-            Boolean flag = chat.getFlag();
-            Message msg = chat.getMessage();
-            // 判断操作是否成功
-            if (!flag) {
-                JOptionPane.showMessageDialog(this, msg.getContent());
-            }
+            userService.addFace(username, base64Image);
+            this.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(this, "无法连接服务器！");
         }

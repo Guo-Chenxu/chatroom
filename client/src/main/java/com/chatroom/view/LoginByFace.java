@@ -35,12 +35,19 @@ public class LoginByFace extends JFrame implements ActionListener {
 
         private User user;
 
+        private Login login;
+
+        private JFrame window; // 添加成员变量
+
         public LoginByFace(User user) {
             this.user = user;
             initComponents();
         }
 
         private void initComponents() {
+
+            // 创建窗口并设置布局
+            window = new JFrame("人脸登录");
 
             webcam = Webcam.getDefault();
 
@@ -134,7 +141,6 @@ public class LoginByFace extends JFrame implements ActionListener {
             } else {
                 // 拍照并转换为 BASE64 编码
                 String base64Image = Camera.captureAndEncodeImage(webcam);
-                System.out.println(base64Image);
                 // 检查与服务器的连接
                 UserService userService = new UserServiceImpl();
                 Socket client = userService.getClient();
@@ -163,8 +169,10 @@ public class LoginByFace extends JFrame implements ActionListener {
                         NotRead unReadList = new NotRead(loginUser, messageList);
                         unReadList.showNotRead();
                         new SelectionPage(loginUser);
+
                         // 隐藏登录页面
-                        this.setVisible(false);
+                        window.dispose();
+                        login.hideLogin();
 
                     } else {
                         JOptionPane.showMessageDialog(this, msg.getContent());
