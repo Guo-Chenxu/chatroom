@@ -6,7 +6,8 @@ import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
-import com.chatroom.service.MessageService;
+import com.chatroom.service.FriendMessageService;
+import com.chatroom.service.GroupMessageService;
 import com.chatroom.service.UserService;
 import com.chatroom.utils.ThreadManage;
 import org.slf4j.Logger;
@@ -43,7 +44,10 @@ public class ConnectController implements Runnable {
     @Resource
     UserService userService;
     @Resource
-    MessageService messageService;
+    FriendMessageService friendMessageService;
+
+    @Resource
+    GroupMessageService groupMessageService;
 
     private static final Logger log = LoggerFactory.getLogger(ConnectController.class);
 
@@ -125,7 +129,8 @@ public class ConnectController implements Runnable {
                 "用户ip为: " + client.getRemoteSocketAddress());
         Message res = new Message();
         res.setMessageType(MessageType.LOGIN_SUCCESS);
-        List<Message> notRead = messageService.getNotReadMessages(user);
+        List<Message> notRead = friendMessageService.getNotReadMessages(user);
+        notRead.addAll(groupMessageService.getNotReadMessages(user));
         res.setContent(JSON.toJSONString(notRead));
         output.writeObject(new Chat(true, res));
     }

@@ -2,10 +2,7 @@ package com.chatroom.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.chatroom.entity.*;
-import com.chatroom.service.FriendService;
-import com.chatroom.service.GroupService;
-import com.chatroom.service.MessageService;
-import com.chatroom.service.UserService;
+import com.chatroom.service.*;
 import com.chatroom.service.impl.*;
 import com.chatroom.utils.GetBeanUtil;
 import com.chatroom.utils.ThreadManage;
@@ -52,11 +49,11 @@ public class ServerConnectClientThread implements Runnable {
     /**
      * 好友消息服务
      */
-    private MessageService friendMessageService = GetBeanUtil.getBean(FriendMessageServiceImpl.class);
+    private FriendMessageService friendMessageService = GetBeanUtil.getBean(FriendMessageServiceImpl.class);
     /**
      * 群组消息服务
      */
-    private MessageService groupMessageService = GetBeanUtil.getBean(GroupMessageServiceImpl.class);
+    private GroupMessageService groupMessageService = GetBeanUtil.getBean(GroupMessageServiceImpl.class);
     /**
      * 用户服务
      */

@@ -12,7 +12,7 @@ import java.util.List;
  * @create: 2023-05-15 00:15
  * @version: 1.0
  **/
-public interface MessageService {
+public interface FriendMessageService {
     /**
      * 获取用户的未读消息
      *

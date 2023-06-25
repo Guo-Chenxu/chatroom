@@ -6,6 +6,7 @@ import com.chatroom.mapper.GroupUserRelationMapper;
 import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.GroupService;
 import com.chatroom.service.UserService;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
@@ -18,6 +19,8 @@ import java.util.List;
  * @create: 2023-05-22 11:41
  * @version: 1.0
  **/
+
+@Service
 public class GroupServiceImpl implements GroupService {
 
     @Resource

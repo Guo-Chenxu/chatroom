@@ -174,8 +174,7 @@ public class Login extends JFrame implements ActionListener {
                     // 进行人脸登录处理
                     new LoginByFace(user);
                     Login.this.setVisible(false);
-                }
-                else{
+                } else {
                     JOptionPane.showMessageDialog(null, "请输入正确的用户名");
                 }
 
@@ -259,8 +258,6 @@ public class Login extends JFrame implements ActionListener {
                     && username.matches(pattern) && pwd.matches(pattern)) {
                 // 检查与服务器的连接
                 UserService userService = new UserServiceImpl();
-//                Socket client = userService.getClient();
-//                if (client != null && !client.isClosed()) {
                 // 将登录消息发送至服务器
                 Chat chat = userService.loginByPwd(username, pwd);
                 Boolean flag = chat.getFlag();
@@ -271,14 +268,6 @@ public class Login extends JFrame implements ActionListener {
                     // 创建与服务器通信的线程
                     String jsonContent = msg.getContent();
                     List<Message> messageList = JSON.parseArray(jsonContent, Message.class);
-
-//                    ObjectMapper objectMapper = new ObjectMapper();
-//                    try {
-//                        messageList = objectMapper.readValue(jsonContent, new TypeReference<List<Message>>() {
-//                        });
-//                    } catch (JsonProcessingException ex) {
-//                        throw new RuntimeException(ex);
-//                    }
 
                     ClientConnectServerThread clientThread = new ClientConnectServerThread(username, userService.getClient());
                     new Thread(clientThread).start();
@@ -294,9 +283,6 @@ public class Login extends JFrame implements ActionListener {
                 } else {
                     JOptionPane.showMessageDialog(this, msg.getContent());
                 }
-//                } else {
-//                    JOptionPane.showMessageDialog(this, "无法连接服务器！");
-//                }
             } else {
                 JOptionPane.showMessageDialog(this, "请输入正确的QQ号和密码！");
             }

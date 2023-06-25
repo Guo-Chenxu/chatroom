@@ -109,8 +109,6 @@ public class Register extends JFrame implements ActionListener {
                 //检查格式
                 if (check(username, pwd, againPwd)) {
                     UserService userService = new UserServiceImpl();
-                    // 检查与服务器的连接
-//                    if (userService.getClient() != null) {
                     Chat chat = userService.register(username, pwd);
                     Boolean flag = chat.getFlag();
                     Message msg = chat.getMessage();
@@ -122,9 +120,6 @@ public class Register extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(this, msg.getContent());
                     }
                     userService.myStop();
-//                    } else {
-//                        JOptionPane.showMessageDialog(this, "无法连接服务器!");
-//                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "请输入正确的QQ号和密码！\n(用户名和密码格式要求为 6-20 位的数字、字母和下划线)");

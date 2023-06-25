@@ -3,12 +3,14 @@ package com.chatroom.service.impl;
 import com.chatroom.controller.ServerConnectClientThread;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
+import com.chatroom.entity.User;
 import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.GroupUserRelationMapper;
 import com.chatroom.mapper.MessageMapper;
 import com.chatroom.mapper.UserMapper;
-import com.chatroom.service.AbstractMessageService;
+import com.chatroom.service.GroupMessageService;
 import com.chatroom.utils.ThreadManage;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -21,7 +23,9 @@ import java.util.List;
  * @create: 2023-06-05 10:22
  * @version: 1.0
  **/
-public class GroupMessageServiceImpl extends AbstractMessageService {
+
+@Service
+public class GroupMessageServiceImpl implements GroupMessageService {
     @Resource
     UserMapper userMapper;
     @Resource
@@ -30,6 +34,13 @@ public class GroupMessageServiceImpl extends AbstractMessageService {
     MessageMapper messageMapper;
     @Resource
     GroupUserRelationMapper groupUserRelationMapper;
+
+    @Override
+    public List<Message> getNotReadMessages(User user) {
+        List<Message> notRead = messageMapper.getNotReadMessage(user.getUsername());
+        messageMapper.setMessageReaded(user.getUsername());
+        return notRead;
+    }
 
     /**
      * 群组发送消息
