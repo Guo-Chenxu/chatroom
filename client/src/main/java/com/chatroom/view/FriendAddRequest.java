@@ -1,5 +1,10 @@
 package com.chatroom.view;
 
+import com.chatroom.service.FriendsService;
+import com.chatroom.service.UserService;
+import com.chatroom.service.impl.FriendsServiceImpl;
+import com.chatroom.service.impl.UserServiceImpl;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -9,9 +14,11 @@ import java.awt.event.ActionListener;
 
 public class FriendAddRequest extends JFrame {
     private String friendName;
+    private String username;
 
-    public FriendAddRequest(String friendName) {
+    public FriendAddRequest(String friendName,String username) {
         this.friendName = friendName;
+        this.username = username;
         initComponents();
     }
 
@@ -35,6 +42,11 @@ public class FriendAddRequest extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // 处理同意按钮点击事件
                 JOptionPane.showMessageDialog(FriendAddRequest.this, "您同意了好友申请");
+
+                FriendsService friendsService = new FriendsServiceImpl();
+
+                friendsService.addAgree(username,friendName);
+
                 dispose(); // 关闭窗口
             }
         });
@@ -83,9 +95,9 @@ public class FriendAddRequest extends JFrame {
 
 //    public static void main(String[] args) {
 //        SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                new FriendAddRequest("John Doe");
-//            }
+////            public void run() {
+////                new FriendAddRequest("John Doe");
+////            }
 //        });
 //    }
 }
