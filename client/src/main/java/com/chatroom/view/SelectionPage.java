@@ -116,6 +116,7 @@ public class SelectionPage extends JFrame {
                     userService.offLine(username);
                     System.out.println(5);
                     System.exit(0);
+                    System.out.println(6);
                 } else {
                     JOptionPane.showMessageDialog(null, "无法连接服务器！");
                 }
@@ -137,7 +138,7 @@ public class SelectionPage extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                User user = null;
+                User user = new User();
                 new SelectionPage(user);
             }
         });

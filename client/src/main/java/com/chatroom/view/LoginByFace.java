@@ -1,15 +1,11 @@
 package com.chatroom.view;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import com.alibaba.fastjson2.JSON;
 import com.chatroom.controller.ClientConnectServerThread;
 import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.UserServiceImpl;
-import com.chatroom.utils.MyImageUtil;
 import com.chatroom.utils.ThreadManage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -23,9 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.net.Socket;
-import java.util.Base64;
 import java.util.List;
 
 
@@ -33,13 +27,15 @@ public class LoginByFace extends JFrame implements ActionListener {
 
         private Webcam webcam; // 声明为成员变量
 
-        private User user;
+        private User user = new User();
 
         private Login login;
 
         private JFrame window; // 添加成员变量
+        private Container contentPane;
 
         public LoginByFace(User user) {
+
             this.user = user;
             initComponents();
         }
@@ -66,7 +62,7 @@ public class LoginByFace extends JFrame implements ActionListener {
 
 
             // 获取此窗口容器 设置布局
-            Container contentPane = this.getContentPane();
+            contentPane = this.getContentPane();
             contentPane.setLayout(null);
             // 创建顶部面板来容纳人脸登录标签和用户名输入面板
             JPanel topPanel = new JPanel();
@@ -108,12 +104,13 @@ public class LoginByFace extends JFrame implements ActionListener {
             mainPanel.add(bottomPanel, BorderLayout.CENTER);
 
             // 创建窗口并设置布局
-            JFrame window = new JFrame("Webcam Panel");
+            window = new JFrame("Webcam");
             window.getContentPane().add(mainPanel);
-            window.setResizable(true);
+            window.setResizable(false);
             window.pack();
             window.setLocationRelativeTo(null);
             window.setVisible(true);
+
 
 
             // 添加窗口关闭事件监听器
@@ -122,17 +119,19 @@ public class LoginByFace extends JFrame implements ActionListener {
                 public void windowClosing(WindowEvent e) {
                     // 关闭摄像头
                     webcam.close();
+                    new Login();
+
                 }
             });
-
             this.setSize(windowsWedth, windowsHeight);
             setLocationRelativeTo(getOwner());
             this.setResizable(false);
         }
 
+
+
         @Override
         public void actionPerformed(ActionEvent e) {
-
             String username = user.getUsername();
             User loginUser = new User(username);
             // 检查是否输入用户名
@@ -170,9 +169,10 @@ public class LoginByFace extends JFrame implements ActionListener {
                         unReadList.showNotRead();
                         new SelectionPage(loginUser);
 
+
                         // 隐藏登录页面
                         window.dispose();
-                        login.hideLogin();
+                        webcam.close();
 
                     } else {
                         JOptionPane.showMessageDialog(this, msg.getContent());

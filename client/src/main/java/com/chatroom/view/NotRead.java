@@ -117,6 +117,7 @@ public class NotRead extends JFrame {
             else if(Objects.equals(msg.getMessageType(), GET_FRIENDS_ADD)){
                 // 好友请求发送人用户名是msg.getSenderName()？
                 new FriendAddRequest(msg.getSenderName());
+                msg.setIsRead(true);
             }
         }
         // 添加“没有未读消息”标签

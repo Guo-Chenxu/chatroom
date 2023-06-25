@@ -21,6 +21,7 @@ public class AddFace extends JFrame implements ActionListener {
 
     private Webcam webcam; // 声明为成员变量
 
+    private JFrame window; // 添加成员变量
     private User user;
 
     public AddFace(User user) {
@@ -87,7 +88,7 @@ public class AddFace extends JFrame implements ActionListener {
         mainPanel.add(bottomPanel, BorderLayout.CENTER);
 
         // 创建窗口并设置布局
-        JFrame window = new JFrame("Webcam Panel");
+        window = new JFrame("Webcam Panel");
         window.getContentPane().add(mainPanel);
         window.setResizable(true);
         window.pack();
@@ -122,7 +123,8 @@ public class AddFace extends JFrame implements ActionListener {
         if (client != null && !client.isClosed()) {
             // 将登录消息发送至服务器
             userService.addFace(username, base64Image);
-            this.setVisible(false);
+            window.dispose();
+            webcam.close();
         } else {
             JOptionPane.showMessageDialog(this, "无法连接服务器！");
         }
