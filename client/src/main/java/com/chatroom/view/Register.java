@@ -116,7 +116,6 @@ public class Register extends JFrame implements ActionListener {
                         Chat chat = userService.register(username, pwd);
                         Boolean flag = chat.getFlag();
                         Message msg = chat.getMessage();
-                        User register = JSON.parseObject(msg.getContent(), User.class);
                         // 判断操作是否成功
                         if (flag) {
                             JOptionPane.showMessageDialog(this, "注册成功!");

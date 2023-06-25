@@ -11,6 +11,7 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -94,9 +95,18 @@ public class NotRead extends JFrame {
         setVisible(true);
     }
 
-    public void showNotRead(List<Message> list){
+    public void showNotRead(){
+        List<Message> list = this.messageList;
+        Message msg1 = new Message();
+        msg1.setSenderName("111");
+        msg1.setContent("111111");
+        msg1.setSendTime(new Date("June 25, 2021 10:30:00"));
+//        addFriendMessage(msg1.getSenderName(),msg1.getContent(),msg1.getSendTime());
+//        addFriendMessage(msg1.getSenderName(),msg1.getContent(),msg1.getSendTime());
+//        addFriendMessage(msg1.getSenderName(),msg1.getContent(),msg1.getSendTime());
+//        addGroupMessage(msg1.getSenderName(),msg1.getContent(),msg1.getSendTime());
         for (Message msg : list) {
-            //未读好友消息
+            // 未读好友消息
             if(Objects.equals(msg.getMessageType(), COMMON_MESSAGE)){
                 String sender = msg.getSenderName();
                 String content = msg.getContent();
@@ -105,14 +115,30 @@ public class NotRead extends JFrame {
                 msg.setIsRead(true);
             }
             else if(Objects.equals(msg.getMessageType(), GROUP_MESSAGE)){
-                //未读群聊消息
+                // 未读群聊消息
+
             }
             else if(Objects.equals(msg.getMessageType(), GET_FRIENDS_ADD)){
                 // 好友请求发送人用户名是msg.getSenderName()？
                 new FriendAddRequest(msg.getSenderName());
             }
         }
+        if (friendPanel.getComponentCount() == 0)
+            addNoUnreadMessagesLabel(friendPanel); // 添加“没有未读消息”标签
+        if(groupPanel.getComponentCount() == 0)
+            addNoUnreadMessagesLabel(groupPanel); // 添加“没有未读消息”标签
     }
+
+    // 添加“没有未读消息”标签
+    private void addNoUnreadMessagesLabel(JPanel panel) {
+        JLabel noUnreadLabel = new JLabel("没有未读消息", JLabel.CENTER);
+        noUnreadLabel.setFont(new Font("", Font.BOLD, 16));
+        noUnreadLabel.setForeground(Color.gray);
+        noUnreadLabel.setOpaque(true);
+        noUnreadLabel.setBackground(Color.white);
+        panel.add(noUnreadLabel);
+    }
+
 
     // 添加好友消息到好友消息面板
     private void addFriendMessage(String sender, String message, Date time) {
@@ -120,8 +146,14 @@ public class NotRead extends JFrame {
         friendPanel.add(messagePane);
         friendPanel.revalidate();
         friendPanel.repaint();
-    }
 
+    }
+    private void addGroupMessage(String sender, String message, Date time) {
+        JTextPane messagePane = createMessagePane(sender, message, time);
+        groupPanel.add(messagePane);
+        groupPanel.revalidate();
+        groupPanel.repaint();
+    }
     private JTextPane createMessagePane(String sender, String message, Date time) {
         JTextPane messagePane = new JTextPane();
         messagePane.setPreferredSize(new Dimension(200, 60));
@@ -150,5 +182,17 @@ public class NotRead extends JFrame {
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                User user1 = new User();
+                List<Message> list = new ArrayList<>();
+                NotRead test = new NotRead(user1, list);
+                test.showNotRead();
+
+            }
+        });
     }
 }

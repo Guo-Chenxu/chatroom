@@ -50,6 +50,52 @@ public class UserServiceImpl implements UserService {
         Message mmsg = (Message) input.readObject();
         System.out.println(mmsg);
     }
+
+    /**
+     * 添加人脸信息
+     *
+     * @param userName
+     * @param faceId
+     * @return
+     */
+    @Override
+    public Chat addFace(String userName, String faceId) {
+        try {
+            // 将用户信息发送服务器登录
+            User user = new User(userName);
+            user.setFaceId(faceId);
+            Message message = new Message(ADD_FACE);
+            message.setContent((JSON.toJSONString(user)));
+            output.writeObject(message);
+            // 接收服务器返回到结果
+            Chat chat = (Chat) input.readObject();
+            return chat;
+        } catch (IOException | ClassNotFoundException e) {
+            close(client, output, input);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Chat offLine(String userName) {
+        try {
+            // 将用户信息发送服务器登录
+            User user = new User(userName);
+            Message message = new Message(OFFLINE);
+            message.setContent((JSON.toJSONString(user)));
+            output.writeObject(message);
+            // 接收服务器返回到结果
+            Chat chat = (Chat) input.readObject();
+            return chat;
+        } catch (IOException | ClassNotFoundException e) {
+            close(client, output, input);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     @Override
     public Socket getClient() {
         return client;

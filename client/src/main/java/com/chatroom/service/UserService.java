@@ -17,9 +17,20 @@ import java.net.Socket;
 public interface UserService {
 
     public void myStop();
+
     public Socket getClient();
+
     public Chat loginByPwd(String userName, String pwd);
+
     public Chat loginByFace(String userName, String faceId);
+
     public Chat register(String userName,  String pwd);
+
     public void testSend(Message msg) throws IOException, ClassNotFoundException;
+
+    public Chat addFace(String userName, String faceId);
+
+    public Chat offLine(String userName);
+
+
 }
