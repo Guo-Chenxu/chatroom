@@ -1,29 +1,19 @@
 package com.chatroom.view;
 
-import com.chatroom.controller.ClientConnectServerThread;
-import com.chatroom.entity.Chat;
-import com.chatroom.entity.Message;
 import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.UserServiceImpl;
-import com.chatroom.utils.ThreadManage;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.Socket;
-import java.util.List;
 
 public class SelectionPage extends JFrame {
-    private final User user;
+
     private JPanel container;
 
     public SelectionPage(User user) {
-        this.user = user;
         setTitle("选择");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false); // 禁止调整窗口大小
@@ -48,15 +38,14 @@ public class SelectionPage extends JFrame {
         JButton showFriendsBtn = createButton("展示好友列表");
         showFriendsBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
-
+                new FriendList(user);
             }
         });
 
         JButton showGroupsBtn = createButton("展示群组列表");
         showGroupsBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                    new GroupList(user);
             }
         });
 
@@ -77,7 +66,7 @@ public class SelectionPage extends JFrame {
         JButton addFaceBtn = createButton("添加人脸信息");
         addFaceBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                    new AddFace(user);
+                new AddFace(user);
             }
         });
 
@@ -99,26 +88,16 @@ public class SelectionPage extends JFrame {
         setVisible(true);
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        System.out.println("1");
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 super.windowClosing(windowEvent);
-                System.out.println(2);
                 // 检查与服务器的连接
                 UserService userService = new UserServiceImpl();
-                Socket client = userService.getClient();
                 String username = user.getUsername();
-                System.out.println(3);
-                if (client != null && !client.isClosed()) {
-                    // 将登录消息发送至服务器
-                    System.out.println(4);
-                    userService.offLine(username);
-                    System.out.println(5);
-                    System.exit(0);
-                } else {
-                    JOptionPane.showMessageDialog(null, "无法连接服务器！");
-                }
+                // 将登录消息发送至服务器
+                userService.offLine(username);
+                System.exit(0);
             }
         });
     }
@@ -137,7 +116,7 @@ public class SelectionPage extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                User user = null;
+                User user = new User();
                 new SelectionPage(user);
             }
         });

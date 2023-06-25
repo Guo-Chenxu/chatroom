@@ -2,13 +2,16 @@ package com.chatroom;
 
 import com.alibaba.fastjson2.JSON;
 import com.chatroom.controller.ServerConnectClientThread;
-import com.chatroom.entity.Group;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
+import com.chatroom.entity.User;
+import com.chatroom.mapper.FriendsMapper;
 import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.MessageMapper;
 import com.chatroom.mapper.UserMapper;
+import com.chatroom.service.FriendService;
 import com.chatroom.service.UserService;
+import com.chatroom.service.impl.UserServiceImpl;
 import lombok.var;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -36,6 +39,9 @@ class ServerApplicationTests {
 
     @Resource
     GroupMapper groupMapper;
+
+    @Resource
+    FriendsMapper friendsMapper;
 
     @Test
     void contextLoads() {
@@ -140,4 +146,13 @@ class ServerApplicationTests {
         System.out.println(serverConnectClientThread01);
     }
 
+    @Test
+    void testUserMapper(){
+        userMapper.add(new User("12", "12", "12"));
+    };
+
+    @Test
+    void testAddFriend(){
+        friendsMapper.add("123", "321");
+    }
 }

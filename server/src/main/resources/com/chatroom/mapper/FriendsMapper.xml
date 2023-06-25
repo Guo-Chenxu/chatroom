@@ -15,8 +15,7 @@
         friend_name
     </sql>
 
-    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
-            parameterType="com.chatroom.entity.Friends">
+    <insert id="add">
         INSERT INTO friends
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="null != name1 and '' != name1">

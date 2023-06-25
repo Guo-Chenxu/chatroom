@@ -5,7 +5,6 @@ import com.alibaba.fastjson2.JSON;
 import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
-import com.chatroom.service.FriendsService;
 import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.view.ChatView;
 import com.chatroom.view.FriendList;

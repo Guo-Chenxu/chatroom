@@ -2,11 +2,9 @@ package com.chatroom.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.chatroom.entity.*;
-import com.chatroom.service.FriendService;
-import com.chatroom.service.GroupService;
-import com.chatroom.service.MessageService;
-import com.chatroom.service.UserService;
+import com.chatroom.service.*;
 import com.chatroom.service.impl.*;
+import com.chatroom.utils.GetBeanUtil;
 import com.chatroom.utils.ThreadManage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,26 +37,27 @@ public class ServerConnectClientThread implements Runnable {
      * 控制线程
      */
     private boolean loop;
+
     /**
      * 好友服务
      */
-    private static final FriendService friendService = new FriendServiceImpl();
+    private FriendService friendService = GetBeanUtil.getBean(FriendServiceImpl.class);
     /**
      * 群组服务
      */
-    private static final GroupService groupService = new GroupServiceImpl();
+    private GroupService groupService = GetBeanUtil.getBean(GroupServiceImpl.class);
     /**
      * 好友消息服务
      */
-    private static final MessageService friendMessageService = new FriendMessageServiceImpl();
+    private FriendMessageService friendMessageService = GetBeanUtil.getBean(FriendMessageServiceImpl.class);
     /**
      * 群组消息服务
      */
-    private static final MessageService groupMessageService = new GroupMessageServiceImpl();
+    private GroupMessageService groupMessageService = GetBeanUtil.getBean(GroupMessageServiceImpl.class);
     /**
      * 用户服务
      */
-    private static final UserService userService = new UserServiceImpl();
+    private UserService userService = GetBeanUtil.getBean(UserServiceImpl.class);
 
     private static final Logger log = LoggerFactory.getLogger(ServerConnectClientThread.class);
 
@@ -139,10 +138,12 @@ public class ServerConnectClientThread implements Runnable {
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 删除好友 " + msg.getReceiverName());
                         flag = friendService.removeFriend(msg.getSenderName(), msg.getReceiverName());
                         send(flag, res);
+                        break;
                     case MessageType.ADD_AGREE:
-                        log.info(new Date() + " 用户 " + msg.getSenderName() + " 请求加入 " + msg.getReceiverName() + " 群聊");
+                        log.info(new Date() + " 用户 " + msg.getSenderName() + " 同意了 " + msg.getReceiverName() + " 的好友申请");
                         flag = friendService.addAgree(msg.getSenderName(), msg.getReceiverName());
-                        send(flag, res);
+//                        ThreadManage.getThread(msg.getSenderName()).send(flag, msg);
+                        sendError(flag, msg);
                         break;
                     case MessageType.COMMON_MESSAGE:
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 向 " + msg.getReceiverName() + " 发送了一条消息");
