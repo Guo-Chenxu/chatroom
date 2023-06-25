@@ -204,13 +204,13 @@ public class ServerConnectClientThread implements Runnable {
                         sendError(flag, res);
                         break;
                     case MessageType.OFFLINE:
+                        log.info(new Date() + "用户 " + username + " 下线, 用户ip为: " + client.getRemoteSocketAddress());
                         userService.offline(msg.getSenderName());
                         break;
                     default:
                         break;
                 }
             }
-            log.info(new Date() + "用户 " + username + " 下线, 用户ip为: " + client.getRemoteSocketAddress());
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } catch (CloneNotSupportedException e) {

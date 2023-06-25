@@ -141,7 +141,7 @@ public class ConnectController implements Runnable {
         log.info("用户 " + user.getUsername() + " 在 " + new Date() + " 登录失败, " +
                 "用户ip为: " + client.getRemoteSocketAddress());
         Message res = new Message();
-        res.setContent("用户名/密码/人脸不正确");
+        res.setContent("信息不正确或该用户已登录");
         output.writeObject(new Chat(false, res));
     }
 
