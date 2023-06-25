@@ -173,7 +173,9 @@ public class Login extends JFrame implements ActionListener {
                 if (!username.equals("请输入用户名") && username.matches(pattern)) {
                     // 进行人脸登录处理
                     new LoginByFace(user);
-                } else {
+                    Login.this.setVisible(false);
+                }
+                else{
                     JOptionPane.showMessageDialog(null, "请输入正确的用户名");
                 }
 
@@ -301,9 +303,6 @@ public class Login extends JFrame implements ActionListener {
         }
     }
 
-    public void hideLogin() {
-        setVisible(false);
-    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

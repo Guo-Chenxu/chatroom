@@ -1,6 +1,5 @@
 package com.chatroom.view;
 
-import com.alibaba.fastjson2.JSON;
 import com.chatroom.controller.ClientConnectServerThread;
 import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
@@ -17,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.Socket;
 import java.util.List;
 
 
@@ -24,16 +24,18 @@ public class LoginByFace extends JFrame implements ActionListener {
 
     private Webcam webcam; // 声明为成员变量
 
-    private User user;
+        private User user = new User();
 
     private Login login;
 
-    private JFrame window; // 添加成员变量
+        private JFrame window; // 添加成员变量
+        private Container contentPane;
 
-    public LoginByFace(User user) {
-        this.user = user;
-        initComponents();
-    }
+        public LoginByFace(User user) {
+
+            this.user = user;
+            initComponents();
+        }
 
     private void initComponents() {
 
@@ -56,13 +58,13 @@ public class LoginByFace extends JFrame implements ActionListener {
         int windowsHeight = 380;
 
 
-        // 获取此窗口容器 设置布局
-        Container contentPane = this.getContentPane();
-        contentPane.setLayout(null);
-        // 创建顶部面板来容纳人脸登录标签和用户名输入面板
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BorderLayout());
-        topPanel.setBackground(Color.BLUE);
+            // 获取此窗口容器 设置布局
+            contentPane = this.getContentPane();
+            contentPane.setLayout(null);
+            // 创建顶部面板来容纳人脸登录标签和用户名输入面板
+            JPanel topPanel = new JPanel();
+            topPanel.setLayout(new BorderLayout());
+            topPanel.setBackground(Color.BLUE);
 
         // 创建最上方的JLabel
         // 设置人脸登录标签
@@ -98,21 +100,83 @@ public class LoginByFace extends JFrame implements ActionListener {
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(bottomPanel, BorderLayout.CENTER);
 
-        // 创建窗口并设置布局
-        JFrame window = new JFrame("Webcam Panel");
-        window.getContentPane().add(mainPanel);
-        window.setResizable(true);
-        window.pack();
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
+            // 创建窗口并设置布局
+            window = new JFrame("Webcam");
+            window.getContentPane().add(mainPanel);
+            window.setResizable(false);
+            window.pack();
+            window.setLocationRelativeTo(null);
+            window.setVisible(true);
 
 
-        // 添加窗口关闭事件监听器
-        window.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                // 关闭摄像头
-                webcam.close();
+
+            // 添加窗口关闭事件监听器
+            window.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    // 关闭摄像头
+                    webcam.close();
+                    new Login();
+
+                }
+            });
+            this.setSize(windowsWedth, windowsHeight);
+            setLocationRelativeTo(getOwner());
+            this.setResizable(false);
+        }
+
+
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String username = user.getUsername();
+            User loginUser = new User(username);
+            // 检查是否输入用户名
+            if (username.equals("")) {
+                JOptionPane.showMessageDialog(this, "用户名不能为空!", "warning", JOptionPane.WARNING_MESSAGE);
+            } else {
+                // 拍照并转换为 BASE64 编码
+                String base64Image = Camera.captureAndEncodeImage(webcam);
+                // 检查与服务器的连接
+                UserService userService = new UserServiceImpl();
+                Socket client = userService.getClient();
+                if (client != null && !client.isClosed()) {
+                    // 将登录消息发送至服务器
+                    Chat chat = userService.loginByFace(username, base64Image);
+                    Boolean flag = chat.getFlag();
+                    Message msg = chat.getMessage();
+                    // 判断操作是否成功
+                    if (flag) {
+                        String jsonContent = msg.getContent();
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        java.util.List<Message> messageList;
+                        try {
+                            messageList = objectMapper.readValue(jsonContent, new TypeReference<List<Message>>() {
+                            });
+                        } catch (JsonProcessingException ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+                        ClientConnectServerThread clientThread = new ClientConnectServerThread(username, userService.getClient());
+                        new Thread(clientThread).start();
+                        ThreadManage.addThread(username, clientThread);
+
+                        // 显示未读消息
+                        NotRead unReadList = new NotRead(loginUser, messageList);
+                        unReadList.showNotRead();
+                        new SelectionPage(loginUser);
+
+
+                        // 隐藏登录页面
+                        window.dispose();
+                        webcam.close();
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, msg.getContent());
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "无法连接服务器！");
+                }
             }
         });
 

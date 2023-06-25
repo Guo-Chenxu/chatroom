@@ -128,7 +128,7 @@ public class SelectionPage extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                User user = null;
+                User user = new User();
                 new SelectionPage(user);
             }
         });

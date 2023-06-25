@@ -19,6 +19,7 @@ public class AddFace extends JFrame implements ActionListener {
 
     private Webcam webcam; // 声明为成员变量
 
+    private JFrame window; // 添加成员变量
     private User user;
 
     public AddFace(User user) {
@@ -85,7 +86,7 @@ public class AddFace extends JFrame implements ActionListener {
         mainPanel.add(bottomPanel, BorderLayout.CENTER);
 
         // 创建窗口并设置布局
-        JFrame window = new JFrame("Webcam Panel");
+        window = new JFrame("Webcam Panel");
         window.getContentPane().add(mainPanel);
         window.setResizable(true);
         window.pack();
