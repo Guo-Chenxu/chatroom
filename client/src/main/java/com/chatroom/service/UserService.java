@@ -28,9 +28,9 @@ public interface UserService {
 
     public void testSend(Message msg) throws IOException, ClassNotFoundException;
 
-    public Chat addFace(String userName, String faceId);
+    public void addFace(String userName, String faceId);
 
-    public Chat offLine(String userName);
+    public void offLine(String userName);
 
 
 }

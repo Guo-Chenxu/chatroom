@@ -282,7 +282,7 @@ public class Login extends JFrame implements ActionListener {
                         }
 
                         ClientConnectServerThread clientThread = new ClientConnectServerThread(username, userService.getClient());
-                        clientThread.start();
+                        new Thread(clientThread).start();
                         ThreadManage.addThread(username, clientThread);
 
                         // 显示未读消息

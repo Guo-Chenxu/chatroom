@@ -98,19 +98,24 @@ public class SelectionPage extends JFrame {
         setLocationRelativeTo(null); // 居中显示
         setVisible(true);
 
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        System.out.println("1");
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 super.windowClosing(windowEvent);
+                System.out.println(2);
                 // 检查与服务器的连接
                 UserService userService = new UserServiceImpl();
                 Socket client = userService.getClient();
                 String username = user.getUsername();
+                System.out.println(3);
                 if (client != null && !client.isClosed()) {
                     // 将登录消息发送至服务器
+                    System.out.println(4);
                     userService.offLine(username);
+                    System.out.println(5);
+                    System.exit(0);
                 } else {
                     JOptionPane.showMessageDialog(null, "无法连接服务器！");
                 }
