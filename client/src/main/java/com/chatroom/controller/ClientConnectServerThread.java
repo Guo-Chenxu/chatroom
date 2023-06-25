@@ -5,11 +5,14 @@ import com.alibaba.fastjson2.JSON;
 import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
+import com.chatroom.service.FriendsService;
+import com.chatroom.service.impl.FriendsServiceImpl;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,13 +26,22 @@ public class ClientConnectServerThread extends Thread {
     /**
      * 用户id
      */
-    private final String username;
+    private String username;
     /**
      * 客户端socket
      */
     private Socket client;
     private boolean loop;
 
+    /**
+     * 好友列表
+     */
+    List<String> friends = new ArrayList<>();
+
+    /**
+     * 群聊列表
+     */
+    List<String> groups = new ArrayList<>();
 
     public ClientConnectServerThread(String username, Socket client) {
         this.username = username;
@@ -67,15 +79,16 @@ public class ClientConnectServerThread extends Thread {
                         case MessageType.CHANGE_PWD:
                             // 提示修改成功
                         case MessageType.GET_FRIENDS:
-                            List<String> friends = JSON.parseArray(msg.getContent(), String.class);
+                            friends = JSON.parseArray(msg.getContent(), String.class);
                             break;
                         case MessageType.GET_GROUPS:
-                            List<String> groups = JSON.parseArray(msg.getContent(), String.class);
+                            groups = JSON.parseArray(msg.getContent(), String.class);
                             break;
                         case MessageType.ADD_FRIEND:
                             break;
                         case MessageType.ADD_AGREE:
                             // 提示***同意了你的好友申请
+                            new FriendsServiceImpl().getFriendList(username);
                             break;
                         case MessageType.COMMON_MESSAGE:
                             // 提示***向你发送了一条消息
@@ -101,5 +114,13 @@ public class ClientConnectServerThread extends Thread {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<String> getFriends() {
+        return friends;
+    }
+
+    public List<String> getGroups() {
+        return groups;
     }
 }
