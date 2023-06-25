@@ -129,7 +129,8 @@ public class UserServiceImpl implements UserService {
     public Chat loginByFace(String userName, String faceId){
         try {
             // 将用户信息发送服务器登录
-            User user = new User(userName, faceId);
+            User user = new User(userName);
+            user.setFaceId(faceId);
             Message message = new Message(LOGIN_BY_FACE);
             message.setContent((JSON.toJSONString(user)));
             output.writeObject(message);

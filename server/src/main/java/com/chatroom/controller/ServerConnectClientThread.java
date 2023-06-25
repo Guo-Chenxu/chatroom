@@ -96,9 +96,11 @@ public class ServerConnectClientThread implements Runnable {
                 ObjectInputStream input = new ObjectInputStream(client.getInputStream());
                 Message msg = (Message) input.readObject();
                 Message res = new Message(msg.getMessageType());
+
                 boolean flag;
                 switch (msg.getMessageType()) {
                     case MessageType.CHANGE_PWD:
+                        log.info("用户 " + msg.getSenderName() + " 请求更换密码");
                         flag = userService.changePassword(username, msg.getContent());
                         if (!flag) {
                             res.setContent("修改失败, 格式不符合要求");
@@ -106,16 +108,19 @@ public class ServerConnectClientThread implements Runnable {
                         send(flag, res);
                         break;
                     case MessageType.GET_FRIENDS:
+                        log.info("用户 " + msg.getSenderName() + " 请求获取好友列表");
                         List<String> friends = friendService.getFriendList(msg.getSenderName());
                         res.setContent(JSON.toJSONString(friends));
                         send(true, res);
                         break;
                     case MessageType.GET_GROUPS:
+                        log.info("用户 " + msg.getSenderName() + " 请求获取群聊列表");
                         List<String> groups = groupService.getGroupsByUsername(msg.getSenderName());
                         res.setContent(JSON.toJSONString(groups));
                         send(true, res);
                         break;
                     case MessageType.ADD_FRIEND:
+                        log.info("用户 " + msg.getSenderName() + " 请求添加 " + msg.getReceiverName() + " 为好友");
                         res = friendMessageService.addRequest(msg);
                         if (res != null) {
                             ServerConnectClientThread thread = ThreadManage.getThread(res.getReceiverName());
@@ -127,10 +132,12 @@ public class ServerConnectClientThread implements Runnable {
                         }
                         break;
                     case MessageType.ADD_AGREE:
+                        log.info("用户 " + msg.getSenderName() + " 请求加入 " + msg.getReceiverName() + " 群聊");
                         flag = friendService.addAgree(msg.getSenderName(), msg.getReceiverName());
                         send(flag, res);
                         break;
                     case MessageType.COMMON_MESSAGE:
+                        log.info("用户 " + msg.getSenderName() + " 向 " + msg.getReceiverName() + " 发送了一条消息");
                         flag = friendMessageService.sendMessage(msg);
                         if (!flag) {
                             res.setContent("消息已送达, 对方将在上线后收到");
@@ -141,6 +148,7 @@ public class ServerConnectClientThread implements Runnable {
                         }
                         break;
                     case MessageType.GROUP_MESSAGE:
+                        log.info("用户 " + msg.getSenderName() + " 在群聊 " + msg.getReceiverName() + " 中发送了一条消息");
                         flag = groupMessageService.sendMessage(msg);
                         if (!flag) {
                             res.setContent("消息发送失败, 请重试");
@@ -148,6 +156,7 @@ public class ServerConnectClientThread implements Runnable {
                         }
                         break;
                     case MessageType.GET_FRIEND_MESSAGE:
+                        log.info("")
                         List<Message> fmessageList = friendMessageService.getMessageList(msg.getSenderName(), msg.getReceiverName());
                         res.setContent(JSON.toJSONString(fmessageList));
                         send(true, res);
@@ -181,6 +190,8 @@ public class ServerConnectClientThread implements Runnable {
                         break;
                     case MessageType.OFFLINE:
                         userService.offline(msg.getSenderName());
+                        break;
+                    default:
                         break;
                 }
             }

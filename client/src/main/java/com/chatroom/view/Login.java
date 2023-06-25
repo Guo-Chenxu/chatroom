@@ -219,9 +219,7 @@ public class Login extends JFrame implements ActionListener {
             // 获取账号密码
             String username = userName.getText().trim();
             String pwd = new String(passWord.getPassword());
-            User loginUser = null;
-            loginUser.setUsername(username);
-            loginUser.setPassword(pwd);
+            User loginUser = new User(username, pwd);
             // 正则表达式
             String pattern = "^[a-zA-Z0-9_]{6,20}$";
 
