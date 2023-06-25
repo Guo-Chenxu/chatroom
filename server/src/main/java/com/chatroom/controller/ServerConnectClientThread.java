@@ -138,10 +138,12 @@ public class ServerConnectClientThread implements Runnable {
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 删除好友 " + msg.getReceiverName());
                         flag = friendService.removeFriend(msg.getSenderName(), msg.getReceiverName());
                         send(flag, res);
+                        break;
                     case MessageType.ADD_AGREE:
-                        log.info(new Date() + " 用户 " + msg.getSenderName() + " 请求加入 " + msg.getReceiverName() + " 群聊");
+                        log.info(new Date() + " 用户 " + msg.getSenderName() + " 同意了 " + msg.getReceiverName() + " 的好友申请");
                         flag = friendService.addAgree(msg.getSenderName(), msg.getReceiverName());
-                        send(flag, res);
+//                        ThreadManage.getThread(msg.getSenderName()).send(flag, msg);
+                        sendError(flag, msg);
                         break;
                     case MessageType.COMMON_MESSAGE:
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 向 " + msg.getReceiverName() + " 发送了一条消息");

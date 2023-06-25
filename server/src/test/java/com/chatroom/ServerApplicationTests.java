@@ -5,9 +5,11 @@ import com.chatroom.controller.ServerConnectClientThread;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
+import com.chatroom.mapper.FriendsMapper;
 import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.MessageMapper;
 import com.chatroom.mapper.UserMapper;
+import com.chatroom.service.FriendService;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.UserServiceImpl;
 import lombok.var;
@@ -37,6 +39,9 @@ class ServerApplicationTests {
 
     @Resource
     GroupMapper groupMapper;
+
+    @Resource
+    FriendsMapper friendsMapper;
 
     @Test
     void contextLoads() {
@@ -145,4 +150,9 @@ class ServerApplicationTests {
     void testUserMapper(){
         userMapper.add(new User("12", "12", "12"));
     };
+
+    @Test
+    void testAddFriend(){
+        friendsMapper.add("123", "321");
+    }
 }
