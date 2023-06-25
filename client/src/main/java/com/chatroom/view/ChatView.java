@@ -123,16 +123,16 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
             panel2.setLayout(null);
 
             //---- 图片按钮 ----
-            button1.setText("图片");
-            panel2.add(button1);
-            button1.setBounds(5, 0, 60, 30);
-            button1.addActionListener(this);
+//            button1.setText("图片");
+//            panel2.add(button1);
+//            button1.setBounds(5, 0, 60, 30);
+//            button1.addActionListener(this);
 
             //---- 文件按钮 ----
-            button2.setText("文件");
-            panel2.add(button2);
-            button2.setBounds(65, 0, 60, 30);
-            button2.addActionListener(this);
+//            button2.setText("文件");
+//            panel2.add(button2);
+//            button2.setBounds(65, 0, 60, 30);
+//            button2.addActionListener(this);
 
             {
                 // compute preferred size
@@ -270,5 +270,12 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
     @Override
     public void windowDeactivated(WindowEvent e) {
 
+    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new ChatView(new User(),new User());
+            }
+        });
     }
 }

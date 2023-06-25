@@ -70,7 +70,7 @@ public class GroupList extends JFrame {
     //请求群组列表
     public void updateGroupList(){
         GroupService groupService = new GroupServiceImpl();
-        Socket client = groupService.getClient();
+//        Socket client = groupService.getClient();
         String userName = user.getUsername();
         //...
 

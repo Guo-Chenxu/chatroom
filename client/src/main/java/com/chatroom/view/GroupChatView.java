@@ -41,6 +41,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
     private JPanel panel3;
     private JButton button3;
     private JButton button4;
+    private JButton button5;
 
     public GroupChatView(User user, Group group){
         this.user = user;
@@ -78,7 +79,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
 
     private void initComponents(){
         panel1 = new JPanel();
-//        label1 = new Avatar(friend.getAvatarId(), 60, 60);
+        label1 = new Avatar(user.getAvatarId(), 60, 60);
         label2 = new JLabel();
         label3 = new JLabel();
         scrollPane1 = new JScrollPane();
@@ -91,6 +92,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
         panel3 = new JPanel();
         button3 = new JButton();
         button4 = new JButton();
+        button5 = new JButton();
 
         //this
         setVisible(true);
@@ -134,16 +136,16 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             panel2.setLayout(null);
 
             //图片按钮
-            button1.setText("图片");
-            panel2.add(button1);
-            button1.setBounds(5,0,60,30);
-            button1.addActionListener(this);
+//            button1.setText("图片");
+//            panel2.add(button1);
+//            button1.setBounds(5,0,60,30);
+//            button1.addActionListener(this);
 
             //文件按钮
-            button2.setText("文件");
-            panel2.add(button2);
-            button2.setBounds(65,0,60,30);
-            button2.addActionListener(this);
+//            button2.setText("文件");
+//            panel2.add(button2);
+//            button2.setBounds(65,0,60,30);
+//            button2.addActionListener(this);
 
             {
                 //compute preferred size
@@ -173,6 +175,14 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
         //panel3
         {
             panel3.setLayout(null);
+
+            //邀请好友进群按钮
+            button5.setText("邀请");
+            button5.setBackground(new Color(3, 37, 108));
+            button5.setForeground(Color.white);
+            panel3.add(button5);
+            button5.setBounds(145, 5, 80, 30);
+            button5.addActionListener(this);
 
             //发送按钮
             button3.setText("发送");
@@ -259,5 +269,12 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
     @Override
     public void windowDeactivated(WindowEvent e) {
 
+    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new GroupChatView(new User(), new Group());
+            }
+        });
     }
 }
