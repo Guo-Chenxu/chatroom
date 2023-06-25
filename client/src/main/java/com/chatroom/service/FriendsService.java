@@ -1,17 +1,35 @@
 package com.chatroom.service;
 
-import com.chatroom.entity.Chat;
-
-import java.net.Socket;
+import java.util.List;
 
 /**
  * @author Ye peixin
  */
 public interface FriendsService {
-    Socket getClient();
 
-    void myStop();
+    /**
+     * 获取好友列表
+     *
+     * @param username
+     * @return 好友列表
+     */
+    void getFriendList(String username);
 
-    //获取好友列表
-    Chat getFriendList(String userName);
+    /**
+     * 添加好友
+     *
+     * @param username 自己
+     * @param friend   请求添加的用户
+     */
+    void addFriend(String username, String friend);
+
+    /**
+     * 删除好友
+     */
+    void deleteFriend(String username, String friend);
+
+    /**
+     * 同意好友申请
+     */
+    void addAgree(String username, String friend);
 }

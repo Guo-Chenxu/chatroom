@@ -52,6 +52,27 @@ public class Message implements Serializable, Cloneable {
     public Message() {
     }
 
+    public Message(String senderName, String receiverName, Date sendTime) {
+        this.senderName = senderName;
+        this.receiverName = receiverName;
+        this.sendTime = sendTime;
+    }
+
+    public Message(String senderName, String receiverName, Date sendTime, String type) {
+        this.senderName = senderName;
+        this.receiverName = receiverName;
+        this.sendTime = sendTime;
+        this.messageType = type;
+    }
+
+    public Message(String senderName, String receiverName, Date sendTime, String type, boolean isGroupMessage) {
+        this.senderName = senderName;
+        this.receiverName = receiverName;
+        this.sendTime = sendTime;
+        this.messageType = type;
+        this.isGroupMessage = true;
+    }
+
     public Message(String messageType) {
         this.messageType = messageType;
     }

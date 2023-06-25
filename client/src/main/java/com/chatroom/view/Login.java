@@ -45,7 +45,7 @@ public class Login extends JFrame implements ActionListener {
         contentPane.setLayout(null);
 
         // 设置标题
-        jlbTitle = new JLabel("CHATROOM",JLabel.CENTER);
+        jlbTitle = new JLabel("CHATROOM", JLabel.CENTER);
         jlbTitle.setFont(new Font("", Font.BOLD, 48));
         jlbTitle.setBounds((windowsWedth - 340) / 2, 20, 340, 100);
         jlbTitle.setForeground(Color.white);
@@ -139,14 +139,22 @@ public class Login extends JFrame implements ActionListener {
             public void mouseClicked(MouseEvent e) {
                 new Register();
             }
+
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
+
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
+
             @Override
-            public void mouseEntered(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {
+            }
+
             @Override
-            public void mouseExited(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {
+            }
         });
         contentPane.add(jlbRegister);
 
@@ -161,13 +169,21 @@ public class Login extends JFrame implements ActionListener {
                 // 进行人脸登录处理
                 new LoginByFace();
             }
-            public void mousePressed(MouseEvent e) {}
+
+            public void mousePressed(MouseEvent e) {
+            }
+
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
+
             @Override
-            public void mouseEntered(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {
+            }
+
             @Override
-            public void mouseExited(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {
+            }
         });
         contentPane.add(jlbFaceLogin);
 
@@ -183,16 +199,20 @@ public class Login extends JFrame implements ActionListener {
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
 
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
 
             @Override
-            public void mouseEntered(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {
+            }
 
             @Override
-            public void mouseExited(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {
+            }
         });
         contentPane.add(jlbForget);
 
@@ -235,7 +255,7 @@ public class Login extends JFrame implements ActionListener {
                     Boolean flag = chat.getFlag();
                     Message msg = chat.getMessage();
                     // 判断操作是否成功
-                    if(flag){
+                    if (flag) {
                         // 处理服务器返回的结果
                         // 登录成功
                         // 创建与服务器通信的线程
@@ -243,22 +263,23 @@ public class Login extends JFrame implements ActionListener {
                         ObjectMapper objectMapper = new ObjectMapper();
                         List<Message> messageList = null;
                         try {
-                            messageList = objectMapper.readValue(jsonContent, new TypeReference<List<Message>>(){});
+                            messageList = objectMapper.readValue(jsonContent, new TypeReference<List<Message>>() {
+                            });
                         } catch (JsonProcessingException ex) {
                             throw new RuntimeException(ex);
                         }
 
-                        ClientConnectServerThread clientThread = new ClientConnectServerThread(username,userService.getClient());
+                        ClientConnectServerThread clientThread = new ClientConnectServerThread(username, userService.getClient());
                         clientThread.start();
                         ThreadManage.addThread(username, clientThread);
 
                         // 将用户信息和好友列表控件保存至通信线程中
                         ClientConnectServerThread thread = ThreadManage.getThread(username);
                         FriendList friendList = new FriendList(loginUser);// 创建好友列表主界面
-                        thread.setFriendList(friendList);
-                        thread.setUser(loginUser);
+//                        thread.setFriendList(friendList);
+//                        thread.setUser(loginUser);
                         friendList.updateFriendList();// 获取好友列表
-                        NotRead unReadList = new NotRead(loginUser,messageList);
+                        NotRead unReadList = new NotRead(loginUser, messageList);
 
                         this.dispose();// 关闭登录界面
 

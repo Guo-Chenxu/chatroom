@@ -2,6 +2,7 @@ package com.chatroom.utils;
 
 
 import com.chatroom.controller.ClientConnectServerThread;
+import com.chatroom.entity.Message;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,7 +23,7 @@ public class ThreadManage {
     /**
      * 将某个线程添加到集合中
      *
-     * @param username                   用户名
+     * @param username                  用户名
      * @param clientConnectServerThread 客户端连接到服务器的线程
      */
     public static void addThread(String username, ClientConnectServerThread clientConnectServerThread) {
@@ -48,6 +49,14 @@ public class ThreadManage {
         map.remove(userId);
     }
 
-
+    /**
+     * 向服务端发送消息
+     *
+     * @param username 用户名
+     * @param message  消息
+     */
+    public static void send(String username, Message message) {
+        ThreadManage.getThread(username).send(message);
+    }
 }
 
