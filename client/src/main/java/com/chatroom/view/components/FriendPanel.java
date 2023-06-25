@@ -1,5 +1,6 @@
 package com.chatroom.view.components;
 
+import com.chatroom.controller.ChatViewManage;
 import com.chatroom.entity.*;
 import com.chatroom.view.ChatView;
 
@@ -40,17 +41,17 @@ public class FriendPanel extends JPanel implements MouseListener {
         nickname = new JLabel();
         nickname.setBounds(60, 10, 210, 18);
         nickname.setForeground(new Color(0, 0, 0));
-        nickname.setText(friend.getUsername() + "(" + friend.getId() + ")");
+        nickname.setText(friend.getUsername());
 
 //        this.add(avatar);
         this.add(nickname);
-        this.add(sign);
     }
     @Override
     public void mouseClicked(MouseEvent e) {
         // 检测鼠标右键单击
         if (e.getClickCount() == 2) {
             ChatView chatView = new ChatView(user, friend);
+            ChatViewManage.addChatView(friend.getUsername(), chatView);
 //            ChatViewManage.addChatFrame(friend.getQq(), chatView);
         }
     }

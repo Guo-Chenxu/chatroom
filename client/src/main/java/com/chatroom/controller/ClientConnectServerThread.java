@@ -77,11 +77,11 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                 Message msg = chat.getMessage();
                 // todo 补充具体的页面展示
                 if (!chat.getFlag()) {
+                    JOptionPane.showMessageDialog(this, msg.getContent(), "warning", JOptionPane.WARNING_MESSAGE);
                 } else {
                     switch (msg.getMessageType()) {
                         case MessageType.CHANGE_PWD:
                             // 提示修改成功
-                            JOptionPane.showMessageDialog(this, "请输入正确的QQ号和密码！");
                         case MessageType.GET_FRIENDS:
                             friends = JSON.parseArray(msg.getContent(), String.class);
                             break;

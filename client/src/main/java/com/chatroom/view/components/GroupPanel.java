@@ -1,5 +1,6 @@
 package com.chatroom.view.components;
 
+import com.chatroom.controller.GroupChatViewManage;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.User;
 import com.chatroom.view.ChatView;
@@ -44,7 +45,7 @@ public class GroupPanel extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e){
         if (e.getClickCount() == 2) {
             GroupChatView groupChatView = new GroupChatView(user, group);
-
+            GroupChatViewManage.addGroupChatView(group.getGroupName(), groupChatView);
         }
     }
     @Override

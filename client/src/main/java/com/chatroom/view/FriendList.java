@@ -45,11 +45,11 @@ public class FriendList extends JFrame{
         container = this.getContentPane();
         container.setLayout(null);
         //用户头像
-        JLabel jlbPhoto = new Avatar(user.getAvatarId(), 80, 80);
-        jlbPhoto.setBounds(20, 22, 80, 80);
-        container.add(jlbPhoto);
+//        JLabel jlbPhoto = new Avatar(user.getAvatarId(), 80, 80);
+//        jlbPhoto.setBounds(20, 22, 80, 80);
+//        container.add(jlbPhoto);
         //用户昵称
-        JLabel jlbName = new JLabel(user.getUsername() + "(" + user.getId() + ")");
+        JLabel jlbName = new JLabel(user.getUsername());
         jlbName.setForeground(Color.WHITE);
         jlbName.setFont(new Font("", Font.BOLD, 18));
         jlbName.setBounds(120, 30, 140, 20);
@@ -78,7 +78,7 @@ public class FriendList extends JFrame{
         //窗体底部面板
         bottom = new JPanel(new GridLayout(1, 0));
         bottom.setBounds(0, 542, windowsWedth, 30);
-        bottom.add(addFriend);
+
         container.add(bottom);
         //窗体关闭事件
         this.addWindowListener(new WindowAdapter(){
