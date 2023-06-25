@@ -128,4 +128,8 @@ public interface MessageType {
      * 注册失败
      */
     String REGISTER_FAIL = "29";
+    /**
+     * 删除好友
+     */
+    String DELETE_FRIEND = "30";
 }

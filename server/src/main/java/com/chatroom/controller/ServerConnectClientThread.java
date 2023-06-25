@@ -68,6 +68,10 @@ public class ServerConnectClientThread implements Runnable {
         this.loop = true;
     }
 
+    public Socket getClient() {
+        return this.client;
+    }
+
     public void myStop() {
         this.loop = false;
     }
@@ -78,7 +82,7 @@ public class ServerConnectClientThread implements Runnable {
             /*
              * 输出流
              */
-            log.info("服务器向 " + this.username + " 发送了一条效写, 内容为 " + message);
+            log.info("服务器向 " + this.username + " 发送了一条消息, 内容为 " + message);
             ObjectOutputStream output = new ObjectOutputStream(client.getOutputStream());
             output.writeObject(chat);
         } catch (IOException e) {
@@ -131,6 +135,10 @@ public class ServerConnectClientThread implements Runnable {
                             send(false, res);
                         }
                         break;
+                    case MessageType.DELETE_FRIEND:
+                        log.info(new Date() + " 用户 " + msg.getSenderName() + " 删除好友 " + msg.getReceiverName());
+                        flag = friendService.removeFriend(msg.getSenderName(), msg.getReceiverName());
+                        send(flag, res);
                     case MessageType.ADD_AGREE:
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 请求加入 " + msg.getReceiverName() + " 群聊");
                         flag = friendService.addAgree(msg.getSenderName(), msg.getReceiverName());

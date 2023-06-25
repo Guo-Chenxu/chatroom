@@ -63,7 +63,7 @@ public class SelectionPage extends JFrame {
         JButton addFriendBtn = createButton("添加好友");
         addFriendBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new addFriend();
+                new AddFriend(new User());
             }
         });
 

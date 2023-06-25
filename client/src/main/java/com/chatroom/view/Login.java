@@ -45,7 +45,7 @@ public class Login extends JFrame implements ActionListener {
         contentPane.setLayout(null);
 
         // 设置标题
-        jlbTitle = new JLabel("CHATROOM",JLabel.CENTER);
+        jlbTitle = new JLabel("CHATROOM", JLabel.CENTER);
         jlbTitle.setFont(new Font("", Font.BOLD, 48));
         jlbTitle.setBounds((windowsWedth - 340) / 2, 20, 340, 100);
         jlbTitle.setForeground(Color.white);
@@ -139,14 +139,22 @@ public class Login extends JFrame implements ActionListener {
             public void mouseClicked(MouseEvent e) {
                 new Register();
             }
+
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
+
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
+
             @Override
-            public void mouseEntered(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {
+            }
+
             @Override
-            public void mouseExited(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {
+            }
         });
         contentPane.add(jlbRegister);
 
@@ -174,13 +182,21 @@ public class Login extends JFrame implements ActionListener {
                 }
 
             }
-            public void mousePressed(MouseEvent e) {}
+
+            public void mousePressed(MouseEvent e) {
+            }
+
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
+
             @Override
-            public void mouseEntered(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {
+            }
+
             @Override
-            public void mouseExited(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {
+            }
         });
         contentPane.add(jlbFaceLogin);
 
@@ -196,16 +212,20 @@ public class Login extends JFrame implements ActionListener {
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
 
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
 
             @Override
-            public void mouseEntered(MouseEvent e) {}
+            public void mouseEntered(MouseEvent e) {
+            }
 
             @Override
-            public void mouseExited(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {
+            }
         });
         contentPane.add(jlbForget);
 

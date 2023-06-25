@@ -1,14 +1,19 @@
 package com.chatroom.controller;
 
 
+import com.alibaba.fastjson2.JSON;
+import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
-import com.chatroom.entity.User;
-import com.chatroom.view.FriendList;
+import com.chatroom.entity.MessageType;
+import com.chatroom.service.FriendsService;
+import com.chatroom.service.impl.FriendsServiceImpl;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @program: chatroom
@@ -21,16 +26,22 @@ public class ClientConnectServerThread extends Thread {
     /**
      * 用户id
      */
-    private final String username;
+    private String username;
     /**
      * 客户端socket
      */
     private Socket client;
     private boolean loop;
-    private User user;
-    private ObjectInputStream input;
-    private ObjectOutputStream output;
 
+    /**
+     * 好友列表
+     */
+    List<String> friends = new ArrayList<>();
+
+    /**
+     * 群聊列表
+     */
+    List<String> groups = new ArrayList<>();
 
     public ClientConnectServerThread(String username, Socket client) {
         this.username = username;
@@ -38,13 +49,16 @@ public class ClientConnectServerThread extends Thread {
         this.loop = true;
     }
 
-    public void myStop() {
+    public void myStop() throws IOException {
         this.loop = false;
+        if (this.client != null) {
+            this.client.close();
+        }
     }
 
     public void send(Message message) {
         try {
-            output = new ObjectOutputStream(client.getOutputStream());
+            ObjectOutputStream output = new ObjectOutputStream(client.getOutputStream());
             output.writeObject(message);
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,47 +69,58 @@ public class ClientConnectServerThread extends Thread {
     public void run() {
         try {
             while (loop) {
-                input = new ObjectInputStream(client.getInputStream());
-//                // 判断消息类型
-//                switch (msg.getType()) {
-//                    case GET_FRIENDS:// 获取好友列表
-//                        ArrayList<User> users = (ArrayList<User>) msg.getContent();
-//                        friendList.showFriendList(users);
-//                        break;
-//                    case GET_CHAT_LIST:// 获取聊天记录
-//                        ArrayList<Chat> content = (ArrayList<Chat>) msg.getContent();
-//                        String remark = (String) msg.getRemark();
-//                        ChatView chatFrame = ChatViewManage.getChatFrame(Integer.parseInt(remark));
-//                        // todo 加了一个content不为空, 应该就没问题了
-//                        if (chatFrame != null && content != null) {
-//                            chatFrame.showChats(content);
-//                        }
-//                        break;
-//                    case CHAT_MESSAGE:// 聊天消息
-//                        new ChatService().receive(msg);
-//                        break;
-//                    default:
-//                        System.out.println("未知类型");
-//                }
+                ObjectInputStream input = new ObjectInputStream(client.getInputStream());
+                Chat chat = (Chat) input.readObject();
+                Message msg = chat.getMessage();
+                // todo 补充具体的页面展示
+                if (!chat.getFlag()) {
+                } else {
+                    switch (msg.getMessageType()) {
+                        case MessageType.CHANGE_PWD:
+                            // 提示修改成功
+                        case MessageType.GET_FRIENDS:
+                            friends = JSON.parseArray(msg.getContent(), String.class);
+                            break;
+                        case MessageType.GET_GROUPS:
+                            groups = JSON.parseArray(msg.getContent(), String.class);
+                            break;
+                        case MessageType.ADD_FRIEND:
+                            break;
+                        case MessageType.ADD_AGREE:
+                            // 提示***同意了你的好友申请
+                            new FriendsServiceImpl().getFriendList(username);
+                            break;
+                        case MessageType.COMMON_MESSAGE:
+                            // 提示***向你发送了一条消息
+                            break;
+                        case MessageType.GROUP_MESSAGE:
+                            // 提示***在***群聊中发送了一条消息
+                        case MessageType.GET_FRIEND_MESSAGE:
+                            List<Message> friendMessages = JSON.parseArray(msg.getContent(), Message.class);
+                            break;
+                        case MessageType.GET_GROUP_MESSAGE:
+                            List<Message> groupMessages = JSON.parseArray(msg.getContent(), Message.class);
+                            break;
+                        case MessageType.DELETE_FRIEND:
+                            // 提示删除成功
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void setFriendList(FriendList friendList) {
+    public List<String> getFriends() {
+        return friends;
     }
 
-    public void setUser(User loginUser) {
-        this.user = user;
+    public List<String> getGroups() {
+        return groups;
     }
-
-//    public FriendList getFriendList() {
-//        return friendList;
-//    }
-//
-//    public void setFriendList(FriendList friendList) {
-//        this.friendList = friendList;
-//    }
-
 }

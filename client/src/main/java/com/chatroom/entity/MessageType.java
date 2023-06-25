@@ -41,6 +41,10 @@ public interface MessageType {
      */
     String ADD_FRIEND = "7";
     /**
+     * 删除好友
+     */
+    String DELETE_FRIEND = "30";
+    /**
      * 好友申请通过
      */
     String ADD_AGREE = "8";
