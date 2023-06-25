@@ -10,11 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SelectionPage extends JFrame {
-    private final User user;
+
     private JPanel container;
 
     public SelectionPage(User user) {
-        this.user = user;
         setTitle("选择");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false); // 禁止调整窗口大小
@@ -39,15 +38,14 @@ public class SelectionPage extends JFrame {
         JButton showFriendsBtn = createButton("展示好友列表");
         showFriendsBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
-
+                new FriendList(user);
             }
         });
 
         JButton showGroupsBtn = createButton("展示群组列表");
         showGroupsBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                    new GroupList(user);
             }
         });
 

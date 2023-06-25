@@ -119,7 +119,6 @@ public class AddFace extends JFrame implements ActionListener {
         UserService userService = new UserServiceImpl();
         // 将登录消息发送至服务器
         userService.addFace(username, base64Image);
-//        this.setVisible(false);
         window.dispose();
         webcam.close();
     }

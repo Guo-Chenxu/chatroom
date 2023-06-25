@@ -24,9 +24,8 @@ public class LoginByFace extends JFrame implements ActionListener {
 
     private Webcam webcam; // 声明为成员变量
 
-    private User user = new User();
+    private User user ;
 
-    private Login login;
 
     private JFrame window; // 添加成员变量
     private Container contentPane;

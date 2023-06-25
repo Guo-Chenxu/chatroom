@@ -114,9 +114,9 @@ public class NotRead extends JFrame {
                 addGroupMessage(sender,content,time);
                 msg.setIsRead(true);
             }
-            else if(Objects.equals(msg.getMessageType(), GET_FRIENDS_ADD)){
-                // 好友请求发送人用户名是msg.getSenderName()？
-                new FriendAddRequest(msg.getSenderName());
+            else if(Objects.equals(msg.getMessageType(), ADD_FRIEND)){
+                // 好友请求
+                new FriendAddRequest(msg.getSenderName(),user.getUsername());
                 msg.setIsRead(true);
             }
         }
