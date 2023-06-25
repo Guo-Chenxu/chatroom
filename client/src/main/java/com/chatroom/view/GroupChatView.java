@@ -4,6 +4,8 @@ import com.chatroom.entity.Chat;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.User;
+import com.chatroom.service.MessageService;
+import com.chatroom.service.impl.GroupMessageServiceImpl;
 import com.chatroom.view.components.Avatar;
 
 import javax.swing.*;
@@ -52,6 +54,8 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
 
     //获取群聊聊天记录
     public void getGroupChatList(){
+        MessageService groupMessageService = new GroupMessageServiceImpl();
+        groupMessageService.getMessages(user.getUsername(), group.getGroupName());
 
     }
 
@@ -235,7 +239,25 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        JButton source = (JButton) e.getSource();
+        if(source == button5){
+            //邀请好友入群按钮
+            try {
+                new InviteFriend(user);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        }else if(source == button4){
+            //关闭按钮
+            this.dispose();
+        }else if(source == button3){
+            //发送按钮
+            String text = textPane2.getText();
+            System.out.println(text);
+            MessageService GroupMessageService = new GroupMessageServiceImpl();
+            GroupMessageService.sendMessage(user.getUsername(), group.getGroupName(), text);
+            textPane2.removeAll();
+        }
     }
     @Override
     public void windowOpened(WindowEvent e) {

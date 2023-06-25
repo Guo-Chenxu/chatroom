@@ -1,5 +1,7 @@
 package com.chatroom.view;
 import com.chatroom.entity.*;
+import com.chatroom.service.MessageService;
+import com.chatroom.service.impl.FriendMessageServiceImpl;
 import com.chatroom.view.components.*;
 
 import javax.swing.*;
@@ -28,7 +30,8 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
      * 获取聊天记录
      */
     public void getChatList() {
-//
+        MessageService friendMessageService = new FriendMessageServiceImpl();
+        friendMessageService.getMessages(user.getUsername(), friend.getUsername());
     }
 
     /**
@@ -233,7 +236,18 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        JButton source = (JButton) e.getSource();
+        //关闭按钮
+        if(source == button4){
+            this.dispose();
+        }else if(source == button3){
+            //发送按钮
+            String text = textPane2.getText();
+            System.out.println(text);
+            MessageService friendMessageService = new FriendMessageServiceImpl();
+            friendMessageService.sendMessage(user.getUsername(), friend.getUsername(), text);
+            textPane2.removeAll();
+        }
     }
 
 

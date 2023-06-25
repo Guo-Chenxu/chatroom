@@ -7,6 +7,8 @@ import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
 import com.chatroom.service.FriendsService;
 import com.chatroom.service.impl.FriendsServiceImpl;
+import com.chatroom.view.ChatView;
+import com.chatroom.view.GroupChatView;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -99,9 +101,15 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             // 提示***在***群聊中发送了一条消息
                         case MessageType.GET_FRIEND_MESSAGE:
                             List<Message> friendMessages = JSON.parseArray(msg.getContent(), Message.class);
+                            String receiverName = msg.getReceiverName();
+                            ChatView chatView = ChatViewManage.getChatView(receiverName);
+                            chatView.showChats((ArrayList<Message>) friendMessages);
                             break;
                         case MessageType.GET_GROUP_MESSAGE:
                             List<Message> groupMessages = JSON.parseArray(msg.getContent(), Message.class);
+                            String groupName = msg.getReceiverName();
+                            GroupChatView groupChatView = GroupChatViewManage.getGroupChatView(groupName);
+                            groupChatView.showGroupList((ArrayList<Message>) groupMessages);
                             break;
                         case MessageType.DELETE_FRIEND:
                             // 提示删除成功
