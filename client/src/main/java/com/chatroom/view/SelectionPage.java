@@ -98,7 +98,24 @@ public class SelectionPage extends JFrame {
         setLocationRelativeTo(null); // 居中显示
         setVisible(true);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                super.windowClosing(windowEvent);
+                // 检查与服务器的连接
+                UserService userService = new UserServiceImpl();
+                Socket client = userService.getClient();
+                String username = user.getUsername();
+                if (client != null && !client.isClosed()) {
+                    // 将登录消息发送至服务器
+                    userService.offLine(username);
+                } else {
+                    JOptionPane.showMessageDialog(null, "无法连接服务器！");
+                }
+            }
+        });
     }
 
     private JButton createButton(String text) {

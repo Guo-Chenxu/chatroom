@@ -292,6 +292,7 @@ public class Login extends JFrame implements ActionListener {
                         // 隐藏登录页面
                         this.setVisible(false);
 
+
                     } else {
                         JOptionPane.showMessageDialog(this, msg.getContent());
                     }
@@ -302,6 +303,10 @@ public class Login extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "请输入正确的QQ号和密码！");
             }
         }
+    }
+
+    public void hideLogin() {
+        setVisible(false);
     }
 
     public static void main(String[] args) {
