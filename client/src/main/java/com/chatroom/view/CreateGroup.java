@@ -30,7 +30,7 @@ public class CreateGroup extends JFrame {
         this.user = user;
         this.setSize(300, 220); // Increased height to accommodate checkboxes
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setVisible(true);
 
         label1 = new JLabel();

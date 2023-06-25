@@ -52,14 +52,18 @@ public class SelectionPage extends JFrame {
         JButton addFriendBtn = createButton("添加好友");
         addFriendBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new AddFriend(new User());
+                new AddFriend(user);
             }
         });
 
         JButton createGroupBtn = createButton("建立群组");
         createGroupBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                try {
+                    new CreateGroup(user);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 

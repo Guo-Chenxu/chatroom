@@ -40,7 +40,7 @@ public class FriendList extends JFrame{
     public FriendList(User user){
         this.user = user;
         this.setSize(windowsWedth, windowsHeight);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         // 本窗口面板
         container = this.getContentPane();
         container.setLayout(null);

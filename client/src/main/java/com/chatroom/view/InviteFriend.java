@@ -26,7 +26,7 @@ public class InviteFriend extends JFrame {
         this.group = group;
         this.setSize(300, 200);  // 调整窗口高度以适应新的组件
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setVisible(true);
 
         label1 = new JLabel();

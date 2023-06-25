@@ -24,7 +24,7 @@ public class FriendAddRequest extends JFrame {
 
     private void initComponents() {
         setTitle("好友申请");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         // 创建面板
         JPanel mainPanel = new JPanel(new BorderLayout());

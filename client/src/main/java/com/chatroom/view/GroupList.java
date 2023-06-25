@@ -40,7 +40,7 @@ public class GroupList extends JFrame {
     public GroupList(User user){
         this.user = user;
         this.setSize(windowsWedth, windowsHeight);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         //窗口面板
         container = this.getContentPane();
         container.setLayout(null);
