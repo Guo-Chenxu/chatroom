@@ -285,15 +285,10 @@ public class Login extends JFrame implements ActionListener {
                         clientThread.start();
                         ThreadManage.addThread(username, clientThread);
 
-                        // 将用户信息和好友列表控件保存至通信线程中
-                        ClientConnectServerThread thread = ThreadManage.getThread(username);
-                        FriendList friendList = new FriendList(loginUser);
-                        thread.setFriendList(friendList);
-                        thread.setUser(loginUser);
                         // 显示未读消息
                         NotRead unReadList = new NotRead(loginUser, messageList);
                         unReadList.showNotRead();
-                        SelectionPage selectionPage = new SelectionPage(loginUser);
+                        new SelectionPage(loginUser);
                         // 隐藏登录页面
                         this.setVisible(false);
 

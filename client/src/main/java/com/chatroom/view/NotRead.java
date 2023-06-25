@@ -97,14 +97,6 @@ public class NotRead extends JFrame {
 
     public void showNotRead(){
         List<Message> list = this.messageList;
-        Message msg1 = new Message();
-        msg1.setSenderName("111");
-        msg1.setContent("111111");
-        msg1.setSendTime(new Date("June 25, 2021 10:30:00"));
-//        addFriendMessage(msg1.getSenderName(),msg1.getContent(),msg1.getSendTime());
-//        addFriendMessage(msg1.getSenderName(),msg1.getContent(),msg1.getSendTime());
-//        addFriendMessage(msg1.getSenderName(),msg1.getContent(),msg1.getSendTime());
-//        addGroupMessage(msg1.getSenderName(),msg1.getContent(),msg1.getSendTime());
         for (Message msg : list) {
             // 未读好友消息
             if(Objects.equals(msg.getMessageType(), COMMON_MESSAGE)){
@@ -116,17 +108,22 @@ public class NotRead extends JFrame {
             }
             else if(Objects.equals(msg.getMessageType(), GROUP_MESSAGE)){
                 // 未读群聊消息
-
+                String sender = msg.getSenderName();
+                String content = msg.getContent();
+                Date time = msg.getSendTime();
+                addGroupMessage(sender,content,time);
+                msg.setIsRead(true);
             }
             else if(Objects.equals(msg.getMessageType(), GET_FRIENDS_ADD)){
                 // 好友请求发送人用户名是msg.getSenderName()？
                 new FriendAddRequest(msg.getSenderName());
             }
         }
+        // 添加“没有未读消息”标签
         if (friendPanel.getComponentCount() == 0)
-            addNoUnreadMessagesLabel(friendPanel); // 添加“没有未读消息”标签
+            addNoUnreadMessagesLabel(friendPanel);
         if(groupPanel.getComponentCount() == 0)
-            addNoUnreadMessagesLabel(groupPanel); // 添加“没有未读消息”标签
+            addNoUnreadMessagesLabel(groupPanel);
     }
 
     // 添加“没有未读消息”标签
@@ -139,7 +136,6 @@ public class NotRead extends JFrame {
         panel.add(noUnreadLabel);
     }
 
-
     // 添加好友消息到好友消息面板
     private void addFriendMessage(String sender, String message, Date time) {
         JTextPane messagePane = createMessagePane(sender, message, time);
@@ -148,12 +144,15 @@ public class NotRead extends JFrame {
         friendPanel.repaint();
 
     }
+
+    // 添加群聊消息到群聊消息面板
     private void addGroupMessage(String sender, String message, Date time) {
         JTextPane messagePane = createMessagePane(sender, message, time);
         groupPanel.add(messagePane);
         groupPanel.revalidate();
         groupPanel.repaint();
     }
+
     private JTextPane createMessagePane(String sender, String message, Date time) {
         JTextPane messagePane = new JTextPane();
         messagePane.setPreferredSize(new Dimension(200, 60));
