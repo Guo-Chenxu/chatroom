@@ -27,9 +27,6 @@ public class ClientConnectServerThread extends Thread {
      */
     private Socket client;
     private boolean loop;
-    private User user;
-    private ObjectInputStream input;
-    private ObjectOutputStream output;
 
 
     public ClientConnectServerThread(String username, Socket client) {
@@ -44,7 +41,7 @@ public class ClientConnectServerThread extends Thread {
 
     public void send(Message message) {
         try {
-            output = new ObjectOutputStream(client.getOutputStream());
+            ObjectOutputStream output = new ObjectOutputStream(client.getOutputStream());
             output.writeObject(message);
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,8 +52,8 @@ public class ClientConnectServerThread extends Thread {
     public void run() {
         try {
             while (loop) {
-                input = new ObjectInputStream(client.getInputStream());
-//                // 判断消息类型
+                ObjectInputStream input = new ObjectInputStream(client.getInputStream());
+                // 判断消息类型
 //                switch (msg.getType()) {
 //                    case GET_FRIENDS:// 获取好友列表
 //                        ArrayList<User> users = (ArrayList<User>) msg.getContent();
@@ -82,20 +79,4 @@ public class ClientConnectServerThread extends Thread {
             e.printStackTrace();
         }
     }
-
-    public void setFriendList(FriendList friendList) {
-    }
-
-    public void setUser(User loginUser) {
-        this.user = user;
-    }
-
-//    public FriendList getFriendList() {
-//        return friendList;
-//    }
-//
-//    public void setFriendList(FriendList friendList) {
-//        this.friendList = friendList;
-//    }
-
 }

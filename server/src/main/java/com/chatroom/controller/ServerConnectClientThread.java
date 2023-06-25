@@ -68,6 +68,10 @@ public class ServerConnectClientThread implements Runnable {
         this.loop = true;
     }
 
+    public Socket getClient(){
+        return this.client;
+    }
+
     public void myStop() {
         this.loop = false;
     }

@@ -5,14 +5,10 @@ import com.chatroom.controller.ServerConnectClientThread;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
-import com.chatroom.entity.User;
 import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.MessageMapper;
 import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.UserService;
-import com.chatroom.utils.Base64Util;
-import com.chatroom.utils.FaceMatchUtil;
-import com.chatroom.utils.FileUtil;
 import lombok.var;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -79,11 +75,12 @@ class ServerApplicationTests {
 
     @Test
     void testGroupAdd() {
-        Group g = new Group();
-        g.setGroupName("123");
-        g.setAvatarId("123");
-        g.setLevel(1);
-        groupMapper.add(g);
+//        Group g = new Group();
+//        g.setLeaderName("111");
+//        g.setGroupName("123");
+//        g.setAvatarId("123");
+//        g.setLevel(1);
+//        groupMapper.add(g);
     }
 
     @Test
@@ -120,16 +117,16 @@ class ServerApplicationTests {
 
     @Test
     void testAddList() {
-        List<Message> m = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Message mm = new Message();
-            mm.setContent(1 + "");
-            mm.setIsGroupMessage(i % 2 == 1);
-            mm.setIsRead(i % 2 == 0);
-//            messagesMapper.add(mm);
-        }
-        messagesMapper.addList(m);
-        System.out.println(messagesMapper.getAllMessages());
+//        List<Message> m = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            Message mm = new Message();
+//            mm.setContent(1 + "");
+//            mm.setIsGroupMessage(i % 2 == 1);
+//            mm.setIsRead(i % 2 == 0);
+////            messagesMapper.add(mm);
+//        }
+//        messagesMapper.addList(m);
+//        System.out.println(messagesMapper.getAllMessages());
     }
 
     @Test
@@ -143,12 +140,4 @@ class ServerApplicationTests {
         System.out.println(serverConnectClientThread01);
     }
 
-    @Test
-    void testFaceMatch() throws IOException {
-        User u = userMapper.getByUsername("guochenxu123");
-//        String str = Base64Util.encode(FileUtil.readFileByBytes("D:\\Screenshot 2023-06-24 001429.png"));
-        String str = FileUtil.readFileAsString("D:\\token.txt");
-        System.out.println(str.length());
-        System.out.println(FaceMatchUtil.faceMatch(u.getFaceId(), str));
-    }
 }
