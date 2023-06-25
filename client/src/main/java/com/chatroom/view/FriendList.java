@@ -96,20 +96,20 @@ public class FriendList extends JFrame{
 
     //向服务器请求好友列表
     public void updateFriendList(){
-        FriendsService friendsService = new FriendsServiceImpl();
-        Socket client = friendsService.getClient();
-        String userName = user.getUsername();
-        JSONObject myFriendList = null;
-
-        if(client!=null && !client.isClosed()){
-            Chat chat = friendsService.getFriendList(userName);
-            Message msg = chat.getMessage();
-            if(chat.getFlag()){
-                myFriendList = JSON.parseObject(msg.getContent());
-                ClientConnectServerThread thread = ThreadManage.getThread(user.getUsername());
-
-            }
-        }
+//        FriendsService friendsService = new FriendsServiceImpl();
+//        Socket client = friendsService.getClient();
+//        String userName = user.getUsername();
+//        JSONObject myFriendList = null;
+//
+//        if(client!=null && !client.isClosed()){
+//            Chat chat = friendsService.getFriendList(userName);
+//            Message msg = chat.getMessage();
+//            if(chat.getFlag()){
+//                myFriendList = JSON.parseObject(msg.getContent());
+//                ClientConnectServerThread thread = ThreadManage.getThread(user.getUsername());
+//
+//            }
+//        }
 
 //        Message message = new Message();
 //        ThreadManage.getThread(user.getUsername()).send(message);

@@ -1,5 +1,7 @@
 package com.chatroom.view;
 
+import com.chatroom.entity.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -48,7 +50,7 @@ public class SelectionPage extends JFrame {
         JButton addFriendBtn = createButton("添加好友");
         addFriendBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new addFriend();
+                new AddFriend(new User());
             }
         });
 
