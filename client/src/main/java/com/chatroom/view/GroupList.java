@@ -4,12 +4,14 @@ import com.chatroom.entity.Group;
 import com.chatroom.entity.User;
 import com.chatroom.service.GroupService;
 import com.chatroom.service.impl.GroupServiceImpl;
+import com.chatroom.utils.ThreadManage;
 import com.chatroom.view.components.GroupPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Ye peixin
@@ -65,14 +67,13 @@ public class GroupList extends JFrame {
         container.add(bottom);
         //设置窗体可见
         this.setVisible(true);
+        updateGroupList();
     }
 
     //请求群组列表
     public void updateGroupList(){
         GroupService groupService = new GroupServiceImpl();
-//        Socket client = groupService.getClient();
-        String userName = user.getUsername();
-        //...
+        groupService.getGroups(user.getUsername());
 
         groupList = new JPanel();
         groupList.setLayout(null);
@@ -86,12 +87,15 @@ public class GroupList extends JFrame {
         jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         container.add(jScrollPane);
+
+        List<String> groups = ThreadManage.getThread(user.getUsername()).getGroups();
+        showGroupList(groups);
     }
-    public void showGroupList(ArrayList<Group> list){
+    public void showGroupList(List<String> list){
         int panelHeight = 60;
         groupList.removeAll();
         for(int i=0; i<list.size(); i++){
-            Group group = list.get(i);
+            Group group = new Group( list.get(i));
             //创建群聊面板
             JPanel groupPanel = new GroupPanel(this.user, group);
             groupPanel.setLocation(0,i*panelHeight);

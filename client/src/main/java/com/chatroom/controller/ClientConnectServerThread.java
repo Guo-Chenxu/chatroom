@@ -8,6 +8,7 @@ import com.chatroom.entity.MessageType;
 import com.chatroom.service.FriendsService;
 import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.view.ChatView;
+import com.chatroom.view.FriendList;
 import com.chatroom.view.GroupChatView;
 
 import javax.swing.*;
@@ -96,9 +97,17 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             break;
                         case MessageType.COMMON_MESSAGE:
                             // 提示***向你发送了一条消息
+                            Message friendMessage = msg;
+                            String senderName = msg.getSenderName();
+                            ChatView chatView1 = ChatViewManage.getChatView(senderName);
+                            chatView1.receiveChat(friendMessage);
                             break;
                         case MessageType.GROUP_MESSAGE:
                             // 提示***在***群聊中发送了一条消息
+                            Message groupMessage = msg;
+                            String groupName1 = msg.getReceiverName();
+                            GroupChatView groupChatView1 = GroupChatViewManage.getGroupChatView(groupName1);
+                            groupChatView1.receiveGroupChat(groupMessage);
                         case MessageType.GET_FRIEND_MESSAGE:
                             List<Message> friendMessages = JSON.parseArray(msg.getContent(), Message.class);
                             String receiverName = msg.getReceiverName();

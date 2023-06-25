@@ -1,6 +1,8 @@
 package com.chatroom.view;
 
 import com.chatroom.entity.User;
+import com.chatroom.service.FriendsService;
+import com.chatroom.service.impl.FriendsServiceImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +25,7 @@ public class AddFriend extends JFrame {
         this.user = user;
         this.setSize(300, 150);
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setVisible(true);
 
         label1 = new JLabel();
@@ -52,6 +54,8 @@ public class AddFriend extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = textField1.getText();
+                FriendsService friendsService = new FriendsServiceImpl();
+                friendsService.addFriend(user.getUsername(), text);
             }
         });
 

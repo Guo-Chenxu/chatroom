@@ -1,8 +1,11 @@
 package com.chatroom.view;
 
+import com.chatroom.entity.Group;
 import com.chatroom.entity.User;
 import com.chatroom.service.FriendsService;
+import com.chatroom.service.GroupService;
 import com.chatroom.service.impl.FriendsServiceImpl;
+import com.chatroom.service.impl.GroupServiceImpl;
 import com.chatroom.utils.ThreadManage;
 
 import javax.swing.*;
@@ -17,8 +20,10 @@ import java.util.List;
  */
 public class CreateGroup extends JFrame {
     private User user;
+    private Group group;
     private JLabel label1;
     private JButton button1;
+    private JTextField textField;
     private List<JCheckBox> checkBoxes;
 
     public CreateGroup(User user) throws InterruptedException {
@@ -31,6 +36,7 @@ public class CreateGroup extends JFrame {
         label1 = new JLabel();
         button1 = new JButton();
         checkBoxes = new ArrayList<>();
+        textField = new JTextField();
 
         Container containerPane = getContentPane();
         containerPane.setLayout(null);
@@ -66,6 +72,9 @@ public class CreateGroup extends JFrame {
         containerPane.add(checkBox3);
         checkBox3.setBounds(70, 75, 100, checkBox3.getPreferredSize().height);
         checkBoxes.add(checkBox3);
+        //输入群聊等级
+        textField.setBounds(140,30,200,textField.getPreferredSize().height);
+        containerPane.add(textField);
 
         button1.setText("建立群聊");
         containerPane.add(button1);
@@ -81,10 +90,14 @@ public class CreateGroup extends JFrame {
                         selectedOptions.add(checkBox.getText());
                     }
                 }
-                System.out.println("选中的选项：");
-                for (String option : selectedOptions) {
-                    System.out.println(option);
-                }
+                group.setLevel(Integer.parseInt(textField.getText()));
+                group.setUsers(selectedOptions);
+//                System.out.println("选中的选项：");
+//                for (String option : selectedOptions) {
+//                    System.out.println(option);
+//                }
+                GroupService groupService = new GroupServiceImpl();
+                groupService.setGroup(user.getUsername(), group);
             }
         });
 

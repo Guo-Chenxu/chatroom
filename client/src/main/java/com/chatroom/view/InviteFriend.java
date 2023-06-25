@@ -1,8 +1,11 @@
 package com.chatroom.view;
 
+import com.chatroom.entity.Group;
 import com.chatroom.entity.User;
 import com.chatroom.service.FriendsService;
+import com.chatroom.service.GroupService;
 import com.chatroom.service.impl.FriendsServiceImpl;
+import com.chatroom.service.impl.GroupServiceImpl;
 import com.chatroom.utils.ThreadManage;
 
 import javax.swing.*;
@@ -13,12 +16,14 @@ import java.util.List;
 
 public class InviteFriend extends JFrame {
     private User user;
+    private Group group;
     private JLabel label1;
     private JComboBox<String> comboBox1;  // 添加 JComboBox
     private JButton button1;
 
-    public InviteFriend(User user) throws InterruptedException {
+    public InviteFriend(User user, Group group) throws InterruptedException {
         this.user = user;
+        this.group = group;
         this.setSize(300, 200);  // 调整窗口高度以适应新的组件
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,6 +82,8 @@ public class InviteFriend extends JFrame {
                 } else {
                     System.out.println("未选择好友");
                 }
+                GroupService groupService = new GroupServiceImpl();
+                groupService.addGroup(comboBox1.getSelectedObjects().toString(), group.getGroupName());
             }
         });
 
@@ -89,7 +96,7 @@ public class InviteFriend extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new InviteFriend(new User());
+                    new InviteFriend(new User(), new Group());
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

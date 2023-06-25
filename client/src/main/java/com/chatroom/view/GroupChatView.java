@@ -4,9 +4,12 @@ import com.chatroom.entity.Chat;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.User;
+import com.chatroom.service.GroupService;
 import com.chatroom.service.MessageService;
 import com.chatroom.service.impl.GroupMessageServiceImpl;
+import com.chatroom.service.impl.GroupServiceImpl;
 import com.chatroom.view.components.Avatar;
+import com.chatroom.view.components.ChatBubble;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * @author Ye peixin
@@ -44,6 +48,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
     private JButton button3;
     private JButton button4;
     private JButton button5;
+    private JButton button6;
 
     public GroupChatView(User user, Group group){
         this.user = user;
@@ -61,7 +66,16 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
 
     //展示群聊聊天记录
     public void showGroupList(ArrayList<Message> list){
-
+        textPane1.removeAll();
+        for(Message message:list){
+            String senderName = message.getSenderName();
+            Date time = new Date(String.valueOf(message.getSendTime()));
+            String content = message.getContent();
+            ChatBubble chatBubble = new ChatBubble(senderName, time, content);
+            textPane1.add(chatBubble);
+        }
+        textPane1.updateUI();
+        scrollToBottom();
     }
 
     //聊天内容区域滚动到底部
@@ -76,9 +90,15 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             }
         });
     }
-    //接收聊天消息
-    public void receiveGroupChat(Chat chat){
-
+    //接收实时聊天消息
+    public void receiveGroupChat(Message message){
+        String senderName = message.getSenderName();
+        Date time = new Date(String.valueOf(message.getSendTime()));
+        String content = message.getContent();
+        ChatBubble chatBubble = new ChatBubble(senderName, time, content);
+        textPane1.add(chatBubble);
+        textPane1.updateUI();
+        scrollToBottom();
     }
 
     private void initComponents(){
@@ -97,6 +117,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
         button3 = new JButton();
         button4 = new JButton();
         button5 = new JButton();
+        button6 = new JButton();
 
         //this
         setVisible(true);
@@ -180,6 +201,14 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
         {
             panel3.setLayout(null);
 
+            //退出群聊
+            button6.setText("退群");
+            button6.setBackground(new Color(3, 37, 108));
+            button6.setForeground(Color.white);
+            panel3.add(button6);
+            button6.setBounds(60, 5, 80, 30);
+            button6.addActionListener(this);
+
             //邀请好友进群按钮
             button5.setText("邀请");
             button5.setBackground(new Color(3, 37, 108));
@@ -243,7 +272,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
         if(source == button5){
             //邀请好友入群按钮
             try {
-                new InviteFriend(user);
+                new InviteFriend(user, group);
             } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
             }
@@ -257,6 +286,9 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             MessageService GroupMessageService = new GroupMessageServiceImpl();
             GroupMessageService.sendMessage(user.getUsername(), group.getGroupName(), text);
             textPane2.removeAll();
+        } else if (source==button6) {
+            GroupService groupService = new GroupServiceImpl();
+            groupService.leaveGroup(user.getUsername(), group.getGroupName());
         }
     }
     @Override

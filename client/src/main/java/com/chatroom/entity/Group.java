@@ -28,7 +28,7 @@ public class Group implements Serializable {
      * 群组成员的信息
      * 仅用于前后端交互
      */
-    private List<User> users;
+    private List<String> users;
     /**
      * 群头像
      */
@@ -47,6 +47,10 @@ public class Group implements Serializable {
     }
 
     public Group() {
+    }
+
+    public Group(String groupName) {
+        this.groupName = groupName;
     }
 
     /**

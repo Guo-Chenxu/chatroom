@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -38,7 +39,16 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
      * 显示聊天记录
      */
     public void showChats(ArrayList<Message> list) {
-
+        textPane1.removeAll();
+        for(Message message : list){
+            String senderName = (message.getSenderName() == user.getUsername())?user.getUsername() : friend.getUsername();
+            Date time = new Date(String.valueOf(message.getSendTime()));
+            String content = message.getContent();
+            ChatBubble chatBubble = new ChatBubble(senderName, time, content);
+            textPane1.add(chatBubble);
+        }
+        textPane1.updateUI();
+        scrollToBottom();
     }
 
     /**
@@ -57,10 +67,16 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
     }
 
     /**
-     * 接收聊天消息
+     * 接收实时聊天消息
      */
-    public void receiveChat(Message chat) {
-
+    public void receiveChat(Message msg) {
+        String senderName = msg.getSenderName() == user.getUsername()?user.getUsername() : friend.getUsername();
+        Date time = new Date(String.valueOf(msg.getSendTime()));
+        String content = msg.getContent();
+        ChatBubble chatBubble = new ChatBubble(senderName, time, content);
+        textPane1.add(chatBubble);
+        textPane1.updateUI();
+        scrollToBottom();
     }
 
     private void initComponents() {
