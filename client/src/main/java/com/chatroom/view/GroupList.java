@@ -43,7 +43,7 @@ public class GroupList extends JFrame {
         container = this.getContentPane();
         container.setLayout(null);
         //用户昵称
-        JLabel jlbName = new JLabel(user.getUsername()+"("+user.getId()+")");
+        JLabel jlbName = new JLabel(user.getUsername());
         jlbName.setForeground(Color.white);
         jlbName.setFont(new Font("", Font.BOLD, 18));
         jlbName.setBounds(120, 30, 140, 20);
@@ -99,5 +99,12 @@ public class GroupList extends JFrame {
         }
         groupList.setPreferredSize(new Dimension(windowsWedth, list.size()*panelHeight));
         container.repaint();
+    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new GroupList(new User());
+            }
+        });
     }
 }
