@@ -1,22 +1,13 @@
 package com.chatroom.view;
 
-import com.chatroom.controller.ClientConnectServerThread;
-import com.chatroom.entity.Chat;
-import com.chatroom.entity.Message;
 import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.UserServiceImpl;
-import com.chatroom.utils.ThreadManage;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.Socket;
-import java.util.List;
 
 public class SelectionPage extends JFrame {
     private final User user;
@@ -77,7 +68,7 @@ public class SelectionPage extends JFrame {
         JButton addFaceBtn = createButton("添加人脸信息");
         addFaceBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                    new AddFace(user);
+                new AddFace(user);
             }
         });
 
@@ -107,18 +98,18 @@ public class SelectionPage extends JFrame {
                 System.out.println(2);
                 // 检查与服务器的连接
                 UserService userService = new UserServiceImpl();
-                Socket client = userService.getClient();
+//                Socket client = ThreadManage.getThread(user.getUsername()).getClient();
                 String username = user.getUsername();
                 System.out.println(3);
-                if (client != null && !client.isClosed()) {
-                    // 将登录消息发送至服务器
-                    System.out.println(4);
-                    userService.offLine(username);
-                    System.out.println(5);
-                    System.exit(0);
-                } else {
-                    JOptionPane.showMessageDialog(null, "无法连接服务器！");
-                }
+//                if (client != null && !client.isClosed()) {
+                // 将登录消息发送至服务器
+                System.out.println(4);
+                userService.offLine(username);
+                System.out.println(5);
+                System.exit(0);
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "无法连接服务器！");
+//                }
             }
         });
     }

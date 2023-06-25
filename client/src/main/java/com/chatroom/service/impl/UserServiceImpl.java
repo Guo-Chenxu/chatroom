@@ -3,9 +3,6 @@ package com.chatroom.service.impl;
 import com.alibaba.fastjson2.JSON;
 import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
-import static com.chatroom.entity.MessageType.*;
-
-import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
 import com.chatroom.utils.ThreadManage;
@@ -15,6 +12,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Date;
+
+import static com.chatroom.entity.MessageType.*;
 
 /**
  * @program: chatroom
@@ -29,7 +29,10 @@ public class UserServiceImpl implements UserService {
     private ObjectOutputStream output;
     private ObjectInputStream input;
 
-    public UserServiceImpl() {
+    /**
+     * 初始化三个流
+     */
+    public void init() {
         try {
             // todo ip会变, 所以需要改
             client = new Socket("10.28.236.228", 9623);
@@ -60,32 +63,19 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void addFace(String userName, String faceId) {
-        try {
-            // 将用户信息发送服务器登录
-            User user = new User(userName);
-            user.setFaceId(faceId);
-            Message message = new Message(ADD_FACE);
-            message.setContent((JSON.toJSONString(user)));
-            output.writeObject(message);
-
-        } catch (IOException e) {
-            close(client, output, input);
-            e.printStackTrace();
-        }
+        // 将用户信息发送服务器登录
+        User user = new User(userName);
+        user.setFaceId(faceId);
+        Message message = new Message(ADD_FACE);
+        message.setContent((JSON.toJSONString(user)));
+        ThreadManage.send(userName, message);
     }
 
     @Override
     public void offLine(String userName) {
-        try {
-            // 将用户信息发送服务器登录
-            User user = new User(userName);
-            Message message = new Message(OFFLINE);
-            message.setContent((JSON.toJSONString(user)));
-            output.writeObject(message);
-
-        } catch (IOException e) {
-            close(client, output, input);
-            e.printStackTrace();}
+        // 将用户信息发送服务器登录
+        Message message = new Message(userName, "", new Date(), OFFLINE);
+        ThreadManage.send(userName, message);
     }
 
 
@@ -93,6 +83,7 @@ public class UserServiceImpl implements UserService {
     public Socket getClient() {
         return client;
     }
+
     @Override
     public void myStop() {
         close(client, input, output);
@@ -117,6 +108,7 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
+
     /**
      * 用户登录
      *
@@ -127,6 +119,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Chat loginByPwd(String userName, String pwd) {
         try {
+            init();
             // 将用户信息发送服务器登录
             User user = new User(userName, pwd);
             Message message = new Message(LOGIN_BY_PWD);
@@ -134,6 +127,11 @@ public class UserServiceImpl implements UserService {
             output.writeObject(message);
             // 接收服务器返回到结果
             Chat chat = (Chat) input.readObject();
+
+            if (!chat.getFlag()) {
+                client.close();
+            }
+
             return chat;
         } catch (IOException | ClassNotFoundException e) {
             close(client, output, input);
@@ -141,32 +139,12 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
-    /**
-     * 用户注册
-     *
-     * @param userName
-     * @param pwd
-     * @return
-     */
+
     @Override
-    public Chat register(String userName,  String pwd) {
+    public Chat loginByFace(String userName, String faceId) {
         try {
-            // 将用户信息发送服务器
-            User user = new User(userName, pwd);
-            Message message = new Message(REGISTER);
-            message.setContent((JSON.toJSONString(user)));
-            output.writeObject(message);
-            // 接收服务器返回到结果
-            Chat chat = (Chat) input.readObject();
-            return chat;
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    @Override
-    public Chat loginByFace(String userName, String faceId){
-        try {
+            init();
+
             // 将用户信息发送服务器登录
             User user = new User(userName);
             user.setFaceId(faceId);
@@ -175,6 +153,11 @@ public class UserServiceImpl implements UserService {
             output.writeObject(message);
             // 接收服务器返回到结果
             Chat chat = (Chat) input.readObject();
+
+            if (!chat.getFlag()) {
+                client.close();
+            }
+
             return chat;
         } catch (IOException | ClassNotFoundException e) {
             close(client, output, input);
@@ -182,5 +165,35 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
+    /**
+     * 用户注册
+     *
+     * @param userName
+     * @param pwd
+     * @return
+     */
+    @Override
+    public Chat register(String userName, String pwd) {
+        try {
+            init();
+
+            // 将用户信息发送服务器
+            User user = new User(userName, pwd);
+            Message message = new Message(REGISTER);
+            message.setContent((JSON.toJSONString(user)));
+            output.writeObject(message);
+            // 接收服务器返回到结果
+            Chat chat = (Chat) input.readObject();
+
+            client.close();
+
+            return chat;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }

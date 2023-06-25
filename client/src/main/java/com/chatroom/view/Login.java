@@ -1,5 +1,6 @@
 package com.chatroom.view;
 
+import com.alibaba.fastjson2.JSON;
 import com.chatroom.controller.ClientConnectServerThread;
 import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
@@ -7,14 +8,10 @@ import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.UserServiceImpl;
 import com.chatroom.utils.ThreadManage;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.net.Socket;
 import java.util.List;
 
 
@@ -166,18 +163,17 @@ public class Login extends JFrame implements ActionListener {
         jlbFaceLogin.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                User user= new User();
+                User user = new User();
                 String username = userName.getText().trim();
                 user.setUsername(username);
                 // 正则表达式
                 String pattern = "^[a-zA-Z0-9_]{6,20}$";
 
                 // 检查信息是否输入正确
-                if (!username.equals("请输入用户名") && username.matches(pattern) ) {
+                if (!username.equals("请输入用户名") && username.matches(pattern)) {
                     // 进行人脸登录处理
                     new LoginByFace(user);
-                }
-                else{
+                } else {
                     JOptionPane.showMessageDialog(null, "请输入正确的用户名");
                 }
 
@@ -261,44 +257,44 @@ public class Login extends JFrame implements ActionListener {
                     && username.matches(pattern) && pwd.matches(pattern)) {
                 // 检查与服务器的连接
                 UserService userService = new UserServiceImpl();
-                Socket client = userService.getClient();
-                if (client != null && !client.isClosed()) {
-                    // 将登录消息发送至服务器
-                    Chat chat = userService.loginByPwd(username, pwd);
-                    Boolean flag = chat.getFlag();
-                    Message msg = chat.getMessage();
-                    // 判断操作是否成功
-                    if(flag) {
-                        // 处理服务器返回的结果
-                        // 创建与服务器通信的线程
-                        String jsonContent = msg.getContent();
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        List<Message> messageList;
-                        try {
-                            messageList = objectMapper.readValue(jsonContent, new TypeReference<List<Message>>() {
-                            });
-                        } catch (JsonProcessingException ex) {
-                            throw new RuntimeException(ex);
-                        }
+//                Socket client = userService.getClient();
+//                if (client != null && !client.isClosed()) {
+                // 将登录消息发送至服务器
+                Chat chat = userService.loginByPwd(username, pwd);
+                Boolean flag = chat.getFlag();
+                Message msg = chat.getMessage();
+                // 判断操作是否成功
+                if (flag) {
+                    // 处理服务器返回的结果
+                    // 创建与服务器通信的线程
+                    String jsonContent = msg.getContent();
+                    List<Message> messageList = JSON.parseArray(jsonContent, Message.class);
 
-                        ClientConnectServerThread clientThread = new ClientConnectServerThread(username, userService.getClient());
-                        new Thread(clientThread).start();
-                        ThreadManage.addThread(username, clientThread);
+//                    ObjectMapper objectMapper = new ObjectMapper();
+//                    try {
+//                        messageList = objectMapper.readValue(jsonContent, new TypeReference<List<Message>>() {
+//                        });
+//                    } catch (JsonProcessingException ex) {
+//                        throw new RuntimeException(ex);
+//                    }
 
-                        // 显示未读消息
-                        NotRead unReadList = new NotRead(loginUser, messageList);
-                        unReadList.showNotRead();
-                        new SelectionPage(loginUser);
-                        // 隐藏登录页面
-                        this.setVisible(false);
+                    ClientConnectServerThread clientThread = new ClientConnectServerThread(username, userService.getClient());
+                    new Thread(clientThread).start();
+                    ThreadManage.addThread(username, clientThread);
 
+                    // 显示未读消息
+                    NotRead unReadList = new NotRead(loginUser, messageList);
+                    unReadList.showNotRead();
+                    new SelectionPage(loginUser);
+                    // 隐藏登录页面
+                    this.setVisible(false);
 
-                    } else {
-                        JOptionPane.showMessageDialog(this, msg.getContent());
-                    }
                 } else {
-                    JOptionPane.showMessageDialog(this, "无法连接服务器！");
+                    JOptionPane.showMessageDialog(this, msg.getContent());
                 }
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "无法连接服务器！");
+//                }
             } else {
                 JOptionPane.showMessageDialog(this, "请输入正确的QQ号和密码！");
             }

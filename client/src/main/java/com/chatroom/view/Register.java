@@ -1,16 +1,14 @@
 package com.chatroom.view;
 
-import com.alibaba.fastjson2.JSON;
 import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
-import com.chatroom.entity.User;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.UserServiceImpl;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
 
 
 public class Register extends JFrame implements ActionListener {
@@ -107,46 +105,46 @@ public class Register extends JFrame implements ActionListener {
             String againPwd = String.valueOf(confirm.getPassword());
             // 正则表达式
             String pattern = "^[a-zA-Z0-9_]{6,20}$";
-            if(username.matches(pattern) && pwd.matches(pattern)){
+            if (username.matches(pattern) && pwd.matches(pattern)) {
                 //检查格式
                 if (check(username, pwd, againPwd)) {
                     UserService userService = new UserServiceImpl();
                     // 检查与服务器的连接
-                    if (userService.getClient() != null) {
-                        Chat chat = userService.register(username, pwd);
-                        Boolean flag = chat.getFlag();
-                        Message msg = chat.getMessage();
-                        // 判断操作是否成功
-                        if (flag) {
-                            JOptionPane.showMessageDialog(this, "注册成功!");
-                            this.dispose();
-                        } else {
-                            JOptionPane.showMessageDialog(this,  msg.getContent());
-                        }
-                        userService.myStop();
+//                    if (userService.getClient() != null) {
+                    Chat chat = userService.register(username, pwd);
+                    Boolean flag = chat.getFlag();
+                    Message msg = chat.getMessage();
+                    // 判断操作是否成功
+                    if (flag) {
+                        JOptionPane.showMessageDialog(this, "注册成功!");
+                        this.dispose();
                     } else {
-                        JOptionPane.showMessageDialog(this, "无法连接服务器!");
+                        JOptionPane.showMessageDialog(this, msg.getContent());
                     }
+                    userService.myStop();
+//                    } else {
+//                        JOptionPane.showMessageDialog(this, "无法连接服务器!");
+//                    }
                 }
-            }else {
+            } else {
                 JOptionPane.showMessageDialog(this, "请输入正确的QQ号和密码！\n(用户名和密码格式要求为 6-20 位的数字、字母和下划线)");
             }
         }
     }
 
 
-    private Boolean check(String n,  String p, String ap) {
+    private Boolean check(String n, String p, String ap) {
         if (n.equals("")) {
-            JOptionPane.showMessageDialog(this, "昵称不能为空!","warning",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "昵称不能为空!", "warning", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
         if (p.equals("") || ap.equals("")) {
-            JOptionPane.showMessageDialog(this, "密码不能为空，请重新输入！","warning",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "密码不能为空，请重新输入！", "warning", JOptionPane.WARNING_MESSAGE);
             return false;
         }
         if (!p.equals(ap)) {
-            JOptionPane.showMessageDialog(this, "密码输入错误，请重新输入！","warning",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "密码输入错误，请重新输入！", "warning", JOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;

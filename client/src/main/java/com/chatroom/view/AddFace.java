@@ -13,8 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.net.Socket;
-
 
 
 public class AddFace extends JFrame implements ActionListener {
@@ -118,14 +116,14 @@ public class AddFace extends JFrame implements ActionListener {
         String base64Image = Camera.captureAndEncodeImage(webcam);
         // 检查与服务器的连接
         UserService userService = new UserServiceImpl();
-        Socket client = userService.getClient();
-        if (client != null && !client.isClosed()) {
-            // 将登录消息发送至服务器
-            userService.addFace(username, base64Image);
-            this.setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(this, "无法连接服务器！");
-        }
+//        Socket client = userService.getClient();
+//        if (client != null && !client.isClosed()) {
+        // 将登录消息发送至服务器
+        userService.addFace(username, base64Image);
+        this.setVisible(false);
+//        } else {
+//            JOptionPane.showMessageDialog(this, "无法连接服务器！");
+//        }
 
     }
 
