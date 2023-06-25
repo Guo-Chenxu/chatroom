@@ -75,7 +75,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public boolean leaveGroup(String groupName, String username) {
-        return false;
+        return groupUserRelationMapper.delete(groupName, username) > 0;
     }
 
     @Override

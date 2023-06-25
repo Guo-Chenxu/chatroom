@@ -28,7 +28,8 @@ public class FriendsServiceImpl implements FriendsService {
 
     @Override
     public void deleteFriend(String username, String friend) {
-        Message message = new Message(username, friend, new Date());
+        Message message = new Message(username, friend, new Date(), MessageType.DELETE_FRIEND);
+        ThreadManage.send(username, message);
     }
 
     @Override
