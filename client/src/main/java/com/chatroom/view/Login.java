@@ -166,8 +166,21 @@ public class Login extends JFrame implements ActionListener {
         jlbFaceLogin.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // 进行人脸登录处理
-                new LoginByFace();
+                User user= new User();
+                String username = userName.getText().trim();
+                user.setUsername(username);
+                // 正则表达式
+                String pattern = "^[a-zA-Z0-9_]{6,20}$";
+
+                // 检查信息是否输入正确
+                if (!username.equals("请输入用户名") && username.matches(pattern) ) {
+                    // 进行人脸登录处理
+                    new LoginByFace(user);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "请输入正确的用户名");
+                }
+
             }
 
             public void mousePressed(MouseEvent e) {
@@ -255,13 +268,12 @@ public class Login extends JFrame implements ActionListener {
                     Boolean flag = chat.getFlag();
                     Message msg = chat.getMessage();
                     // 判断操作是否成功
-                    if (flag) {
+                    if(flag) {
                         // 处理服务器返回的结果
-                        // 登录成功
                         // 创建与服务器通信的线程
                         String jsonContent = msg.getContent();
                         ObjectMapper objectMapper = new ObjectMapper();
-                        List<Message> messageList = null;
+                        List<Message> messageList;
                         try {
                             messageList = objectMapper.readValue(jsonContent, new TypeReference<List<Message>>() {
                             });
@@ -273,15 +285,12 @@ public class Login extends JFrame implements ActionListener {
                         clientThread.start();
                         ThreadManage.addThread(username, clientThread);
 
-                        // 将用户信息和好友列表控件保存至通信线程中
-                        ClientConnectServerThread thread = ThreadManage.getThread(username);
-                        FriendList friendList = new FriendList(loginUser);// 创建好友列表主界面
-//                        thread.setFriendList(friendList);
-//                        thread.setUser(loginUser);
-                        friendList.updateFriendList();// 获取好友列表
+                        // 显示未读消息
                         NotRead unReadList = new NotRead(loginUser, messageList);
-
-                        this.dispose();// 关闭登录界面
+                        unReadList.showNotRead();
+                        new SelectionPage(loginUser);
+                        // 隐藏登录页面
+                        this.setVisible(false);
 
                     } else {
                         JOptionPane.showMessageDialog(this, msg.getContent());
