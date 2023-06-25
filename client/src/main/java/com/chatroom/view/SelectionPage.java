@@ -99,30 +99,6 @@ public class SelectionPage extends JFrame {
         setVisible(true);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                // 检查与服务器的连接
-                UserService userService = new UserServiceImpl();
-                Socket client = userService.getClient();
-                String username = user.getUsername();
-                if (client != null && !client.isClosed()) {
-                    // 将登录消息发送至服务器
-                    Chat chat = userService.offLine(username);
-                    Boolean flag = chat.getFlag();
-                    Message msg = chat.getMessage();
-                    // 判断操作是否成功
-                    if(flag) {
-                        JOptionPane.showMessageDialog(null, "下线成功");
-                    } else {
-                        JOptionPane.showMessageDialog(null, msg.getContent());
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "无法连接服务器！");
-                }
-            }
-        });
     }
 
     private JButton createButton(String text) {
