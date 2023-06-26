@@ -1,9 +1,8 @@
 package com.chatroom.view.components;
 
-import com.chatroom.controller.GroupChatViewManage;
+import com.chatroom.utils.GroupChatViewManage;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.User;
-import com.chatroom.view.ChatView;
 import com.chatroom.view.GroupChatView;
 
 import javax.swing.*;

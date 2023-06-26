@@ -69,9 +69,9 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
         textPane1.removeAll();
         for(Message message:list){
             String senderName = message.getSenderName();
-            Date time = new Date(String.valueOf(message.getSendTime()));
+//            Date time = new Date(String.valueOf(message.getSendTime()));
             String content = message.getContent();
-            ChatBubble chatBubble = new ChatBubble(senderName, time, content);
+            ChatBubble chatBubble = new ChatBubble(senderName, message.getSendTime(), content);
             textPane1.add(chatBubble);
         }
         textPane1.updateUI();
@@ -93,9 +93,9 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
     //接收实时聊天消息
     public void receiveGroupChat(Message message){
         String senderName = message.getSenderName();
-        Date time = new Date(String.valueOf(message.getSendTime()));
+//        Date time = new Date(String.valueOf(message.getSendTime()));
         String content = message.getContent();
-        ChatBubble chatBubble = new ChatBubble(senderName, time, content);
+        ChatBubble chatBubble = new ChatBubble(senderName, message.getSendTime(), content);
         textPane1.add(chatBubble);
         textPane1.updateUI();
         scrollToBottom();

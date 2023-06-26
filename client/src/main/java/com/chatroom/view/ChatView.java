@@ -42,9 +42,9 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
         textPane1.removeAll();
         for(Message message : list){
             String senderName = (message.getSenderName() == user.getUsername())?user.getUsername() : friend.getUsername();
-            Date time = new Date(String.valueOf(message.getSendTime()));
+//            Date time = new Date(String.valueOf(message.getSendTime()));
             String content = message.getContent();
-            ChatBubble chatBubble = new ChatBubble(senderName, time, content);
+            ChatBubble chatBubble = new ChatBubble(senderName, message.getSendTime(), content);
             textPane1.add(chatBubble);
         }
         textPane1.updateUI();
@@ -71,9 +71,9 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
      */
     public void receiveChat(Message msg) {
         String senderName = msg.getSenderName() == user.getUsername()?user.getUsername() : friend.getUsername();
-        Date time = new Date(String.valueOf(msg.getSendTime()));
+//        Date time = new Date(String.valueOf(msg.getSendTime()));
         String content = msg.getContent();
-        ChatBubble chatBubble = new ChatBubble(senderName, time, content);
+        ChatBubble chatBubble = new ChatBubble(senderName, msg.getSendTime(), content);
         textPane1.add(chatBubble);
         textPane1.updateUI();
         scrollToBottom();
