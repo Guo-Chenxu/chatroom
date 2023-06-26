@@ -1,7 +1,10 @@
 package com.chatroom.view;
 import com.chatroom.entity.*;
+import com.chatroom.service.FriendsService;
 import com.chatroom.service.MessageService;
 import com.chatroom.service.impl.FriendMessageServiceImpl;
+import com.chatroom.service.impl.FriendsServiceImpl;
+import com.chatroom.utils.ChatViewManage;
 import com.chatroom.view.components.*;
 
 import javax.swing.*;
@@ -12,6 +15,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 
 /**
@@ -41,7 +45,7 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
     public void showChats(ArrayList<Message> list) {
         textPane1.removeAll();
         for(Message message : list){
-            String senderName = (message.getSenderName() == user.getUsername())?user.getUsername() : friend.getUsername();
+            String senderName = (Objects.equals(message.getSenderName(), user.getUsername()))?user.getUsername() : friend.getUsername();
 //            Date time = new Date(String.valueOf(message.getSendTime()));
             String content = message.getContent();
             ChatBubble chatBubble = new ChatBubble(senderName, message.getSendTime(), content);
@@ -70,7 +74,7 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
      * 接收实时聊天消息
      */
     public void receiveChat(Message msg) {
-        String senderName = msg.getSenderName() == user.getUsername()?user.getUsername() : friend.getUsername();
+        String senderName = Objects.equals(msg.getSenderName(), user.getUsername()) ?user.getUsername() : friend.getUsername();
 //        Date time = new Date(String.valueOf(msg.getSendTime()));
         String content = msg.getContent();
         ChatBubble chatBubble = new ChatBubble(senderName, msg.getSendTime(), content);
@@ -96,6 +100,7 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
         panel3 = new JPanel();
         button3 = new JButton();
         button4 = new JButton();
+        button5 = new JButton();
 
         //======== this ========
         setVisible(true);
@@ -182,6 +187,14 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
         {
             panel3.setLayout(null);
 
+            //删除好友按钮
+            button5.setText("删除好友");
+            button5.setBackground(new Color(3,37,108));
+            button5.setForeground(Color.white);
+            panel3.add(button5);
+            button5.setBounds(115, 5, 110, 30);
+            button5.addActionListener(this);
+
             //---- 发送按钮 ----
             button3.setText("发送");
             button3.setBackground(new Color(3, 37, 108));
@@ -249,20 +262,27 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
     private JPanel panel3;
     private JButton button3;
     private JButton button4;
+    private JButton button5;
 
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton source = (JButton) e.getSource();
         //关闭按钮
         if(source == button4){
+            //将该窗口从哈希表中删除
+            ChatViewManage.removeChatView(friend.getUsername());
             this.dispose();
         }else if(source == button3){
             //发送按钮
             String text = textPane2.getText();
             System.out.println(text);
+            textPane2.removeAll();
             MessageService friendMessageService = new FriendMessageServiceImpl();
             friendMessageService.sendMessage(user.getUsername(), friend.getUsername(), text);
-            textPane2.removeAll();
+        } else if (source == button5) {
+            //删除好友
+            FriendsService friendsService = new FriendsServiceImpl();
+            friendsService.deleteFriend(user.getUsername(), friend.getUsername());
         }
     }
 

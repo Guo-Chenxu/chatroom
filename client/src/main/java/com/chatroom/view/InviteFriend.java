@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.List;
 
 public class InviteFriend extends JFrame {
@@ -83,7 +84,7 @@ public class InviteFriend extends JFrame {
                     System.out.println("未选择好友");
                 }
                 GroupService groupService = new GroupServiceImpl();
-                groupService.addGroup(comboBox1.getSelectedObjects().toString(), group.getGroupName());
+                groupService.addGroup(Arrays.toString(comboBox1.getSelectedObjects()), group.getGroupName());
             }
         });
 

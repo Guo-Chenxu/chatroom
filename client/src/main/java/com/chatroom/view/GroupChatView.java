@@ -8,6 +8,7 @@ import com.chatroom.service.GroupService;
 import com.chatroom.service.MessageService;
 import com.chatroom.service.impl.GroupMessageServiceImpl;
 import com.chatroom.service.impl.GroupServiceImpl;
+import com.chatroom.utils.GroupChatViewManage;
 import com.chatroom.view.components.Avatar;
 import com.chatroom.view.components.ChatBubble;
 
@@ -278,6 +279,8 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             }
         }else if(source == button4){
             //关闭按钮
+            //将该窗口从哈希表中删除
+            GroupChatViewManage.removeGroupChatView(group.getGroupName());
             this.dispose();
         }else if(source == button3){
             //发送按钮
