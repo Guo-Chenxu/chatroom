@@ -104,8 +104,8 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM message
-        WHERE (sender_name = #{name1} and receiver_name = #{name2} and is_group_message = 0)
-        or (sender_name = #{name2} and receiver_name = #{name1} and is_group_message = 0)
+        WHERE (sender_name = #{name1} and receiver_name = #{name2} and is_group_message = 0 and message_type = '9')
+        or (sender_name = #{name2} and receiver_name = #{name1} and is_group_message = 0 and message_type = '9')
         Order by send_time
     </select>
 

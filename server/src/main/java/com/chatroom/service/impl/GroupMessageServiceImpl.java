@@ -1,8 +1,6 @@
 package com.chatroom.service.impl;
 
-import com.chatroom.controller.ServerConnectClientThread;
 import com.chatroom.entity.Message;
-import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
 import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.GroupUserRelationMapper;
@@ -13,7 +11,6 @@ import com.chatroom.utils.ThreadManage;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +32,11 @@ public class GroupMessageServiceImpl implements GroupMessageService {
     @Resource
     GroupUserRelationMapper groupUserRelationMapper;
 
+    /**
+     * 群聊天用未读消息提醒
+     */
     @Override
+    @Deprecated
     public List<Message> getNotReadMessages(User user) {
         List<Message> notRead = messageMapper.getNotReadMessage(user.getUsername());
         messageMapper.setMessageReaded(user.getUsername());
@@ -51,22 +52,25 @@ public class GroupMessageServiceImpl implements GroupMessageService {
     @Override
     public boolean sendMessage(Message message) throws CloneNotSupportedException {
         List<String> groupMembers = groupUserRelationMapper.getUsersByGroupName(message.getReceiverName());
-        List<Message> messages = new ArrayList<>();
+//        List<Message> messages = new ArrayList<>();
         for (String username : groupMembers) {
-            Message m = message.cloneMessage();
-            // 根据用户是否在线判断消息是否已读
-            if (ThreadManage.userIsOnline(message.getReceiverName())) {
-                message.setIsRead(false);
-                message.setMessageType(MessageType.USER_OFFLINE);
-            } else {
-                message.setIsRead(true);
-                ServerConnectClientThread thread = ThreadManage.getThread(username);
-                thread.send(true, message);
+//            Message m = message.cloneMessage();
+//            // 根据用户是否在线判断消息是否已读
+//            if (ThreadManage.userIsOnline(message.getReceiverName())) {
+//                message.setIsRead(false);
+//                message.setMessageType(MessageType.USER_OFFLINE);
+//            } else {
+//                message.setIsRead(true);
+//                ServerConnectClientThread thread = ThreadManage.getThread(username);
+//                thread.send(true, message);
+//            }
+//            m.setReceiverName(username);
+//            messages.add(m);
+//            // todo mybatis的for each标签似乎有点问题, 读不到标签内的sql语句, 所以暂时循环写数据库, 以后再改
+//            messageMapper.add(m);
+            if (ThreadManage.userIsOnline(username)) {
+                ThreadManage.getThread(username).send(true, message);
             }
-            m.setReceiverName(username);
-            messages.add(m);
-            // todo mybatis的for each标签似乎有点问题, 读不到标签内的sql语句, 所以暂时循环写数据库, 以后再改
-            messageMapper.add(m);
         }
         // 给群组内每个用户都添加一条该消息
 //        messageMapper.addList(messages);

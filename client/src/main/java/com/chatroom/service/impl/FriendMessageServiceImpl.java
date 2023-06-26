@@ -23,7 +23,7 @@ public class FriendMessageServiceImpl implements MessageService {
 
     @Override
     public void sendMessage(String sender, String receiver, String content) {
-        Message message = new Message(sender, receiver, new Date(), MessageType.COMMON_MESSAGE, true);
+        Message message = new Message(sender, receiver, new Date(), MessageType.COMMON_MESSAGE);
         message.setContent(content);
         ThreadManage.send(sender, message);
     }

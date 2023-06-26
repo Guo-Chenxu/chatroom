@@ -43,12 +43,8 @@ public class FriendMessageServiceImpl implements FriendMessageService {
     @Override
     public boolean sendMessage(Message message) {
         // 根据用户是否在线判断消息是否已读
-        if (ThreadManage.userIsOnline(message.getReceiverName())) {
-            message.setIsRead(false);
-            message.setMessageType(MessageType.USER_OFFLINE);
-        } else {
-            message.setIsRead(true);
-        }
+        message.setIsRead(ThreadManage.userIsOnline(message.getReceiverName()));
+        messageMapper.add(message);
         return message.getIsRead();
     }
 

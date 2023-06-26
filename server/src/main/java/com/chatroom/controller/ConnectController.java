@@ -130,7 +130,7 @@ public class ConnectController implements Runnable {
         Message res = new Message();
         res.setMessageType(MessageType.LOGIN_SUCCESS);
         List<Message> notRead = friendMessageService.getNotReadMessages(user);
-        notRead.addAll(groupMessageService.getNotReadMessages(user));
+//        notRead.addAll(groupMessageService.getNotReadMessages(user));
         res.setContent(JSON.toJSONString(notRead));
         output.writeObject(new Chat(true, res));
     }

@@ -81,9 +81,12 @@ public class ServerConnectClientThread implements Runnable {
             /*
              * 输出流
              */
-            log.info("服务器向 " + this.username + " 发送了一条消息, 内容为 " + message);
+            if (message.getMessageType().equals(MessageType.COMMON_MESSAGE)){
+                int i = 1;
+            }
             ObjectOutputStream output = new ObjectOutputStream(client.getOutputStream());
             output.writeObject(chat);
+            log.info("服务器向 " + this.username + " 发送了一条消息, 内容为 " + message);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -152,7 +155,7 @@ public class ServerConnectClientThread implements Runnable {
                             res.setContent("消息已送达, 对方将在上线后收到");
                             send(false, res);
                         } else {
-                            ServerConnectClientThread thread = ThreadManage.getThread(msg.getSenderName());
+                            ServerConnectClientThread thread = ThreadManage.getThread(msg.getReceiverName());
                             thread.send(true, msg);
                         }
                         break;

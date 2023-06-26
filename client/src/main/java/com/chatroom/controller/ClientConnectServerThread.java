@@ -7,7 +7,6 @@ import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
 import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.view.ChatView;
-import com.chatroom.view.FriendList;
 import com.chatroom.view.GroupChatView;
 
 import javax.swing.*;
@@ -75,6 +74,10 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                 ObjectInputStream input = new ObjectInputStream(client.getInputStream());
                 Chat chat = (Chat) input.readObject();
                 Message msg = chat.getMessage();
+                if (!chat.getFlag()){
+                    System.out.println("=================");
+                }
+                System.out.println(chat);
                 // todo 补充具体的页面展示
                 if (!chat.getFlag()) {
                     JOptionPane.showMessageDialog(this, msg.getContent(), "warning", JOptionPane.WARNING_MESSAGE);
@@ -108,10 +111,11 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             GroupChatView groupChatView1 = GroupChatViewManage.getGroupChatView(groupName1);
                             groupChatView1.receiveGroupChat(groupMessage);
                         case MessageType.GET_FRIEND_MESSAGE:
-                            List<Message> friendMessages = JSON.parseArray(msg.getContent(), Message.class);
-                            String receiverName = msg.getReceiverName();
-                            ChatView chatView = ChatViewManage.getChatView(receiverName);
-                            chatView.showChats((ArrayList<Message>) friendMessages);
+//                            List<Message> friendMessages = JSON.parseArray(msg.getContent(), Message.class);
+//                            System.out.println(friendMessages);
+//                            String receiverName = msg.getReceiverName();
+//                            ChatView chatView = ChatViewManage.getChatView(receiverName);
+//                            chatView.showChats((ArrayList<Message>) friendMessages);
                             break;
                         case MessageType.GET_GROUP_MESSAGE:
                             List<Message> groupMessages = JSON.parseArray(msg.getContent(), Message.class);
