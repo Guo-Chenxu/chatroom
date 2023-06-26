@@ -126,6 +126,7 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             break;
                         case MessageType.DELETE_FRIEND:
                             // 提示删除成功
+//                            JOptionPane.showMessageDialog(this, "删除成功", "warning", JOptionPane.WARNING_MESSAGE);
                             break;
                         default:
                             break;
