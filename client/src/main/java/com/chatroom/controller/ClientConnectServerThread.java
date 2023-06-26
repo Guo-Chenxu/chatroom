@@ -74,10 +74,6 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                 ObjectInputStream input = new ObjectInputStream(client.getInputStream());
                 Chat chat = (Chat) input.readObject();
                 Message msg = chat.getMessage();
-                if (!chat.getFlag()){
-                    System.out.println("=================");
-                }
-                System.out.println(chat);
                 // todo 补充具体的页面展示
                 if (!chat.getFlag()) {
                     JOptionPane.showMessageDialog(this, msg.getContent(), "warning", JOptionPane.WARNING_MESSAGE);
@@ -85,6 +81,8 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                     switch (msg.getMessageType()) {
                         case MessageType.CHANGE_PWD:
                             // 提示修改成功
+                            JOptionPane.showMessageDialog(this, "修改成功", "success", JOptionPane.OK_OPTION);
+                            break;
                         case MessageType.GET_FRIENDS:
                             friends = JSON.parseArray(msg.getContent(), String.class);
                             break;
@@ -95,10 +93,12 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             break;
                         case MessageType.ADD_AGREE:
                             // 提示***同意了你的好友申请
+//                            JOptionPane.showMessageDialog(this, msg.getSenderName() + " 同意了你的好友申请", "success", JOptionPane.OK_OPTION);
                             new FriendsServiceImpl().getFriendList(username);
                             break;
                         case MessageType.COMMON_MESSAGE:
                             // 提示***向你发送了一条消息
+//                            JOptionPane.showMessageDialog(this, msg.getSenderName() +  " 向你发送了一条消息", "warning", JOptionPane.WARNING_MESSAGE);
                             Message friendMessage = msg;
                             String senderName = msg.getSenderName();
                             ChatView chatView1 = ChatViewManage.getChatView(senderName);
@@ -106,6 +106,7 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             break;
                         case MessageType.GROUP_MESSAGE:
                             // 提示***在***群聊中发送了一条消息
+//                            JOptionPane.showMessageDialog(this, msg.getReceiverName() + " 群聊中有一条新消息", "warning", JOptionPane.WARNING_MESSAGE);
                             Message groupMessage = msg;
                             String groupName1 = msg.getReceiverName();
                             GroupChatView groupChatView1 = GroupChatViewManage.getGroupChatView(groupName1);
