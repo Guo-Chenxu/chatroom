@@ -274,11 +274,19 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
             this.dispose();
         }else if(source == button3){
             //发送按钮
-            String text = textPane2.getText();
-            System.out.println(text);
-            textPane2.removeAll();
-            MessageService friendMessageService = new FriendMessageServiceImpl();
-            friendMessageService.sendMessage(user.getUsername(), friend.getUsername(), text);
+            if(!textPane2.getText().equals("")){
+                String text = textPane2.getText();
+                System.out.println(text);
+                textPane2.removeAll();
+                MessageService friendMessageService = new FriendMessageServiceImpl();
+                friendMessageService.sendMessage(user.getUsername(), friend.getUsername(), text);
+                ChatBubble chatBubble = new ChatBubble(user.getUsername(), new Date(), text);
+                textPane1.add(chatBubble);
+                textPane1.updateUI();
+                scrollToBottom();
+            }else {
+                JOptionPane.showMessageDialog(this,"消息不能为空！");
+            }
         } else if (source == button5) {
             //删除好友
             FriendsService friendsService = new FriendsServiceImpl();
