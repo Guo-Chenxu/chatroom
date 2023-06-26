@@ -1,4 +1,4 @@
-package com.chatroom.controller;
+package com.chatroom.utils;
 
 import com.chatroom.view.GroupChatView;
 

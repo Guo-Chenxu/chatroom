@@ -1,6 +1,6 @@
 package com.chatroom.view.components;
 
-import com.chatroom.controller.ChatViewManage;
+import com.chatroom.utils.ChatViewManage;
 import com.chatroom.entity.*;
 import com.chatroom.view.ChatView;
 
@@ -51,6 +51,7 @@ public class FriendPanel extends JPanel implements MouseListener {
         // 检测鼠标右键单击
         if (e.getClickCount() == 2) {
             ChatView chatView = new ChatView(user, friend);
+            System.out.println(chatView);
             ChatViewManage.addChatView(friend.getUsername(), chatView);
 //            ChatViewManage.addChatFrame(friend.getQq(), chatView);
         }
