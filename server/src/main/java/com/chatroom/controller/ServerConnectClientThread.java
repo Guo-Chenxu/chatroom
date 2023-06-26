@@ -81,7 +81,7 @@ public class ServerConnectClientThread implements Runnable {
             /*
              * 输出流
              */
-            if (message.getMessageType().equals(MessageType.COMMON_MESSAGE)){
+            if (message.getMessageType().equals(MessageType.COMMON_MESSAGE)) {
                 int i = 1;
             }
             ObjectOutputStream output = new ObjectOutputStream(client.getOutputStream());
@@ -170,12 +170,16 @@ public class ServerConnectClientThread implements Runnable {
                     case MessageType.GET_FRIEND_MESSAGE:
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 获取和 " + msg.getReceiverName() + " 的好友聊天记录");
                         List<Message> fmessageList = friendMessageService.getMessageList(msg.getSenderName(), msg.getReceiverName());
+                        res.setSenderName(msg.getSenderName());
+                        res.setReceiverName(msg.getReceiverName());
                         res.setContent(JSON.toJSONString(fmessageList));
                         send(true, res);
                         break;
                     case MessageType.GET_GROUP_MESSAGE:
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 获取群聊 " + msg.getReceiverName() + " 的聊天记录");
                         List<Message> gmessageList = groupMessageService.getMessageList(msg.getSenderName(), msg.getReceiverName());
+                        res.setSenderName(msg.getSenderName());
+                        res.setReceiverName(msg.getReceiverName());
                         res.setContent(JSON.toJSONString(gmessageList));
                         send(true, res);
                         break;
