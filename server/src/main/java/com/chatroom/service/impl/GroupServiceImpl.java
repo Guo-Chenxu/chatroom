@@ -51,7 +51,8 @@ public class GroupServiceImpl implements GroupService {
             return false;
         }
 
-        int groupChange = groupMapper.add(group);
+        int groupChange = groupMapper.add(
+                new Group(group.getGroupName(), group.getLeaderName(), group.getAvatarId(), group.getLevel()));
         int relationChange = 0;
         for (String u : users) {
             groupUserRelationMapper.add(group.getGroupName(), u);

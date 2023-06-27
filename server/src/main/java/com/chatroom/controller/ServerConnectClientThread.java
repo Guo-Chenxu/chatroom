@@ -122,7 +122,9 @@ public class ServerConnectClientThread implements Runnable {
                     case MessageType.GET_GROUPS:
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 请求获取群聊列表");
                         List<String> groups = groupService.getGroupsByUsername(msg.getSenderName());
+                        System.out.println(groups);
                         res.setContent(JSON.toJSONString(groups));
+                        System.out.println(res);
                         send(true, res);
                         break;
                     case MessageType.ADD_FRIEND:

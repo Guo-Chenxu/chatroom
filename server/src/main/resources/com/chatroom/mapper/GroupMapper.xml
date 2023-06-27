@@ -19,7 +19,7 @@
         `level`
     </sql>
 
-    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+    <insert id="add"
             parameterType="com.chatroom.entity.Group">
         INSERT INTO `group`
         <trim prefix="(" suffix=")" suffixOverrides=",">

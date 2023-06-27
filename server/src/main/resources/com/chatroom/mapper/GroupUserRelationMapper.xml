@@ -15,8 +15,7 @@
         username
     </sql>
 
-    <insert id="add" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
-            parameterType="com.chatroom.entity.GroupUserRelation">
+    <insert id="add" >
         INSERT INTO group_user_relation
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="null != groupName and '' != groupName">
