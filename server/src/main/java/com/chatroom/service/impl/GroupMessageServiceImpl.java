@@ -1,6 +1,8 @@
 package com.chatroom.service.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.chatroom.entity.Message;
+import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
 import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.GroupUserRelationMapper;
@@ -52,30 +54,17 @@ public class GroupMessageServiceImpl implements GroupMessageService {
     @Override
     public boolean sendMessage(Message message) throws CloneNotSupportedException {
         List<String> groupMembers = groupUserRelationMapper.getUsersByGroupName(message.getReceiverName());
-//        List<Message> messages = new ArrayList<>();
+        int flag = messageMapper.add(message);
+        List<Message> messages = messageMapper.getGroupMessage(message.getReceiverName());
+        Message res = new Message(MessageType.GET_GROUP_MESSAGE);
+        res.setContent(JSON.toJSONString(messages));
+        res.setReceiverName(message.getReceiverName());
         for (String username : groupMembers) {
-//            Message m = message.cloneMessage();
-//            // 根据用户是否在线判断消息是否已读
-//            if (ThreadManage.userIsOnline(message.getReceiverName())) {
-//                message.setIsRead(false);
-//                message.setMessageType(MessageType.USER_OFFLINE);
-//            } else {
-//                message.setIsRead(true);
-//                ServerConnectClientThread thread = ThreadManage.getThread(username);
-//                thread.send(true, message);
-//            }
-//            m.setReceiverName(username);
-//            messages.add(m);
-//            // todo mybatis的for each标签似乎有点问题, 读不到标签内的sql语句, 所以暂时循环写数据库, 以后再改
-//            messageMapper.add(m);
             if (ThreadManage.userIsOnline(username)) {
-                ThreadManage.getThread(username).send(true, message);
+                ThreadManage.getThread(username).send(true, res);
             }
         }
-        // 给群组内每个用户都添加一条该消息
-//        messageMapper.addList(messages);
-
-        return messageMapper.add(message) > 0;
+        return flag > 0;
     }
 
     /**

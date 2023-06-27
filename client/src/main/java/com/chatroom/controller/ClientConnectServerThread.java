@@ -47,6 +47,11 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
      */
     List<String> groups = new ArrayList<>();
 
+    /**
+     * 群友
+     */
+    List<String> groupMembers = new ArrayList<>();
+
     public ClientConnectServerThread(String username, Socket client) {
         this.username = username;
         this.client = client;
@@ -117,7 +122,6 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             List<Message> friendMessages = JSON.parseArray(msg.getContent(), Message.class);
                             System.out.println(friendMessages);
                             String receiverName = msg.getReceiverName();
-                            System.out.println(receiverName);
                             ChatView chatView = ChatViewManage.getChatView(receiverName);
                             chatView.showChats((ArrayList<Message>) friendMessages);
                             break;
@@ -126,6 +130,10 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             String groupName = msg.getReceiverName();
                             GroupChatView groupChatView = GroupChatViewManage.getGroupChatView(groupName);
                             groupChatView.showGroupList((ArrayList<Message>) groupMessages);
+                            break;
+                        case MessageType.GET_USERS_IN_GROUP:
+                            groupMembers = JSON.parseArray(msg.getContent(), String.class);
+                            // todo 待写页面
                             break;
                         case MessageType.DELETE_FRIEND:
                             // 提示删除成功

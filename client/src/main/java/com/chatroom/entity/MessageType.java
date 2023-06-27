@@ -132,4 +132,8 @@ public interface MessageType {
      * 注册失败
      */
     String REGISTER_FAIL = "29";
+    /**
+     * 展示群聊成员
+     */
+    String GET_USERS_IN_GROUP = "31";
 }
