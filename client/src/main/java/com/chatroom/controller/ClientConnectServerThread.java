@@ -92,11 +92,9 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             break;
                         case MessageType.GET_FRIENDS:
                             friends = JSON.parseArray(msg.getContent(), String.class);
-                            new FriendList(new User(username));
                             break;
                         case MessageType.GET_GROUPS:
                             groups = JSON.parseArray(msg.getContent(), String.class);
-                            new GroupList(new User(username));
                             break;
                         case MessageType.ADD_FRIEND:
                             new FriendAddRequest(msg.getSenderName(), msg.getReceiverName());
