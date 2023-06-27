@@ -75,7 +75,7 @@ public class InviteFriend extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // 获取选中的好友
-                Object[] selectedFriends = comboBox1.getSelectedObjects();
+                Object[] selectedFriends =comboBox1.getSelectedObjects();
                 if (selectedFriends != null) {
                     for (Object friend : selectedFriends) {
                         System.out.println("选中好友：" + friend);
@@ -83,7 +83,8 @@ public class InviteFriend extends JFrame {
                 } else {
                     System.out.println("未选择好友");
                 }
-                new GroupServiceImpl().addGroup(user.getUsername(), Arrays.toString(comboBox1.getSelectedObjects()), group.getGroupName());
+                new GroupServiceImpl().addGroup(user.getUsername(), (String) comboBox1.getSelectedObjects()[0], group.getGroupName());
+                dispose();
             }
         });
 
