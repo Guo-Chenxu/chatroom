@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     private ObjectInputStream input;
 
     /**
-     * 初始化三个流
+     * 初始化服务
      */
     public void init() {
         try {
@@ -46,21 +46,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    // todo 测试方法, 成功后删除
-    @Override
-    public void testSend(Message msg) throws IOException, ClassNotFoundException {
-        output.writeObject(msg);
-        Message mmsg = (Message) input.readObject();
-        System.out.println(mmsg);
-    }
-
-    /**
-     * 添加人脸信息
-     *
-     * @param userName
-     * @param faceId
-     * @return
-     */
     @Override
     public void addFace(String userName, String faceId) {
         // 将用户信息发送服务器登录
@@ -73,7 +58,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void offLine(String userName) {
-        // 将用户信息发送服务器登录
         Message message = new Message(userName, "", new Date(), OFFLINE);
         ThreadManage.send(userName, message);
     }
@@ -93,9 +77,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 用于关闭多个io流
-     *
-     * @param ios io流
+     * 关闭多个流
      */
     private void close(Closeable... ios) {//可变长参数
         for (Closeable io : ios) {
@@ -109,13 +91,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /**
-     * 用户登录
-     *
-     * @param userName
-     * @param pwd
-     * @return
-     */
     @Override
     public Chat loginByPwd(String userName, String pwd) {
         try {
@@ -166,13 +141,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /**
-     * 用户注册
-     *
-     * @param userName
-     * @param pwd
-     * @return
-     */
     @Override
     public Chat register(String userName, String pwd) {
         try {

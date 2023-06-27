@@ -1,10 +1,7 @@
 package com.chatroom.service;
 
 import com.chatroom.entity.Chat;
-import com.chatroom.entity.Message;
-import com.chatroom.entity.User;
 
-import java.io.IOException;
 import java.net.Socket;
 
 /**
@@ -16,21 +13,57 @@ import java.net.Socket;
  **/
 public interface UserService {
 
-    public void myStop();
+    /**
+     * 停止线程
+     */
+    void myStop();
 
-    public Socket getClient();
+    /**
+     * 获取用户socket (仅在登录时使用)
+     */
+    Socket getClient();
 
-    public Chat loginByPwd(String userName, String pwd);
+    /**
+     * 使用密码登录
+     *
+     * @param userName 用户名
+     * @param pwd      密码
+     * @return 未读消息
+     */
+    Chat loginByPwd(String userName, String pwd);
 
-    public Chat loginByFace(String userName, String faceId);
+    /**
+     * 使用人脸登录
+     *
+     * @param userName 用户名
+     * @param faceId   人脸信息
+     * @return 未读消息
+     */
+    Chat loginByFace(String userName, String faceId);
 
-    public Chat register(String userName,  String pwd);
+    /**
+     * 注册
+     *
+     * @param userName 用户名
+     * @param pwd      密码
+     * @return 注册结果
+     */
+    Chat register(String userName, String pwd);
 
-    public void testSend(Message msg) throws IOException, ClassNotFoundException;
+    /**
+     * 添加人脸信息
+     *
+     * @param userName 用户名
+     * @param faceId   人脸信息
+     */
+    void addFace(String userName, String faceId);
 
-    public void addFace(String userName, String faceId);
-
-    public void offLine(String userName);
+    /**
+     * 用户请求下线
+     *
+     * @param userName 用户名
+     */
+    void offLine(String userName);
 
 
 }

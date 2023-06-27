@@ -1,33 +1,22 @@
 package com.chatroom.view;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
-import com.chatroom.controller.ClientConnectServerThread;
-import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
-import com.chatroom.entity.MessageType.*;
 import com.chatroom.entity.User;
 import com.chatroom.service.FriendsService;
-import com.chatroom.service.UserService;
 import com.chatroom.service.impl.FriendsServiceImpl;
-import com.chatroom.service.impl.UserServiceImpl;
 import com.chatroom.utils.ThreadManage;
-import com.chatroom.view.components.Avatar;
 import com.chatroom.view.components.FriendPanel;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Ye peixin
  */
-public class FriendList extends JFrame{
+public class FriendList extends JFrame {
     private static int windowsWedth = 280;
     private static int windowsHeight = 600;
     /**
@@ -44,8 +33,9 @@ public class FriendList extends JFrame{
      */
     private JPanel bottom;
     private User user;// 用户对象
-//    private List<String> list;
-    public FriendList(User user){
+
+    //    private List<String> list;
+    public FriendList(User user) {
         this.user = user;
         this.setSize(windowsWedth, windowsHeight);
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -80,9 +70,9 @@ public class FriendList extends JFrame{
 
         container.add(bottom);
         //窗体关闭事件
-        this.addWindowListener(new WindowAdapter(){
+        this.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e){
+            public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 //发送下线消息
                 Message message = new Message();
@@ -96,14 +86,14 @@ public class FriendList extends JFrame{
     }
 
     //向服务器请求好友列表
-    public void updateFriendList(){
+    public void updateFriendList() {
 
         FriendsService friendsService = new FriendsServiceImpl();
         friendsService.getFriendList(user.getUsername());
 
         friendList = new JPanel();
         friendList.setLayout(null);
-        if(jScrollPane != null){
+        if (jScrollPane != null) {
             container.remove(jScrollPane);
         }
         jScrollPane = new JScrollPane();
@@ -118,15 +108,13 @@ public class FriendList extends JFrame{
         showFriendList(friends);
     }
 
-//    List<String> friends = ThreadManage.getThread(user.getUsername()).getFriends();
-    public void showFriendList(List<String> list){
+    public void showFriendList(List<String> list) {
 
         int panelHeight = 60;
         friendList.removeAll();
-        for(int i=0; i<list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             User friend = new User();
             friend.setUsername(list.get(i));
-//            String friend = list.get(i);
             // 创建好友面板
             JPanel friendPanel = new FriendPanel(this.user, friend);
             friendPanel.setLocation(0, i * panelHeight);

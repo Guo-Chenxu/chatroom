@@ -1,6 +1,5 @@
 package com.chatroom.view;
 
-import com.chatroom.entity.Chat;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.User;
@@ -52,7 +51,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
     private JButton button6;
     private JButton button7;
 
-    public GroupChatView(User user, Group group){
+    public GroupChatView(User user, Group group) {
         this.user = user;
         this.group = group;
         initComponents();
@@ -60,16 +59,16 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
     }
 
     //获取群聊聊天记录
-    public void getGroupChatList(){
+    public void getGroupChatList() {
         MessageService groupMessageService = new GroupMessageServiceImpl();
         groupMessageService.getMessages(user.getUsername(), group.getGroupName());
 
     }
 
     //展示群聊聊天记录
-    public void showGroupList(ArrayList<Message> list){
+    public void showGroupList(ArrayList<Message> list) {
         textPane1.removeAll();
-        for(Message message:list){
+        for (Message message : list) {
             String senderName = message.getSenderName();
 //            Date time = new Date(String.valueOf(message.getSendTime()));
             String content = message.getContent();
@@ -92,8 +91,9 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             }
         });
     }
+
     //接收实时聊天消息
-    public void receiveGroupChat(Message message){
+    public void receiveGroupChat(Message message) {
         String senderName = message.getSenderName();
 //        Date time = new Date(String.valueOf(message.getSendTime()));
         String content = message.getContent();
@@ -103,7 +103,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
         scrollToBottom();
     }
 
-    private void initComponents(){
+    private void initComponents() {
         panel1 = new JPanel();
         label1 = new Avatar(user.getAvatarId(), 60, 60);
         label2 = new JLabel();
@@ -131,7 +131,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
 
         //panel1
         {
-            panel1.setBackground(new Color(3,37,108));
+            panel1.setBackground(new Color(3, 37, 108));
             panel1.setLayout(null);
 
             //label1
@@ -149,7 +149,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             label3.setBounds(80, 46, 300, label3.getPreferredSize().height);
         }
         contentPane.add(panel1);
-        panel1.setBounds(0,0,400,80);
+        panel1.setBounds(0, 0, 400, 80);
 
         //scrollPane1
         {
@@ -157,7 +157,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             scrollPane1.setViewportView(textPane1);
         }
         contentPane.add(scrollPane1);
-        scrollPane1.setBounds(0,80,400,200);
+        scrollPane1.setBounds(0, 80, 400, 200);
 
         //panel2
         {
@@ -166,14 +166,14 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             //展示群聊成员按钮
             button7.setText("查看群成员");
             panel2.add(button7);
-            button7.setBounds(5,0,130,30);
+            button7.setBounds(5, 0, 130, 30);
             button7.addActionListener(this);
 
 
             {
                 //compute preferred size
                 Dimension preferredSize = new Dimension();
-                for(int i=0; i<panel2.getComponentCount(); i++){
+                for (int i = 0; i < panel2.getComponentCount(); i++) {
                     Rectangle bounds = panel2.getComponent(i).getBounds();
                     preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                     preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -186,14 +186,14 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             }
         }
         contentPane.add(panel2);
-        panel2.setBounds(0,280,400,30);
+        panel2.setBounds(0, 280, 400, 30);
 
         //scrollPane2
         {
             scrollPane2.setViewportView(textPane2);
         }
         contentPane.add(scrollPane2);
-        scrollPane2.setBounds(0,310,400,120);
+        scrollPane2.setBounds(0, 310, 400, 120);
 
         //panel3
         {
@@ -264,24 +264,25 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
         pack();
         setLocationRelativeTo(getOwner());
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton source = (JButton) e.getSource();
-        if(source == button5){
+        if (source == button5) {
             //邀请好友入群按钮
             try {
                 new InviteFriend(user, group);
             } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
             }
-        }else if(source == button4){
+        } else if (source == button4) {
             //关闭按钮
             //将该窗口从哈希表中删除
             GroupChatViewManage.removeGroupChatView(group.getGroupName());
             this.dispose();
-        }else if(source == button3){
+        } else if (source == button3) {
             //发送按钮
-            if(!textPane2.getText().equals("")){
+            if (!textPane2.getText().equals("")) {
                 String text = textPane2.getText();
                 System.out.println(text);
                 MessageService GroupMessageService = new GroupMessageServiceImpl();
@@ -292,11 +293,11 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
                 scrollToBottom();
                 textPane2.removeAll();
                 textPane2.setText("");
-            }else {
+            } else {
                 JOptionPane.showMessageDialog(this, "消息不能为空！");
             }
 
-        } else if (source==button6) {
+        } else if (source == button6) {
             //退群按钮
             GroupService groupService = new GroupServiceImpl();
             groupService.leaveGroup(user.getUsername(), group.getGroupName());
@@ -305,9 +306,9 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             //查看群聊成员及群主
             GroupService groupService = new GroupServiceImpl();
             groupService.getUsersInGroup(user.getUsername(), group.getGroupName());
-//            new ShowGroupMember(user, group);
         }
     }
+
     @Override
     public void windowOpened(WindowEvent e) {
 
@@ -322,6 +323,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
     public void windowClosed(WindowEvent e) {
 
     }
+
     @Override
     public void windowIconified(WindowEvent e) {
 
@@ -341,6 +343,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
     public void windowDeactivated(WindowEvent e) {
 
     }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
