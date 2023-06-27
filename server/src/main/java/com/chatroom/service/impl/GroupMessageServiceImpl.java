@@ -28,10 +28,6 @@ import java.util.List;
 @Service
 public class GroupMessageServiceImpl implements GroupMessageService {
     @Resource
-    UserMapper userMapper;
-    @Resource
-    GroupMapper groupMapper;
-    @Resource
     MessageMapper messageMapper;
     @Resource
     GroupUserRelationMapper groupUserRelationMapper;
@@ -54,7 +50,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
      * @return 返回结果
      */
     @Override
-    public boolean sendMessage(Message message) throws CloneNotSupportedException {
+    public boolean sendMessage(Message message) {
         List<String> groupMembers = groupUserRelationMapper.getUsersByGroupName(message.getReceiverName());
         int flag = messageMapper.add(message);
         List<Message> messages = messageMapper.getGroupMessage(message.getReceiverName());
@@ -91,10 +87,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
 
     @Override
     public int deleteExpireMessage(long time) {
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date(time);
-//        String str = sdf.format(date);
-//        System.out.println(str);
         return messageMapper.delete(date);
     }
 }

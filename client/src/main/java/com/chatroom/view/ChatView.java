@@ -1,11 +1,14 @@
 package com.chatroom.view;
-import com.chatroom.entity.*;
+
+import com.chatroom.entity.Message;
+import com.chatroom.entity.User;
 import com.chatroom.service.FriendsService;
 import com.chatroom.service.MessageService;
 import com.chatroom.service.impl.FriendMessageServiceImpl;
 import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.utils.ChatViewManage;
-import com.chatroom.view.components.*;
+import com.chatroom.view.components.Avatar;
+import com.chatroom.view.components.ChatBubble;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,6 +34,7 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
         initComponents();
         getChatList();
     }
+
     /**
      * 获取聊天记录
      */
@@ -44,8 +48,8 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
      */
     public void showChats(ArrayList<Message> list) {
         textPane1.removeAll();
-        for(Message message : list){
-            String senderName = (Objects.equals(message.getSenderName(), user.getUsername()))?user.getUsername() : friend.getUsername();
+        for (Message message : list) {
+            String senderName = (Objects.equals(message.getSenderName(), user.getUsername())) ? user.getUsername() : friend.getUsername();
 //            Date time = new Date(String.valueOf(message.getSendTime()));
             String content = message.getContent();
             ChatBubble chatBubble = new ChatBubble(senderName, message.getSendTime(), content);
@@ -74,7 +78,7 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
      * 接收实时聊天消息
      */
     public void receiveChat(Message msg) {
-        String senderName = Objects.equals(msg.getSenderName(), user.getUsername()) ?user.getUsername() : friend.getUsername();
+        String senderName = Objects.equals(msg.getSenderName(), user.getUsername()) ? user.getUsername() : friend.getUsername();
 //        Date time = new Date(String.valueOf(msg.getSendTime()));
         String content = msg.getContent();
         ChatBubble chatBubble = new ChatBubble(senderName, msg.getSendTime(), content);
@@ -146,7 +150,6 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
             panel2.setLayout(null);
 
 
-
             {
                 // compute preferred size
                 Dimension preferredSize = new Dimension();
@@ -178,7 +181,7 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
 
             //删除好友按钮
             button5.setText("删除好友");
-            button5.setBackground(new Color(3,37,108));
+            button5.setBackground(new Color(3, 37, 108));
             button5.setForeground(Color.white);
             panel3.add(button5);
             button5.setBounds(115, 5, 110, 30);
@@ -256,13 +259,13 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
     public void actionPerformed(ActionEvent e) {
         JButton source = (JButton) e.getSource();
         //关闭按钮
-        if(source == button4){
+        if (source == button4) {
             //将该窗口从哈希表中删除
             ChatViewManage.removeChatView(friend.getUsername());
             this.dispose();
-        }else if(source == button3){
+        } else if (source == button3) {
             //发送按钮
-            if(!textPane2.getText().equals("")){
+            if (!textPane2.getText().equals("")) {
                 String text = textPane2.getText();
                 System.out.println(text);
                 textPane2.removeAll();
@@ -273,8 +276,8 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
                 textPane1.updateUI();
                 scrollToBottom();
                 textPane2.setText("");
-            }else {
-                JOptionPane.showMessageDialog(this,"消息不能为空！");
+            } else {
+                JOptionPane.showMessageDialog(this, "消息不能为空！");
             }
         } else if (source == button5) {
             //删除好友
@@ -319,10 +322,11 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
     public void windowDeactivated(WindowEvent e) {
 
     }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new ChatView(new User(),new User());
+                new ChatView(new User(), new User());
             }
         });
     }

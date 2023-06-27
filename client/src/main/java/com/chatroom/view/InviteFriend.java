@@ -3,7 +3,6 @@ package com.chatroom.view;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.User;
 import com.chatroom.service.FriendsService;
-import com.chatroom.service.GroupService;
 import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.service.impl.GroupServiceImpl;
 import com.chatroom.utils.ThreadManage;
@@ -12,7 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.List;
 
 public class InviteFriend extends JFrame {
@@ -58,7 +56,7 @@ public class InviteFriend extends JFrame {
         //获取用户好友列表
         List<String> list = ThreadManage.getThread(user.getUsername()).getFriends();
 
-        for(int i=0; i<list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             comboBox1.addItem(list.get(i));
         }
 
@@ -74,7 +72,7 @@ public class InviteFriend extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // 获取选中的好友
-                Object[] selectedFriends =comboBox1.getSelectedObjects();
+                Object[] selectedFriends = comboBox1.getSelectedObjects();
                 if (selectedFriends != null) {
                     for (Object friend : selectedFriends) {
                         System.out.println("选中好友：" + friend);

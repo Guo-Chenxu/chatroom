@@ -9,9 +9,8 @@ import com.chatroom.view.components.GroupPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Ye peixin
@@ -37,7 +36,7 @@ public class GroupList extends JFrame {
      */
     private User user;
 
-    public GroupList(User user){
+    public GroupList(User user) {
         this.user = user;
         this.setSize(windowsWedth, windowsHeight);
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -51,7 +50,7 @@ public class GroupList extends JFrame {
         jlbName.setBounds(120, 30, 140, 20);
         container.add(jlbName);
         //上半部分背景
-        JLabel jlbBackground  = new JLabel();
+        JLabel jlbBackground = new JLabel();
         jlbBackground.setBackground(new Color(3, 37, 108));
         jlbBackground.setOpaque(true);
         jlbBackground.setBounds(0, 0, windowsWedth, 128);
@@ -73,7 +72,7 @@ public class GroupList extends JFrame {
     /**
      * 请求群组列表
      */
-    public void updateGroupList(){
+    public void updateGroupList() {
         GroupService groupService = new GroupServiceImpl();
         groupService.getGroups(user.getUsername());
 
@@ -93,20 +92,23 @@ public class GroupList extends JFrame {
         List<String> groups = ThreadManage.getThread(user.getUsername()).getGroups();
         showGroupList(groups);
     }
-    public void showGroupList(List<String> list){
+
+    public void showGroupList(List<String> list) {
         int panelHeight = 60;
         groupList.removeAll();
-        for(int i=0; i<list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             Group group = new Group();
             group.setGroupName(list.get(i));
+            group.setLevel(new Random().nextInt(4) + 1);
             //创建群聊面板
             JPanel groupPanel = new GroupPanel(this.user, group);
-            groupPanel.setLocation(0,i*panelHeight);
+            groupPanel.setLocation(0, i * panelHeight);
             groupList.add(groupPanel);
         }
-        groupList.setPreferredSize(new Dimension(windowsWedth, list.size()*panelHeight));
+        groupList.setPreferredSize(new Dimension(windowsWedth, list.size() * panelHeight));
         container.repaint();
     }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

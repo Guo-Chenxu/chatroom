@@ -5,7 +5,6 @@ import com.chatroom.controller.ServerConnectClientThread;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
-import com.chatroom.entity.User;
 import com.chatroom.mapper.*;
 import com.chatroom.service.GroupMessageService;
 import com.chatroom.service.UserService;
@@ -18,7 +17,10 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 class ServerApplicationTests {
@@ -80,16 +82,6 @@ class ServerApplicationTests {
     }
 
     @Test
-    void testGroupAdd() {
-//        Group g = new Group();
-//        g.setLeaderName("111");
-//        g.setGroupName("123");
-//        g.setAvatarId("123");
-//        g.setLevel(1);
-//        groupMapper.add(g);
-    }
-
-    @Test
     void testJson() {
         Message m = new Message();
         List<Message> l = new ArrayList<>();
@@ -122,20 +114,6 @@ class ServerApplicationTests {
     }
 
     @Test
-    void testAddList() {
-//        List<Message> m = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            Message mm = new Message();
-//            mm.setContent(1 + "");
-//            mm.setIsGroupMessage(i % 2 == 1);
-//            mm.setIsRead(i % 2 == 0);
-////            messagesMapper.add(mm);
-//        }
-//        messagesMapper.addList(m);
-//        System.out.println(messagesMapper.getAllMessages());
-    }
-
-    @Test
     void testComponent() throws IOException {
         ServerConnectClientThread serverConnectClientThread =
                 new ServerConnectClientThread("1223", new Socket(InetAddress.getLocalHost(), 9623));
@@ -145,13 +123,6 @@ class ServerApplicationTests {
                 new ServerConnectClientThread("1233", new Socket(InetAddress.getLocalHost(), 9623));
         System.out.println(serverConnectClientThread01);
     }
-
-    @Test
-    void testUserMapper() {
-        userMapper.add(new User("12", "12", "12"));
-    }
-
-    ;
 
     @Test
     void testAddFriend() {

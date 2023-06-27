@@ -1,8 +1,6 @@
 package com.chatroom.view;
 
 import com.chatroom.entity.User;
-import com.chatroom.service.FriendsService;
-import com.chatroom.service.GroupService;
 import com.chatroom.service.UserService;
 import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.service.impl.GroupServiceImpl;
@@ -49,7 +47,7 @@ public class SelectionPage extends JFrame {
         JButton showGroupsBtn = createButton("展示群组列表");
         showGroupsBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                    new GroupList(user);
+                new GroupList(user);
             }
         });
 

@@ -25,10 +25,6 @@ public class FriendServiceImpl implements FriendService {
 
     @Resource
     FriendsMapper friendsMapper;
-    @Resource
-    UserMapper userMapper;
-    @Resource
-    UserService userService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

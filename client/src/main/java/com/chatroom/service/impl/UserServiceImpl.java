@@ -97,17 +97,15 @@ public class UserServiceImpl implements UserService {
             init();
             // 将用户信息发送服务器登录
             User user = new User(userName, pwd);
-            Message message = new Message(LOGIN_BY_PWD);
-            message.setContent((JSON.toJSONString(user)));
-            output.writeObject(message);
-            // 接收服务器返回到结果
-            Chat chat = (Chat) input.readObject();
-
-            if (!chat.getFlag()) {
-                client.close();
-            }
-
-            return chat;
+//            Message message = new Message(LOGIN_BY_PWD);
+//            message.setContent((JSON.toJSONString(user)));
+//            output.writeObject(message);
+//            // 接收服务器返回到结果
+//            Chat chat = (Chat) input.readObject();
+//            if (!chat.getFlag()) {
+//                client.close();
+//            }
+            return login(user, LOGIN_BY_PWD);
         } catch (IOException | ClassNotFoundException e) {
             close(client, output, input);
             e.printStackTrace();
@@ -119,21 +117,21 @@ public class UserServiceImpl implements UserService {
     public Chat loginByFace(String userName, String faceId) {
         try {
             init();
-
             // 将用户信息发送服务器登录
             User user = new User(userName);
             user.setFaceId(faceId);
-            Message message = new Message(LOGIN_BY_FACE);
-            message.setContent((JSON.toJSONString(user)));
-            output.writeObject(message);
-            // 接收服务器返回到结果
-            Chat chat = (Chat) input.readObject();
-
-            if (!chat.getFlag()) {
-                client.close();
-            }
-
-            return chat;
+//            Message message = new Message(LOGIN_BY_FACE);
+//            message.setContent((JSON.toJSONString(user)));
+//            output.writeObject(message);
+//            // 接收服务器返回到结果
+//            Chat chat = (Chat) input.readObject();
+//
+//            if (!chat.getFlag()) {
+//                client.close();
+//            }
+//
+//            return chat;
+            return login(user, LOGIN_BY_FACE);
         } catch (IOException | ClassNotFoundException e) {
             close(client, output, input);
             e.printStackTrace();
@@ -163,5 +161,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
+    private Chat login(User user, String type) throws IOException, ClassNotFoundException {
+        Message message = new Message(type);
+        message.setContent((JSON.toJSONString(user)));
+        output.writeObject(message);
+        // 接收服务器返回到结果
+        Chat chat = (Chat) input.readObject();
+        if (!chat.getFlag()) {
+            client.close();
+        }
+        return chat;
+    }
 }

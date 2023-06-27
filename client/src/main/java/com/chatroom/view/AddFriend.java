@@ -21,7 +21,7 @@ public class AddFriend extends JFrame {
     private JTextField textField1;
     private JButton button1;
 
-    public AddFriend(User user){
+    public AddFriend(User user) {
         this.user = user;
         this.setSize(300, 150);
         this.setResizable(false);

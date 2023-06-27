@@ -1,16 +1,13 @@
 package com.chatroom.view;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-
 import com.chatroom.utils.MyImageUtil;
-
 import com.github.sarxos.webcam.Webcam;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.Base64;
-import java.util.List;
+
 public class Camera {
     public static String captureAndEncodeImage(Webcam webcam) {
         // 获取当前相机图像

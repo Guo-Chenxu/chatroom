@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author  Ye peixin
+ * @author Ye peixin
  */
 public class CreateGroup extends JFrame {
     private User user;
@@ -54,32 +54,32 @@ public class CreateGroup extends JFrame {
 
         label2.setText("请输入群聊等级（1-4）");
         containerPane.add(label2);
-        label2.setBounds(new Rectangle(new Point(220,60), label2.getPreferredSize()));
+        label2.setBounds(new Rectangle(new Point(220, 60), label2.getPreferredSize()));
 
         label3.setText("请输入群聊名称");
         containerPane.add(label3);
-        label3.setBounds(new Rectangle(new Point(220,15),label3.getPreferredSize()));
+        label3.setBounds(new Rectangle(new Point(220, 15), label3.getPreferredSize()));
 
         FriendsService friendsService = new FriendsServiceImpl();
         friendsService.getFriendList(user.getUsername());
 
         new Thread().sleep(100);
 
-        List<String> list =  ThreadManage.getThread(user.getUsername()).getFriends();
+        List<String> list = ThreadManage.getThread(user.getUsername()).getFriends();
 
-        for(int i=0; i<list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             JCheckBox checkBox = new JCheckBox(list.get(i));
             containerPane.add(checkBox);
-            checkBox.setBounds(50, 35+(i*20), 150, checkBox.getPreferredSize().height);
+            checkBox.setBounds(50, 35 + (i * 20), 150, checkBox.getPreferredSize().height);
             checkBoxes.add(checkBox);
         }
 
         //输入群聊等级
-        textField.setBounds(220,85,120,textField.getPreferredSize().height);
+        textField.setBounds(220, 85, 120, textField.getPreferredSize().height);
         containerPane.add(textField);
 
         //输入群聊名称
-        textFieldGroupName.setBounds(220, 40,120,textFieldGroupName.getPreferredSize().height);
+        textFieldGroupName.setBounds(220, 40, 120, textFieldGroupName.getPreferredSize().height);
         containerPane.add(textFieldGroupName);
 
         button1.setText("建立群聊");
@@ -97,7 +97,7 @@ public class CreateGroup extends JFrame {
                     }
                 }
                 selectedOptions.add(user.getUsername());
-                Group group =  new Group();
+                Group group = new Group();
                 group.setLeaderName(user.getUsername());
                 group.setLevel(Integer.parseInt(textField.getText()));
                 group.setGroupName(textFieldGroupName.getText());

@@ -35,19 +35,21 @@ public class GroupServiceImpl implements GroupService {
     /**
      * 正则匹配, 6-20位字母数字下划线组合, 必须以字母开头
      */
-    private static final String reg = "^[a-zA-Z]\\w{5,17}$";
+    private static final String REG = "^[a-zA-Z]\\w{5,17}$";
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean setGroup(Group group) {
         List<String> users = group.getUsers();
         if (users.size() > group.getGroupMaxNumber()
-                || !group.getGroupName().matches(reg)
+                || !group.getGroupName().matches(REG)
                 || groupMapper.getByGroupName(group.getGroupName()) != null
                 || userMapper.getByUsername(group.getGroupName()) != null) {
-            // 不能超过群聊最大人数
-            // 群聊名称要符合规范
-            // 群聊名称不能重复
+            /*
+            不能超过群聊最大人数
+            群聊名称要符合规范
+            群聊名称不能重复
+             */
             return false;
         }
 

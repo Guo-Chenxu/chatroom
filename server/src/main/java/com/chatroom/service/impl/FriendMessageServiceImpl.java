@@ -23,8 +23,6 @@ import java.util.List;
 @Service
 public class FriendMessageServiceImpl implements FriendMessageService {
     @Resource
-    UserMapper userMapper;
-    @Resource
     MessageMapper messageMapper;
 
     @Override

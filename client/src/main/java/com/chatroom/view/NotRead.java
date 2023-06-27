@@ -2,6 +2,7 @@ package com.chatroom.view;
 
 import com.chatroom.entity.Message;
 import com.chatroom.entity.User;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
@@ -15,16 +16,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import static com.chatroom.entity.MessageType.*;
+import static com.chatroom.entity.MessageType.ADD_FRIEND;
+import static com.chatroom.entity.MessageType.COMMON_MESSAGE;
 
 public class NotRead extends JFrame {
-    private final User user ;
-    private final List<Message> messageList ;
+    private final User user;
+    private final List<Message> messageList;
     private JPanel friendPanel; // 好友消息面板
 
     public NotRead(User user, List<Message> messageList) {
         this.user = user;
-        this.messageList= messageList;
+        this.messageList = messageList;
         initComponents();
     }
 
@@ -65,19 +67,18 @@ public class NotRead extends JFrame {
         setVisible(true);
     }
 
-    public void showNotRead(){
+    public void showNotRead() {
         for (Message msg : this.messageList) {
             // 未读好友消息
-            if(Objects.equals(msg.getMessageType(), COMMON_MESSAGE)){
+            if (Objects.equals(msg.getMessageType(), COMMON_MESSAGE)) {
                 String sender = msg.getSenderName();
                 String content = msg.getContent();
                 Date time = msg.getSendTime();
                 addFriendMessage(sender, content, time); // 添加好友消息到好友消息面板
                 msg.setIsRead(true);
-            }
-            else if(Objects.equals(msg.getMessageType(), ADD_FRIEND)){
+            } else if (Objects.equals(msg.getMessageType(), ADD_FRIEND)) {
                 // 好友请求
-                new FriendAddRequest(msg.getSenderName(),user.getUsername());
+                new FriendAddRequest(msg.getSenderName(), user.getUsername());
                 msg.setIsRead(true);
             }
         }

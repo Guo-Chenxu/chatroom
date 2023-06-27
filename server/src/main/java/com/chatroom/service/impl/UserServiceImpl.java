@@ -3,8 +3,6 @@ package com.chatroom.service.impl;
 import com.chatroom.controller.ServerConnectClientThread;
 import com.chatroom.entity.User;
 import com.chatroom.mapper.GroupMapper;
-import com.chatroom.mapper.GroupUserRelationMapper;
-import com.chatroom.mapper.MessageMapper;
 import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.UserService;
 import com.chatroom.utils.FaceMatchUtil;
@@ -28,18 +26,12 @@ public class UserServiceImpl implements UserService {
     GroupMapper groupMapper;
 
     @Resource
-    GroupUserRelationMapper groupUserRelationMapper;
-
-    @Resource
-    MessageMapper messageMapper;
-
-    @Resource
     UserMapper userMapper;
 
     /**
      * 正则匹配, 6-20位字母数字下划线组合, 必须以字母开头
      */
-    private static final String reg = "^[a-zA-Z]\\w{5,17}$";
+    private static final String REG = "^[a-zA-Z]\\w{5,17}$";
 
     @Override
     public boolean loginByPwd(User user) {
@@ -74,7 +66,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        if (name.matches(reg) && pwd.matches(reg)) {
+        if (name.matches(REG) && pwd.matches(REG)) {
             return userMapper.add(user) > 0;
         }
         return false;
@@ -82,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean changePassword(String username, String password) {
-        if (password.matches(reg)) {
+        if (password.matches(REG)) {
             return userMapper.changePassword(username, password) > 0;
         }
         return false;

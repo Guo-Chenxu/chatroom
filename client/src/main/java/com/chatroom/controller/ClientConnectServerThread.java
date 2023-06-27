@@ -98,16 +98,14 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             new FriendsServiceImpl().getFriendList(username);
                             break;
                         case MessageType.COMMON_MESSAGE:
-                            Message friendMessage = msg;
                             String senderName = msg.getSenderName();
                             ChatView chatView1 = ChatViewManage.getChatView(senderName);
-                            chatView1.receiveChat(friendMessage);
+                            chatView1.receiveChat(msg);
                             break;
                         case MessageType.GROUP_MESSAGE:
-                            Message groupMessage = msg;
                             String groupName1 = msg.getReceiverName();
                             GroupChatView groupChatView1 = GroupChatViewManage.getGroupChatView(groupName1);
-                            groupChatView1.receiveGroupChat(groupMessage);
+                            groupChatView1.receiveGroupChat(msg);
                         case MessageType.GET_FRIEND_MESSAGE:
                             List<Message> friendMessages = JSON.parseArray(msg.getContent(), Message.class);
                             System.out.println(friendMessages);
