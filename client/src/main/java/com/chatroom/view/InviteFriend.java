@@ -60,9 +60,9 @@ public class InviteFriend extends JFrame {
         }
 
         // comboBox1
-        comboBox1.addItem("好友1");  // 添加下拉选项
-        comboBox1.addItem("好友2");
-        comboBox1.addItem("好友3");
+//        comboBox1.addItem("好友1");  // 添加下拉选项
+//        comboBox1.addItem("好友2");
+//        comboBox1.addItem("好友3");
         containerPane.add(comboBox1);
 
         // button1
