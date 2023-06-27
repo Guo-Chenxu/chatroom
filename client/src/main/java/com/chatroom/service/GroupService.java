@@ -24,10 +24,11 @@ public interface GroupService {
     /**
      * 加入群聊
      *
-     * @param username  用户名
-     * @param groupName 群聊名
+     * @param username   用户名
+     * @param friendName 被邀请的好友
+     * @param groupName  群聊名
      */
-    void addGroup(String username, String groupName);
+    void addGroup(String username, String friendName, String groupName);
 
     /**
      * 离开群聊

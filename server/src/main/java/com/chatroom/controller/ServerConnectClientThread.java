@@ -126,8 +126,8 @@ public class ServerConnectClientThread implements Runnable {
                         break;
                     case MessageType.ADD_FRIEND:
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 请求添加 " + msg.getReceiverName() + " 为好友");
-                        res = friendMessageService.addRequest(msg);
-                        if (res != null) {
+                        Message tmp = friendMessageService.addRequest(msg);
+                        if (tmp != null) {
                             ServerConnectClientThread thread = ThreadManage.getThread(res.getReceiverName());
                             thread.send(true, res);
                         } else {

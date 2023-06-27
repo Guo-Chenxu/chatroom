@@ -30,12 +30,9 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public void addGroup(String username, String groupName) {
-        if (ThreadManage.getThread(username) == null) {
-            return;
-        }
-        Message message = new Message(username, groupName, new Date(), MessageType.ADD_GROUP, true);
-        ThreadManage.send(username, message);
+    public void addGroup(String username, String friendName, String groupName) {
+        Message message = new Message(friendName, groupName, new Date(), MessageType.ADD_GROUP, true);
+        ThreadManage.send(friendName, message);
     }
 
     @Override
