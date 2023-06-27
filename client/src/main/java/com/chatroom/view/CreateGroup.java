@@ -69,7 +69,7 @@ public class CreateGroup extends JFrame {
         List<String> list =  ThreadManage.getThread(user.getUsername()).getFriends();
 
         for(int i=0; i<list.size(); i++){
-            JCheckBox checkBox = new JCheckBox("好友"+list.get(i));
+            JCheckBox checkBox = new JCheckBox(list.get(i));
             containerPane.add(checkBox);
             checkBox.setBounds(50, 35+(i*20), 150, checkBox.getPreferredSize().height);
             checkBoxes.add(checkBox);
