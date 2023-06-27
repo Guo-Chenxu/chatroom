@@ -83,8 +83,7 @@ public class InviteFriend extends JFrame {
                 } else {
                     System.out.println("未选择好友");
                 }
-                GroupService groupService = new GroupServiceImpl();
-                groupService.addGroup(Arrays.toString(comboBox1.getSelectedObjects()), group.getGroupName());
+                new GroupServiceImpl().addGroup(user.getUsername(), Arrays.toString(comboBox1.getSelectedObjects()), group.getGroupName());
             }
         });
 

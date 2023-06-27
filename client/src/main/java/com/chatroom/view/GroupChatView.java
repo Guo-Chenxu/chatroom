@@ -50,6 +50,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
     private JButton button4;
     private JButton button5;
     private JButton button6;
+    private JButton button7;
 
     public GroupChatView(User user, Group group){
         this.user = user;
@@ -119,6 +120,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
         button4 = new JButton();
         button5 = new JButton();
         button6 = new JButton();
+        button7 = new JButton();
 
         //this
         setVisible(true);
@@ -136,7 +138,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             panel1.add(label1);
             label1.setBounds(10, 10, 60, 60);
             //label2
-            label2.setText(group.getGroupName()+"(群主："+group.getLeaderName()+")");
+            label2.setText(group.getGroupName());
             label2.setFont(new Font(".AppleSystemUIFontMonospaced", Font.PLAIN, 22));
             label2.setForeground(Color.white);
             panel1.add(label2);
@@ -160,6 +162,12 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
         //panel2
         {
             panel2.setLayout(null);
+
+            //展示群聊成员按钮
+            button7.setText("查看群成员");
+            panel2.add(button7);
+            button7.setBounds(5,0,130,30);
+            button7.addActionListener(this);
 
             //图片按钮
 //            button1.setText("图片");
