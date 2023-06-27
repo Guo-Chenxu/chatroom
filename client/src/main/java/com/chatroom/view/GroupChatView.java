@@ -169,17 +169,6 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             button7.setBounds(5,0,130,30);
             button7.addActionListener(this);
 
-            //图片按钮
-//            button1.setText("图片");
-//            panel2.add(button1);
-//            button1.setBounds(5,0,60,30);
-//            button1.addActionListener(this);
-
-            //文件按钮
-//            button2.setText("文件");
-//            panel2.add(button2);
-//            button2.setBounds(65,0,60,30);
-//            button2.addActionListener(this);
 
             {
                 //compute preferred size

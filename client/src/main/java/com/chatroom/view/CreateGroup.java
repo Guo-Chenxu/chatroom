@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Ye peixin
+ * @author  Ye peixin
  */
 public class CreateGroup extends JFrame {
     private User user;
@@ -73,20 +73,6 @@ public class CreateGroup extends JFrame {
             checkBox.setBounds(50, 35+(i*20), 150, checkBox.getPreferredSize().height);
             checkBoxes.add(checkBox);
         }
-//        JCheckBox checkBox1 = new JCheckBox("好友1");
-//        containerPane.add(checkBox1);
-//        checkBox1.setBounds(70, 35, 100, checkBox1.getPreferredSize().height);
-//        checkBoxes.add(checkBox1);
-//
-//        JCheckBox checkBox2 = new JCheckBox("好友2");
-//        containerPane.add(checkBox2);
-//        checkBox2.setBounds(70, 55, 100, checkBox2.getPreferredSize().height);
-//        checkBoxes.add(checkBox2);
-//
-//        JCheckBox checkBox3 = new JCheckBox("好友3");
-//        containerPane.add(checkBox3);
-//        checkBox3.setBounds(70, 75, 100, checkBox3.getPreferredSize().height);
-//        checkBoxes.add(checkBox3);
 
         //输入群聊等级
         textField.setBounds(220,85,120,textField.getPreferredSize().height);
@@ -116,10 +102,7 @@ public class CreateGroup extends JFrame {
                 group.setLevel(Integer.parseInt(textField.getText()));
                 group.setGroupName(textFieldGroupName.getText());
                 group.setUsers(selectedOptions);
-//                System.out.println("选中的选项：");
-//                for (String option : selectedOptions) {
-//                    System.out.println(option);
-//                }
+
                 GroupService groupService = new GroupServiceImpl();
                 groupService.setGroup(user.getUsername(), group);
                 new GroupServiceImpl().getGroups(user.getUsername());

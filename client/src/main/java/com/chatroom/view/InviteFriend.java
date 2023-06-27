@@ -19,7 +19,10 @@ public class InviteFriend extends JFrame {
     private User user;
     private Group group;
     private JLabel label1;
-    private JComboBox<String> comboBox1;  // 添加 JComboBox
+    /**
+     * 添加 JComboBox
+     */
+    private JComboBox<String> comboBox1;
     private JButton button1;
 
     public InviteFriend(User user, Group group) throws InterruptedException {
@@ -59,10 +62,6 @@ public class InviteFriend extends JFrame {
             comboBox1.addItem(list.get(i));
         }
 
-        // comboBox1
-//        comboBox1.addItem("好友1");  // 添加下拉选项
-//        comboBox1.addItem("好友2");
-//        comboBox1.addItem("好友3");
         containerPane.add(comboBox1);
 
         // button1
