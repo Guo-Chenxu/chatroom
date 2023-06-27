@@ -292,6 +292,7 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
             //删除好友
             FriendsService friendsService = new FriendsServiceImpl();
             friendsService.deleteFriend(user.getUsername(), friend.getUsername());
+            this.dispose();
         }
     }
 

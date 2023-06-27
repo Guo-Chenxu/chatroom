@@ -1,7 +1,9 @@
 package com.chatroom.view;
 
 import com.chatroom.entity.User;
+import com.chatroom.service.FriendsService;
 import com.chatroom.service.UserService;
+import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.service.impl.UserServiceImpl;
 
 import javax.swing.*;
@@ -85,6 +87,9 @@ public class SelectionPage extends JFrame {
         container.add(addFaceBtn);
 
         contentPane.add(container, BorderLayout.CENTER);
+
+        FriendsService friendsService = new FriendsServiceImpl();
+        friendsService.getFriendList(user.getUsername());
 
         setContentPane(contentPane);
         pack();

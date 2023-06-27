@@ -122,6 +122,7 @@ public class CreateGroup extends JFrame {
 //                }
                 GroupService groupService = new GroupServiceImpl();
                 groupService.setGroup(user.getUsername(), group);
+                dispose();
             }
         });
 
