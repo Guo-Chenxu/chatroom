@@ -9,6 +9,7 @@ import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.utils.ChatViewManage;
 import com.chatroom.utils.GroupChatViewManage;
 import com.chatroom.view.ChatView;
+import com.chatroom.view.FriendAddRequest;
 import com.chatroom.view.GroupChatView;
 
 import javax.swing.*;
@@ -97,6 +98,7 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             groups = JSON.parseArray(msg.getContent(), String.class);
                             break;
                         case MessageType.ADD_FRIEND:
+                            new FriendAddRequest(msg.getSenderName(), msg.getReceiverName());
                             break;
                         case MessageType.ADD_AGREE:
                             // 提示***同意了你的好友申请

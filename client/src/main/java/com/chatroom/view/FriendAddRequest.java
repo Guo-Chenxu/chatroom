@@ -1,11 +1,7 @@
 package com.chatroom.view;
 
 import com.chatroom.service.FriendsService;
-import com.chatroom.service.UserService;
 import com.chatroom.service.impl.FriendsServiceImpl;
-import com.chatroom.service.impl.UserServiceImpl;
-
-import java.awt.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +12,7 @@ public class FriendAddRequest extends JFrame {
     private String friendName;
     private String username;
 
-    public FriendAddRequest(String friendName,String username) {
+    public FriendAddRequest(String friendName, String username) {
         this.friendName = friendName;
         this.username = username;
         initComponents();
@@ -32,7 +28,7 @@ public class FriendAddRequest extends JFrame {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         // 创建标签和按钮
-        JLabel nameLabel = new JLabel( friendName + "申请添加好友");
+        JLabel nameLabel = new JLabel(friendName + "申请添加好友");
         JButton acceptButton = new JButton("同意");
         JButton declineButton = new JButton("拒绝");
 
@@ -45,7 +41,8 @@ public class FriendAddRequest extends JFrame {
 
                 FriendsService friendsService = new FriendsServiceImpl();
 
-                friendsService.addAgree(username,friendName);
+                System.out.println(username + "   " + friendName);
+                friendsService.addAgree(username, friendName);
 
                 dispose(); // 关闭窗口
             }
