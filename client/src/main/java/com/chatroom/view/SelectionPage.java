@@ -26,10 +26,10 @@ public class SelectionPage extends JFrame {
         JPanel contentPane = new JPanel(new BorderLayout());
 
         // 创建最上方的JLabel
-        JLabel jlbTop = new JLabel("选择", JLabel.CENTER);
+        JLabel jlbTop = new JLabel(user.getUsername(), JLabel.CENTER);
         jlbTop.setFont(new Font("", Font.BOLD, 18));
         jlbTop.setForeground(Color.WHITE);
-        jlbTop.setBounds(0, 0, 340, 30);
+        jlbTop.setBounds(0, 0, 340, 40);
         jlbTop.setOpaque(true);
         jlbTop.setBackground(new Color(3, 37, 108));
         contentPane.add(jlbTop, BorderLayout.NORTH);
