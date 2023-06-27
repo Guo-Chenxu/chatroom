@@ -45,4 +45,12 @@ public interface GroupService {
      * @return 群聊列表
      */
     List<String> getGroupsByUsername(String username);
+
+    /**
+     * 获取群聊内所有群友
+     *
+     * @param groupName 群聊名
+     * @return 好友列表
+     */
+    List<String> getUsersInGroup(String groupName);
 }

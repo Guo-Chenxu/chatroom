@@ -132,4 +132,8 @@ public interface MessageType {
      * 删除好友
      */
     String DELETE_FRIEND = "30";
+    /**
+     * 展示群聊成员
+     */
+    String GET_USERS_IN_GROUP = "31";
 }

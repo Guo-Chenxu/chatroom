@@ -43,4 +43,10 @@ public class GroupServiceImpl implements GroupService {
         Message message = new Message(username, groupName, new Date(), MessageType.LEAVE_GROUP, true);
         ThreadManage.send(username, message);
     }
+
+    @Override
+    public void getUsersInGroup(String username, String groupName) {
+        Message message = new Message(username, groupName, new Date(), MessageType.GET_USERS_IN_GROUP, true);
+        ThreadManage.send(username, message);
+    }
 }

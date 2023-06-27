@@ -81,9 +81,6 @@ public class ServerConnectClientThread implements Runnable {
             /*
              * 输出流
              */
-            if (message.getMessageType().equals(MessageType.COMMON_MESSAGE)) {
-                int i = 1;
-            }
             ObjectOutputStream output = new ObjectOutputStream(client.getOutputStream());
             output.writeObject(chat);
             log.info("服务器向 " + this.username + " 发送了一条消息, 内容为 " + message);
@@ -101,7 +98,7 @@ public class ServerConnectClientThread implements Runnable {
                  */
                 ObjectInputStream input = new ObjectInputStream(client.getInputStream());
                 Message msg = (Message) input.readObject();
-                Message res = new Message(msg.getMessageType());
+                Message res = new Message(msg.getSenderName(), msg.getReceiverName(), msg.getMessageType());
 
                 boolean flag;
                 switch (msg.getMessageType()) {
@@ -134,7 +131,6 @@ public class ServerConnectClientThread implements Runnable {
                             ServerConnectClientThread thread = ThreadManage.getThread(res.getReceiverName());
                             thread.send(true, res);
                         } else {
-                            res = new Message();
                             res.setContent("添加请求已送达, 对方将在上线后收到");
                             send(false, res);
                         }
@@ -172,16 +168,12 @@ public class ServerConnectClientThread implements Runnable {
                     case MessageType.GET_FRIEND_MESSAGE:
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 获取和 " + msg.getReceiverName() + " 的好友聊天记录");
                         List<Message> fmessageList = friendMessageService.getMessageList(msg.getSenderName(), msg.getReceiverName());
-                        res.setSenderName(msg.getSenderName());
-                        res.setReceiverName(msg.getReceiverName());
                         res.setContent(JSON.toJSONString(fmessageList));
                         send(true, res);
                         break;
                     case MessageType.GET_GROUP_MESSAGE:
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 获取群聊 " + msg.getReceiverName() + " 的聊天记录");
                         List<Message> gmessageList = groupMessageService.getMessageList(msg.getSenderName(), msg.getReceiverName());
-                        res.setSenderName(msg.getSenderName());
-                        res.setReceiverName(msg.getReceiverName());
                         res.setContent(JSON.toJSONString(gmessageList));
                         send(true, res);
                         break;
@@ -212,6 +204,12 @@ public class ServerConnectClientThread implements Runnable {
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 请求加入群聊 " + msg.getReceiverName());
                         flag = groupService.addGroup(msg.getReceiverName(), msg.getSenderName());
                         sendError(flag, res);
+                        break;
+                    case MessageType.GET_USERS_IN_GROUP:
+                        log.info(new Date() + " 用户 " + msg.getSenderName() + " 获取群聊 " + msg.getReceiverName() + " 的所有成员");
+                        List<String> users = groupService.getUsersInGroup(msg.getReceiverName());
+                        res.setContent(JSON.toJSONString(users));
+                        send(true, res);
                         break;
                     case MessageType.OFFLINE:
                         log.info(new Date() + "用户 " + username + " 下线, 用户ip为: " + client.getRemoteSocketAddress());
