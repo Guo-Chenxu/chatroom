@@ -74,7 +74,7 @@ public class GroupServiceImpl implements GroupService {
         }
 
         int change = groupUserRelationMapper.add(groupName, username);
-        return change > 1;
+        return change > 0;
     }
 
     @Override

@@ -35,6 +35,7 @@ public class FriendsServiceImpl implements FriendsService {
     @Override
     public void addAgree(String username, String friend) {
         Message message = new Message(username, friend, new Date(), MessageType.ADD_AGREE);
+        System.out.println(message);
         ThreadManage.send(username, message);
     }
 }
