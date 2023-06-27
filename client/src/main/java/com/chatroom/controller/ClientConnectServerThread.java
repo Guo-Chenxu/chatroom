@@ -11,6 +11,7 @@ import com.chatroom.utils.GroupChatViewManage;
 import com.chatroom.view.ChatView;
 import com.chatroom.view.FriendAddRequest;
 import com.chatroom.view.GroupChatView;
+import com.chatroom.view.ShowGroupMember;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -48,11 +49,6 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
      */
     List<String> groups = new ArrayList<>();
 
-    /**
-     * 群友
-     */
-    List<String> groupMembers = new ArrayList<>();
-
     public ClientConnectServerThread(String username, Socket client) {
         this.username = username;
         this.client = client;
@@ -82,13 +78,11 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                 ObjectInputStream input = new ObjectInputStream(client.getInputStream());
                 Chat chat = (Chat) input.readObject();
                 Message msg = chat.getMessage();
-                // todo 补充具体的页面展示
                 if (!chat.getFlag()) {
                     JOptionPane.showMessageDialog(this, msg.getContent(), "warning", JOptionPane.WARNING_MESSAGE);
                 } else {
                     switch (msg.getMessageType()) {
                         case MessageType.CHANGE_PWD:
-                            // 提示修改成功
                             JOptionPane.showMessageDialog(this, "修改成功", "success", JOptionPane.OK_OPTION);
                             break;
                         case MessageType.GET_FRIENDS:
@@ -101,21 +95,15 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             new FriendAddRequest(msg.getSenderName(), msg.getReceiverName());
                             break;
                         case MessageType.ADD_AGREE:
-                            // 提示***同意了你的好友申请
-//                            JOptionPane.showMessageDialog(this, msg.getSenderName() + " 同意了你的好友申请", "success", JOptionPane.OK_OPTION);
                             new FriendsServiceImpl().getFriendList(username);
                             break;
                         case MessageType.COMMON_MESSAGE:
-                            // 提示***向你发送了一条消息
-//                            JOptionPane.showMessageDialog(this, msg.getSenderName() +  " 向你发送了一条消息", "warning", JOptionPane.WARNING_MESSAGE);
                             Message friendMessage = msg;
                             String senderName = msg.getSenderName();
                             ChatView chatView1 = ChatViewManage.getChatView(senderName);
                             chatView1.receiveChat(friendMessage);
                             break;
                         case MessageType.GROUP_MESSAGE:
-                            // 提示***在***群聊中发送了一条消息
-//                            JOptionPane.showMessageDialog(this, msg.getReceiverName() + " 群聊中有一条新消息", "warning", JOptionPane.WARNING_MESSAGE);
                             Message groupMessage = msg;
                             String groupName1 = msg.getReceiverName();
                             GroupChatView groupChatView1 = GroupChatViewManage.getGroupChatView(groupName1);
@@ -134,12 +122,10 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             groupChatView.showGroupList((ArrayList<Message>) groupMessages);
                             break;
                         case MessageType.GET_USERS_IN_GROUP:
-                            groupMembers = JSON.parseArray(msg.getContent(), String.class);
-                            // todo 待写页面
+                            List<String> groupMembers = JSON.parseArray(msg.getContent(), String.class);
+                            new ShowGroupMember(groupMembers);
                             break;
                         case MessageType.DELETE_FRIEND:
-                            // 提示删除成功
-//                            JOptionPane.showMessageDialog(this, "删除成功", "warning", JOptionPane.WARNING_MESSAGE);
                             break;
                         default:
                             break;
@@ -159,9 +145,5 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
 
     public List<String> getGroups() {
         return groups;
-    }
-
-    public List<String> getGroupMembers() {
-        return groupMembers;
     }
 }

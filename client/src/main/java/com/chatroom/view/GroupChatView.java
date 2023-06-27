@@ -305,7 +305,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             //查看群聊成员及群主
             GroupService groupService = new GroupServiceImpl();
             groupService.getUsersInGroup(user.getUsername(), group.getGroupName());
-            new ShowGroupMember(user, group);
+//            new ShowGroupMember(user, group);
         }
     }
     @Override
