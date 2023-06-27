@@ -5,12 +5,11 @@ import com.alibaba.fastjson2.JSON;
 import com.chatroom.entity.Chat;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
+import com.chatroom.entity.User;
 import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.utils.ChatViewManage;
 import com.chatroom.utils.GroupChatViewManage;
-import com.chatroom.view.ChatView;
-import com.chatroom.view.FriendAddRequest;
-import com.chatroom.view.GroupChatView;
+import com.chatroom.view.*;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -93,9 +92,11 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             break;
                         case MessageType.GET_FRIENDS:
                             friends = JSON.parseArray(msg.getContent(), String.class);
+                            new FriendList(new User(username));
                             break;
                         case MessageType.GET_GROUPS:
                             groups = JSON.parseArray(msg.getContent(), String.class);
+                            new GroupList(new User(username));
                             break;
                         case MessageType.ADD_FRIEND:
                             new FriendAddRequest(msg.getSenderName(), msg.getReceiverName());
