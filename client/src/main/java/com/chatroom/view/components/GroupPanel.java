@@ -35,7 +35,7 @@ public class GroupPanel extends JPanel implements MouseListener {
         groupName = new JLabel();
         groupName.setBounds(60, 10, 210, 18);
         groupName.setForeground(new Color(0, 0, 0));
-        groupName.setText(group.getGroupName()+"("+group.getId()+")"+" 群聊等级：Level"+group.getLevel());
+        groupName.setText(group.getGroupName()+")"+"\r\n  Level" +group.getLevel());
 
         this.add(groupName);
     }
@@ -44,6 +44,7 @@ public class GroupPanel extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e){
         if (e.getClickCount() == 2) {
             GroupChatView groupChatView = new GroupChatView(user, group);
+            System.out.println(groupChatView);
             GroupChatViewManage.addGroupChatView(group.getGroupName(), groupChatView);
         }
     }

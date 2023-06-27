@@ -95,7 +95,8 @@ public class GroupList extends JFrame {
         int panelHeight = 60;
         groupList.removeAll();
         for(int i=0; i<list.size(); i++){
-            Group group = new Group( list.get(i));
+            Group group = new Group();
+            group.setGroupName(list.get(i));
             //创建群聊面板
             JPanel groupPanel = new GroupPanel(this.user, group);
             groupPanel.setLocation(0,i*panelHeight);

@@ -136,7 +136,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             panel1.add(label1);
             label1.setBounds(10, 10, 60, 60);
             //label2
-            label2.setText(group.getGroupName());
+            label2.setText(group.getGroupName()+"(群主："+group.getLeaderName()+")");
             label2.setFont(new Font(".AppleSystemUIFontMonospaced", Font.PLAIN, 22));
             label2.setForeground(Color.white);
             panel1.add(label2);
@@ -284,12 +284,21 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             this.dispose();
         }else if(source == button3){
             //发送按钮
-            String text = textPane2.getText();
-            System.out.println(text);
-            MessageService GroupMessageService = new GroupMessageServiceImpl();
-            GroupMessageService.sendMessage(user.getUsername(), group.getGroupName(), text);
-            textPane2.removeAll();
-            textPane2.setText("");
+            if(!textPane2.getText().equals("")){
+                String text = textPane2.getText();
+                System.out.println(text);
+                MessageService GroupMessageService = new GroupMessageServiceImpl();
+                GroupMessageService.sendMessage(user.getUsername(), group.getGroupName(), text);
+                ChatBubble chatBubble = new ChatBubble(user.getUsername(), new Date(), text);
+                textPane1.add(chatBubble);
+                textPane1.updateUI();
+                scrollToBottom();
+                textPane2.removeAll();
+                textPane2.setText("");
+            }else {
+                JOptionPane.showMessageDialog(this, "消息不能为空！");
+            }
+
         } else if (source==button6) {
             //退群按钮
             GroupService groupService = new GroupServiceImpl();

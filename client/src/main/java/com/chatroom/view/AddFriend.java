@@ -56,6 +56,7 @@ public class AddFriend extends JFrame {
                 String text = textField1.getText();
                 FriendsService friendsService = new FriendsServiceImpl();
                 friendsService.addFriend(user.getUsername(), text);
+                dispose();
             }
         });
 
