@@ -1,0 +1,56 @@
+@startuml
+left to right direction
+actor 老用户
+actor 新用户
+package 用户服务{
+     usecase "注册"
+     usecase "密码登录"
+     usecase "人脸登录"
+     usecase "添加人脸"
+     usecase "下线"
+}
+package 好友服务{
+     usecase "获取好友列表"
+     usecase "添加好友"
+     usecase "删除好友"
+     usecase "同意好友申请"
+}
+package 消息服务{
+     usecase "获取聊天记录"
+     usecase "发送消息"
+    "获取聊天记录" .> (获取群聊记录) : include
+    "获取聊天记录" .> (获取好友聊天记录) : include
+    "发送消息".> (在群聊中发送信息) : include
+    "发送消息".> (给好友发送信息) : include
+}
+package 群组服务{
+     usecase "获取群组列表"
+     usecase "建立群聊"
+     usecase "加入群聊"
+     usecase "离开群聊"
+     usecase "获取群聊内所有用户"
+}
+
+新用户 --> "注册"
+
+老用户 --> "密码登录"
+老用户 --> "人脸登录"
+老用户 --> "添加人脸"
+老用户 --> "下线"
+
+老用户 --> "获取好友列表"
+老用户 --> "添加好友"
+老用户 --> "删除好友"
+老用户 --> "同意好友申请"
+
+老用户 --> "获取聊天记录"
+老用户 --> "发送消息"
+
+老用户 --> "获取群组列表"
+老用户 --> "建立群聊"
+老用户 --> "加入群聊"
+老用户 --> "离开群聊"
+老用户 --> "获取群聊内所有用户"
+
+
+@enduml
