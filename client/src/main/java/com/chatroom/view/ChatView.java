@@ -284,6 +284,7 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
                 textPane1.add(chatBubble);
                 textPane1.updateUI();
                 scrollToBottom();
+                textPane2.setText("");
             }else {
                 JOptionPane.showMessageDialog(this,"消息不能为空！");
             }

@@ -289,6 +289,7 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             MessageService GroupMessageService = new GroupMessageServiceImpl();
             GroupMessageService.sendMessage(user.getUsername(), group.getGroupName(), text);
             textPane2.removeAll();
+            textPane2.setText("");
         } else if (source==button6) {
             GroupService groupService = new GroupServiceImpl();
             groupService.leaveGroup(user.getUsername(), group.getGroupName());
