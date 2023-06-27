@@ -45,4 +45,12 @@ public interface GroupMessageService {
      * @return 消息列表
      */
     List<Message> getMessageList(String senderName, String receiverName);
+
+    /**
+     * 删除过期的群聊消息
+     *
+     * @param time 时间
+     * @return 是否删除成功
+     */
+    int deleteExpireMessage(long time);
 }

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public interface MessageMapper {
      * @param time 时间点
      * @return 改变行数
      */
-    int delete(@Param("time") Long time);
+    int delete(@Param("time") Date time);
 
     /**
      * 获取一对好友的聊天记录

@@ -31,6 +31,7 @@ public class ServerSocketConfig {
                 new Date() + " 服务器开启, 当前服务器ip地址为: " + InetAddress.getLocalHost()
                 + "==============================================================");
         server = new ConnectController();
+        new Thread(new CleanMessageThread()).start();
     }
 }
 

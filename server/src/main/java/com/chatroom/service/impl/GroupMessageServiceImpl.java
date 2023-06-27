@@ -13,6 +13,8 @@ import com.chatroom.utils.ThreadManage;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -85,5 +87,14 @@ public class GroupMessageServiceImpl implements GroupMessageService {
     @Override
     public List<Message> getMessageList(String senderName, String receiverName) {
         return messageMapper.getGroupMessage(receiverName);
+    }
+
+    @Override
+    public int deleteExpireMessage(long time) {
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(time);
+//        String str = sdf.format(date);
+//        System.out.println(str);
+        return messageMapper.delete(date);
     }
 }

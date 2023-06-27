@@ -7,6 +7,7 @@ import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
 import com.chatroom.mapper.*;
+import com.chatroom.service.GroupMessageService;
 import com.chatroom.service.UserService;
 import lombok.var;
 import org.junit.Assert;
@@ -17,10 +18,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @SpringBootTest
 class ServerApplicationTests {
@@ -29,6 +27,9 @@ class ServerApplicationTests {
 
     @Resource
     UserService userService;
+
+    @Resource
+    GroupMessageService groupMessageService;
 
     @Resource
     MessageMapper messagesMapper;
@@ -173,5 +174,10 @@ class ServerApplicationTests {
     @Test
     void testGetGroups() {
         System.out.println(groupUserRelationMapper.getGroupsByUsername("guochenxu123"));
+    }
+
+    @Test
+    void testDeleteExpireGroupMessage() {
+        System.out.println(groupMessageService.deleteExpireMessage(System.currentTimeMillis()));
     }
 }
