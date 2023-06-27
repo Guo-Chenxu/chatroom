@@ -32,7 +32,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void addGroup(String username, String friendName, String groupName) {
         Message message = new Message(friendName, groupName, new Date(), MessageType.ADD_GROUP, true);
-        ThreadManage.send(friendName, message);
+        ThreadManage.send(username, message);
     }
 
     @Override
