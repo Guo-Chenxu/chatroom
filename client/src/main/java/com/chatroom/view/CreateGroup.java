@@ -110,6 +110,7 @@ public class CreateGroup extends JFrame {
                         selectedOptions.add(checkBox.getText());
                     }
                 }
+                selectedOptions.add(user.getUsername());
                 Group group =  new Group();
                 group.setLeaderName(user.getUsername());
                 group.setLevel(Integer.parseInt(textField.getText()));
