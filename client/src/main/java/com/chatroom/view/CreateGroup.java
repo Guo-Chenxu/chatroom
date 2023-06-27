@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class CreateGroup extends JFrame {
     private User user;
-    private Group group;
     private JLabel label1;
     private JLabel label2;
     private JLabel label3;
@@ -111,6 +110,8 @@ public class CreateGroup extends JFrame {
                         selectedOptions.add(checkBox.getText());
                     }
                 }
+                Group group =  new Group();
+                group.setLeaderName(user.getUsername());
                 group.setLevel(Integer.parseInt(textField.getText()));
                 group.setGroupName(textFieldGroupName.getText());
                 group.setUsers(selectedOptions);
