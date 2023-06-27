@@ -30,11 +30,19 @@ import java.util.List;
 public class FriendList extends JFrame{
     private static int windowsWedth = 280;
     private static int windowsHeight = 600;
-    private static Container container;// 本窗口面板
-    private static JPanel friendList;// 好友列表
+    /**
+     * 本窗口面板
+     */
+    private static Container container;
+    /**
+     * 好友列表
+     */
+    private static JPanel friendList;
     private static JScrollPane jScrollPane;
-    private JPanel bottom;// 底部面板
-    private JButton addFriend;// 添加好友
+    /**
+     * 底部面板
+     */
+    private JPanel bottom;
     private User user;// 用户对象
 //    private List<String> list;
     public FriendList(User user){
@@ -65,16 +73,7 @@ public class FriendList extends JFrame{
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
         this.setBounds((width - windowsWedth) / 2, (height - windowsHeight) / 2, 0, 0);
         this.setMinimumSize(new Dimension(windowsWedth, windowsHeight));
-        //添加好友按钮
-//        addFriend = new JButton("添加好友");
-//        addFriend.setBackground(new Color(3,37,108));
-//        addFriend.setForeground(Color.white);
-//        addFriend.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                new AddFriend();
-//            }
-//        });
+
         //窗体底部面板
         bottom = new JPanel(new GridLayout(1, 0));
         bottom.setBounds(0, 542, windowsWedth, 30);
@@ -98,23 +97,6 @@ public class FriendList extends JFrame{
 
     //向服务器请求好友列表
     public void updateFriendList(){
-//        FriendsService friendsService = new FriendsServiceImpl();
-//        Socket client = friendsService.getClient();
-//        String userName = user.getUsername();
-//        JSONObject myFriendList = null;
-//
-//        if(client!=null && !client.isClosed()){
-//            Chat chat = friendsService.getFriendList(userName);
-//            Message msg = chat.getMessage();
-//            if(chat.getFlag()){
-//                myFriendList = JSON.parseObject(msg.getContent());
-//                ClientConnectServerThread thread = ThreadManage.getThread(user.getUsername());
-//
-//            }
-//        }
-
-//        Message message = new Message();
-//        ThreadManage.getThread(user.getUsername()).send(message);
 
         FriendsService friendsService = new FriendsServiceImpl();
         friendsService.getFriendList(user.getUsername());
@@ -153,57 +135,4 @@ public class FriendList extends JFrame{
         friendList.setPreferredSize(new Dimension(windowsWedth, list.size() * panelHeight));
         container.repaint();
     }
-//    class AddFriend extends JFrame implements ActionListener{
-//        public AddFriend(){
-//            initComponents();
-//        }
-//        private void initComponents() {
-//            label1 = new JLabel();
-//            textField1 = new JTextField();
-//            button1 = new JButton();
-//            //======== this ========
-//            setVisible(true);
-//            Container contentPane = getContentPane();
-//            contentPane.setLayout(null);
-//            //---- label1 ----
-//            label1.setText("好友账号");
-//            contentPane.add(label1);
-//            label1.setBounds(new Rectangle(new Point(70, 35), label1.getPreferredSize()));
-//            contentPane.add(textField1);
-//            textField1.setBounds(140, 30, 200, textField1.getPreferredSize().height);
-//            //---- button1 ----
-//            button1.setText("添加");
-//            contentPane.add(button1);
-//            button1.setBackground(new Color(3, 37, 108));
-//            button1.setForeground(Color.white);
-//            button1.setBounds(160, 75, 80, button1.getPreferredSize().height);
-//            button1.addActionListener(this);
-//            contentPane.setPreferredSize(new Dimension(400, 140));
-//            pack();
-//            setLocationRelativeTo(getOwner());
-//            // JFormDesigner - End of component initialization  //GEN-END:initComponents
-//        }
-//        private JLabel label1;
-//        private JTextField textField1;
-//        private JButton button1;
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            String text = textField1.getText();
-//            if (text.equals("")) {
-//                JOptionPane.showMessageDialog(this, "请输入QQ号！");
-//            } else if (text.length() > 4) {
-//                JOptionPane.showMessageDialog(this, "请输入正确的QQ号！");
-//            } else {
-//                int fqq = Integer.parseInt(text);
-////                Boolean aBoolean = new UserService().addFriend(user.getId(), fqq);
-////                if (aBoolean) {
-////                    JOptionPane.showMessageDialog(this, "添加成功！");
-////                    this.dispose();
-////                    updateFriendList();
-////                } else {
-////                    JOptionPane.showMessageDialog(this, "添加失败！");
-////                }
-//            }
-//        }
-//    }
 }

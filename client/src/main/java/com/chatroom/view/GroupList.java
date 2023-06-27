@@ -70,7 +70,9 @@ public class GroupList extends JFrame {
         updateGroupList();
     }
 
-    //请求群组列表
+    /**
+     * 请求群组列表
+     */
     public void updateGroupList(){
         GroupService groupService = new GroupServiceImpl();
         groupService.getGroups(user.getUsername());
