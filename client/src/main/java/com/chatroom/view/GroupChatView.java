@@ -163,8 +163,8 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
         {
             panel2.setLayout(null);
 
-            //展示群聊成员按钮
-            button7.setText("查看群成员");
+            //展示群聊信息
+            button7.setText("查看群聊信息");
             panel2.add(button7);
             button7.setBounds(5, 0, 130, 30);
             button7.addActionListener(this);
@@ -303,9 +303,9 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             groupService.leaveGroup(user.getUsername(), group.getGroupName());
             this.dispose();
         } else if (source == button7) {
-            //查看群聊成员及群主
+            //查看群聊信息
             GroupService groupService = new GroupServiceImpl();
-            groupService.getUsersInGroup(user.getUsername(), group.getGroupName());
+            groupService.getGroupInfo(user.getUsername(), group.getGroupName());
         }
     }
 

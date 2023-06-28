@@ -41,7 +41,8 @@ public interface GroupService {
     /**
      * 获取群聊内的所有用户
      *
+     * @param username  用户名
      * @param groupName 群聊名
      */
-    void getUsersInGroup(String username, String groupName);
+    void getGroupInfo(String username, String groupName);
 }
