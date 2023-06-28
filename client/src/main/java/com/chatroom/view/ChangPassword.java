@@ -92,7 +92,6 @@ public class ChangPassword extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // todo 修改密码, 直接调用下面的方法即可,参数是 用户名 密码
         String user = username.getText().trim();
         String pwd = new String(password.getPassword());
         String confirm = new String(passwordConfirm.getPassword());

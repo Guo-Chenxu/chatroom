@@ -1,0 +1,208 @@
+@startuml
+start
+
+fork
+
+  :密码登录;
+  if(用户是否已经在线)then(是)
+      :登录失败;
+      end
+      else(否)
+      if(用户名与密码是否匹配)then(否)
+      :登录失败;
+      end
+      else(是)
+      :登录成功;
+      endif
+  endif
+
+fork again
+
+  :人脸信息登录;
+  :获取用户名;
+  if(用户名或人脸信息是否为空)then(是)
+      :登录失败;
+      end
+  else(否)
+      if(用户名与人脸信息是否匹配)then(否)
+      :登录失败;
+      end
+      else(是)
+      :登录成功;
+      endif
+  endif
+
+end fork
+
+:获取用户的未读消息, 并将所有消息设为已读;
+
+repeat:进入系统
+
+fork
+
+    :修改密码;
+    if(密码格式是否符合要求)then(是)
+        :修改密码成功;
+        else(否)
+        :修改密码失败;
+    endif
+
+fork again
+
+    :添加人脸信息;
+    if(是否成功添加人脸信息)then(是)
+        :添加人脸信息成功;
+    else(否)
+        :添加人脸信息失败;
+    endif
+
+fork again
+
+    :获取好友列表;
+
+    fork
+
+        :发送好友消息;
+        if(对方在线) then (是)
+            :将消息设为已读状态;
+            :将消息发送给对方;
+        else(否)
+            :将消息设为未读状态;
+            :返回"消息已送达, 对方将在上线后收到"的提示;
+        endif
+
+    fork again
+
+        :获得好友聊天记录;
+        if(是否成功获得消息记录) then (是)
+            :获得消息记录;
+        else(否)
+            :操作失败;
+        endif
+
+    fork again
+
+        :删除好友;
+        if (是否成功在好友列表中删除用户) then (是)
+            :删除好友成功;
+        else (否)
+            :操作失败;
+        endif
+
+    fork again
+
+    end fork
+
+fork again
+
+    :请求添加好友;
+    if(被添加用户是否在线)then(是)
+        :设置消息已读状态;
+        :将申请发送给对方;
+    else(否)
+        :设置消息未读状态;
+        :返回"消息已送达, 对方将在上线后收到"的提示;
+    endif
+
+fork again
+
+    :获取群组列表;
+
+    fork
+
+        :发送群组消息;
+        if(是否操作成功) then (是)
+        else(否)
+        	:发送消息失败;
+        endif
+
+    fork again
+
+        :获取群聊消息记录;
+        if(是否成功获取群聊消息)then(是)
+            :获取群聊消息;
+        else(否)
+            :操作失败;
+        endif
+
+    fork again
+
+        :拉好友入群;
+        :获取好友列表;
+        if(群聊人数是否超过最大人数限制)then(是)
+            :操作失败;
+        else(否)
+            if(是否重复加群)then(是)
+            :操作失败;
+            else(否)
+                if(是否成功为用户添加群聊) then (是)
+                :操作成功;
+                else(否)
+                :操作失败;
+                endif
+            endif
+        endif
+
+    fork again
+
+        :退出群聊;
+        if(是否成功在群聊中删除用户)then(是)
+            :退出群聊成功;
+        else(否)
+            :退出群聊失败;
+        endif
+
+    fork again
+
+        :获取群聊详细信息;
+        if(是否操作成功)then(是)
+            :获得群聊详细信息;
+        else(否)
+            :操作失败;
+        endif
+
+    fork again
+
+    end fork
+
+    fork again
+
+        :收到好友请求;
+        if (是否同意添加好友) then (是)
+            :添加好友成功;
+        else (否)
+        endif
+
+    fork again
+
+        :建立群聊;
+        :获取好友列表;
+        if(群聊人数是否超过最大人数限制)then(是)
+            :建立群聊失败;
+        else(否)
+            if(群聊名称是否符合规范)then(否)
+            :建立群聊失败;
+            else(是)
+                if(群聊名称是否重复)then(是)
+                :建立群聊失败;
+                else(否)
+                    if(是否成功为用户添加群聊) then (是)
+                    :建立群聊成功;
+                    else(否)
+                    :建立群聊失败;
+                    endif
+                endif
+            endif
+        endif
+
+    fork again
+
+end fork
+
+repeat while (用户是否请求下线) is (未请求下线) not (请求下线)
+
+:用户下线;
+:线程结束,删除该用户的线程;
+
+stop
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+
+start
+:注册;
+if(用户是否已存在)then(是)
+    :注册失败;
+    else(否)
+    if(用户名和密码格式是否符合要求)then(否)
+    :注册失败;
+    else(是)
+    :注册成功;
+    endif
+endif
+stop
+
+@enduml

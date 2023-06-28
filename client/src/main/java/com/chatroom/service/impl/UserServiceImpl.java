@@ -71,6 +71,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changePassword(String userName, String pwd) {
         Message message = new Message(userName, "", new Date(), CHANGE_PWD);
+        message.setContent(pwd);
         ThreadManage.send(userName, message);
     }
 

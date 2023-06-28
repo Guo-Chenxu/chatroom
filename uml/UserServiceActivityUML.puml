@@ -1,72 +1,72 @@
 [@startuml
 'https://plantuml.com/activity-diagram-beta
 
-start
-:密码登录;
-if(用户是否已经在线)then(是)
-    :登陆失败;
-    else(否)
-    if(用户名与密码是否匹配)then(否)
-    :登陆失败;
-    else(是)
-    :登陆成功;
-    endif
-endif
-stop
+'start
+':密码登录;
+'if(用户是否已经在线)then(是)
+'    :登陆失败;
+'    else(否)
+'    if(用户名与密码是否匹配)then(否)
+'    :登陆失败;
+'    else(是)
+'    :登陆成功;
+'    endif
+'endif
+'stop
 
-start
-:人脸信息登录;
-:获取用户名;
-if(用户名或人脸信息是否为空)then(是)
-    :登陆失败;
-    else(否)
-    if(用户名与人脸信息是否匹配)then(否)
-    :登陆失败;
-    else(是)
-    :登陆成功;
-    endif
-endif
-stop
+'start
+':人脸信息登录;
+':获取用户名;
+'if(用户名或人脸信息是否为空)then(是)
+'    :登陆失败;
+'    else(否)
+'    if(用户名与人脸信息是否匹配)then(否)
+'    :登陆失败;
+'    else(是)
+'    :登陆成功;
+'    endif
+'endif
+'stop
 
-start
-:注册;
-if(用户是否已存在)then(是)
-    :注册失败;
-    else(否)
-    if(用户名和密码格式是否符合要求)then(否)
-    :注册失败;
-    else(是)
-    :注册成功;
-    endif
-endif
-stop
+'start
+':注册;
+'if(用户是否已存在)then(是)
+'    :注册失败;
+'    else(否)
+'    if(用户名和密码格式是否符合要求)then(否)
+'    :注册失败;
+'    else(是)
+'    :注册成功;
+'    endif
+'endif
+'stop
 
-start
-:修改密码;
-if(密码格式是否符合要求)then(是)
-    :修改密码成功;
-    else(否)
-    :修改密码失败;
-endif
-stop
+'start
+':修改密码;
+'if(密码格式是否符合要求)then(是)
+'    :修改密码成功;
+'    else(否)
+'    :修改密码失败;
+'endif
+'stop
 
-start
-:用户下线;
-if(用户是否连接到服务端)then(是)
-    :线程结束,删除该用户的线程;
-    else(否)
-    :用户下线失败;
-endif
-stop
+'start
+':用户下线;
+'if(用户是否连接到服务端)then(是)
+'    :线程结束,删除该用户的线程;
+'    else(否)
+'    :用户下线失败;
+'endif
+'stop
 
-start
-:添加人脸信息;
-if(是否成功添加人脸信息)then(是)
-    :添加人脸信息成功;
-    else(否)
-    :添加人脸信息失败;
-endif
-stop
+'start
+':添加人脸信息;
+'if(是否成功添加人脸信息)then(是)
+'    :添加人脸信息成功;
+'    else(否)
+'    :添加人脸信息失败;
+'endif
+'stop
 
 start
 :删除人脸信息;
