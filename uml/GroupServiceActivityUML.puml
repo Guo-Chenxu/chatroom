@@ -1,0 +1,75 @@
+[@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:根据用户名获取他的所有群聊;
+if (是否成功根据用户名获取他的所有群聊) then (是)
+: 获取群聊列表成功;
+else (否)
+:获取群聊列表失败;
+
+endif
+stop
+
+start
+:建立群聊;
+if(群聊人数是否超过最大人数限制)then(是)
+    :建立群聊失败;
+else(否)
+    if(群聊名称是否符合规范)then(否)
+    :建立群聊失败;
+    else(是)
+        if(群聊名称是否重复)then(是)
+        :建立群聊失败;
+        else(否)
+            if(是否成功为用户添加群聊) then (是)
+            :建立群聊成功;
+            else(否)
+            :建立群聊失败;
+            endif
+        endif
+    endif
+endif
+stop
+
+start
+:加入群聊;
+:获取群聊名称;
+:获取群聊人数;
+if(群聊人数是否超过最大人数限制)then(是)
+    :加入群聊失败;
+else(否)
+    if(是否重复加群)then(是)
+    :加入群聊失败;
+    else(否)
+        if(是否成功为用户添加群聊) then (是)
+        :加入群聊成功;
+        else(否)
+        :加入群聊失败;
+        endif
+    endif
+endif
+stop
+
+start
+:退出群聊;
+if(是否成功在群聊中删除用户)then(是)
+    :退出群聊成功;
+    else(否)
+    :退出群聊失败;
+endif
+stop
+
+start
+:获取群聊内的所有用户;
+:获取群聊名称;
+if(是否成功获取群聊内所有群友)then(是)
+    :获取群聊内的所有用户成功;
+    else(否)
+    :获取群聊内的所有用户失败;
+endif
+stop
+
+
+@enduml
+]

@@ -1,0 +1,38 @@
+[@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:获取好友列表;
+if (是否获取好友列表) then (是)
+: 获取好友列表成功;
+    else (否)
+    :获取好友列表失败;
+
+endif
+stop
+
+
+start
+:同意添加好友;
+if (是否成功在好友列表中加入添加用户) then (是)
+: 同意添加好友成功;
+    else (否)
+    :同意添加好友失败;
+
+endif
+stop
+
+start
+:删除好友;
+if (是否成功在好友列表中删除用户) then (是)
+: 删除好友成功;
+    else (否)
+    :删除好友失败;
+
+endif
+stop
+
+
+
+@enduml
+]
