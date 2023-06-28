@@ -111,11 +111,11 @@ public class ChangPassword extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "用户名格式错误！");
             return false;
         }
-        if(!password.matches(REG)){
+        if(password.equals("") || confirm.equals("")){
             JOptionPane.showMessageDialog(this, "密码不能为空！");
             return false;
-        }else if (password.equals("") || confirm.equals("")) {
-            JOptionPane.showMessageDialog(this, "密码不能为空！");            JOptionPane.showMessageDialog(this, "密码格式错误！");
+        }else if (!password.matches(REG)) {
+            JOptionPane.showMessageDialog(this, "密码格式错误！");
             return false;
         }else if (!password.equals(confirm)) {
             JOptionPane.showMessageDialog(this, "密码错误，请重新输入！");
