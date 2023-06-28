@@ -5,9 +5,9 @@ import com.chatroom.controller.ServerConnectClientThread;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
+import com.chatroom.entity.User;
 import com.chatroom.mapper.*;
-import com.chatroom.service.GroupMessageService;
-import com.chatroom.service.UserService;
+import com.chatroom.service.*;
 import lombok.var;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -29,6 +29,15 @@ class ServerApplicationTests {
 
     @Resource
     UserService userService;
+
+    @Resource
+    FriendService friendService;
+
+    @Resource
+    GroupService groupService;
+
+    @Resource
+    FriendMessageService friendMessageService;
 
     @Resource
     GroupMessageService groupMessageService;
@@ -82,6 +91,16 @@ class ServerApplicationTests {
     }
 
     @Test
+    void testMessageMapperContent() {
+        Message m = new Message();
+        m.setContent("11111");
+        System.out.println(m);
+        messagesMapper.add(m);
+        System.out.println(messagesMapper.getAllMessages());
+    }
+
+
+    @Test
     void testJson() {
         Message m = new Message();
         List<Message> l = new ArrayList<>();
@@ -102,15 +121,6 @@ class ServerApplicationTests {
         System.out.println(mm.getMessageType());
         System.out.println(mm.getContent());
         Assert.assertEquals(l, ll);
-    }
-
-    @Test
-    void testMessageMapperContent() {
-        Message m = new Message();
-        m.setContent("11111");
-        System.out.println(m);
-        messagesMapper.add(m);
-        System.out.println(messagesMapper.getAllMessages());
     }
 
     @Test
@@ -137,18 +147,38 @@ class ServerApplicationTests {
     }
 
     @Test
-    void testSetGroup() {
-        Group group = new Group("123", "123", null, 1);
-        groupMapper.add(group);
+    void testGetGroups() {
+        System.out.println(groupService.getGroupInfo("123"));
     }
 
     @Test
-    void testGetGroups() {
-        System.out.println(groupUserRelationMapper.getGroupsByUsername("guochenxu123"));
+    void testSetGroup() {
+        Group group = new Group("123", "123", null, 1);
+        List<String> list = new ArrayList<>();
+        list.add("123");
+        list.add("321");
+        group.setUsers(list);
+        groupService.setGroup(group);
     }
+
 
     @Test
     void testDeleteExpireGroupMessage() {
         System.out.println(groupMessageService.deleteExpireMessage(System.currentTimeMillis()));
+    }
+
+    @Test
+    void testGetNotRead() {
+        System.out.println(friendMessageService.getNotReadMessages(new User("zhangsan123", "", "")));
+    }
+
+    @Test
+    void testGetMessage() {
+        System.out.println(friendMessageService.getMessageList("zhangsan123", "lisi123"));
+    }
+
+    @Test
+    void testGetFriendList() {
+        System.out.println(friendService.getFriendList("zhangsan123"));
     }
 }

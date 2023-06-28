@@ -78,6 +78,7 @@ public class ConnectController implements Runnable {
                         loginSuccess(user, client);
                     } else {
                         loginFail(user, client);
+                        client.close();
                     }
                 } else if (MessageType.LOGIN_BY_FACE.equals(message.getMessageType())) {
                     // 使用人脸登录
@@ -85,6 +86,7 @@ public class ConnectController implements Runnable {
                         loginSuccess(user, client);
                     } else {
                         loginFail(user, client);
+                        client.close();
                     }
                 } else if (MessageType.REGISTER.equals(message.getMessageType())) {
                     // 用户注册
@@ -102,6 +104,7 @@ public class ConnectController implements Runnable {
                         res.setContent("注册失败, 请检查用户名/密码格式是否正确");
                         output.writeObject(new Chat(false, res));
                     }
+                    client.close();
                 }
             }
             log.info(new Date() + "服务器关闭");
@@ -130,7 +133,6 @@ public class ConnectController implements Runnable {
         Message res = new Message();
         res.setMessageType(MessageType.LOGIN_SUCCESS);
         List<Message> notRead = friendMessageService.getNotReadMessages(user);
-//        notRead.addAll(groupMessageService.getNotReadMessages(user));
         res.setContent(JSON.toJSONString(notRead));
         output.writeObject(new Chat(true, res));
     }
