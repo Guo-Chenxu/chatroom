@@ -12,10 +12,8 @@ import java.awt.event.ActionListener;
  * @author unknown
  */
 public class ChangPassword extends JFrame implements ActionListener {
-    private User user;
 
-    public ChangPassword(User user) {
-        this.user = user;
+    public ChangPassword() {
         initComponents();
     }
 
@@ -26,9 +24,9 @@ public class ChangPassword extends JFrame implements ActionListener {
         label2 = new JLabel();
         label3 = new JLabel();
         label4 = new JLabel();
-        passwordField1 = new JPasswordField();
-        passwordField2 = new JPasswordField();
-        passwordField3 = new JPasswordField();
+        username = new JTextField();
+        password = new JPasswordField();
+        passwordConfirm = new JPasswordField();
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -68,12 +66,12 @@ public class ChangPassword extends JFrame implements ActionListener {
         label4.setHorizontalAlignment(SwingConstants.RIGHT);
         contentPane.add(label4);
         label4.setBounds(70, 154, 65, 15);
-        contentPane.add(passwordField1);
-        passwordField1.setBounds(145, 70, 175, 27);
-        contentPane.add(passwordField2);
-        passwordField2.setBounds(145, 110, 175, 27);
-        contentPane.add(passwordField3);
-        passwordField3.setBounds(145, 149, 175, 27);
+        contentPane.add(username);
+        username.setBounds(145, 70, 175, 27);
+        contentPane.add(password);
+        password.setBounds(145, 110, 175, 27);
+        contentPane.add(passwordConfirm);
+        passwordConfirm.setBounds(145, 149, 175, 27);
 
         contentPane.setPreferredSize(new Dimension(400, 260));
         pack();
@@ -88,30 +86,38 @@ public class ChangPassword extends JFrame implements ActionListener {
     private JLabel label2;
     private JLabel label3;
     private JLabel label4;
-    private JPasswordField passwordField1;
-    private JPasswordField passwordField2;
-    private JPasswordField passwordField3;
+    private JTextField username;
+    private JPasswordField password;
+    private JPasswordField passwordConfirm;
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // todo 修改密码, 直接调用下面的方法即可,参数是 用户名 密码
-//        UserServiceImpl.getInstance().changePassword();
+        String user = username.getText().trim();
+        String pwd = new String(password.getPassword());
+        String confirm = new String(passwordConfirm.getPassword());
+        check(user,pwd,confirm);
+        UserServiceImpl.getInstance().changePassword(user,pwd);
+        this.dispose();
+        JOptionPane.showMessageDialog(this, "密码修改成功！");
     }
 
-    private Boolean check(String qq, String op, String p, String ap) {
+    private Boolean check(String qq, String password, String confirm) {
+        String REG = "^[a-zA-Z]\\w{5,17}$";
         if (qq.equals("")) {
-            JOptionPane.showMessageDialog(this, "QQ号不能为空！");
+            JOptionPane.showMessageDialog(this, "用户名不能为空！");
+            return false;
+        }else if(!qq.matches(REG)){
+            JOptionPane.showMessageDialog(this, "用户名格式错误！");
             return false;
         }
-        if (qq.length() > 4) {
-            JOptionPane.showMessageDialog(this, "QQ号格式错误，请重新输入！");
-            return false;
-        }
-        if (op.equals("") || p.equals("") || ap.equals("")) {
+        if(!password.matches(REG)){
             JOptionPane.showMessageDialog(this, "密码不能为空！");
             return false;
-        }
-        if (!p.equals(ap)) {
+        }else if (password.equals("") || confirm.equals("")) {
+            JOptionPane.showMessageDialog(this, "密码不能为空！");            JOptionPane.showMessageDialog(this, "密码格式错误！");
+            return false;
+        }else if (!password.equals(confirm)) {
             JOptionPane.showMessageDialog(this, "密码错误，请重新输入！");
             return false;
         }
