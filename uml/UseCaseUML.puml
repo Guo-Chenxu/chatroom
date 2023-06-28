@@ -7,6 +7,7 @@ package 用户服务{
      usecase "密码登录"
      usecase "人脸登录"
      usecase "添加人脸"
+     usecase "修改密码"
      usecase "下线"
 }
 package 好友服务{

@@ -13,6 +13,7 @@ import com.chatroom.utils.ThreadManage;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.annotation.security.DeclareRoles;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -72,6 +73,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
      * @return message
      */
     @Override
+    @Deprecated
     public Message addRequest(Message message) {
         String username = message.getSenderName();
         String groupName = message.getReceiverName();

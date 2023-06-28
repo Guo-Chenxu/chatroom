@@ -46,9 +46,6 @@ public class ConnectController implements Runnable {
     @Resource
     FriendMessageService friendMessageService;
 
-    @Resource
-    GroupMessageService groupMessageService;
-
     private static final Logger log = LoggerFactory.getLogger(ConnectController.class);
 
     public ConnectController() {

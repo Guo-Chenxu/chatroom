@@ -15,6 +15,13 @@ import java.util.Date;
  * @version: 1.0
  **/
 public class FriendMessageServiceImpl implements MessageService {
+
+    private static FriendMessageServiceImpl friendMessageService = new FriendMessageServiceImpl();
+
+    public static FriendMessageServiceImpl getInstance() {
+        return friendMessageService;
+    }
+
     @Override
     public void getMessages(String sender, String receiver) {
         Message message = new Message(sender, receiver, new Date(), MessageType.GET_FRIEND_MESSAGE);

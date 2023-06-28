@@ -39,8 +39,9 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
      * 获取聊天记录
      */
     public void getChatList() {
-        MessageService friendMessageService = new FriendMessageServiceImpl();
-        friendMessageService.getMessages(user.getUsername(), friend.getUsername());
+//        MessageService friendMessageService = new FriendMessageServiceImpl();
+//        friendMessageService.getMessages(user.getUsername(), friend.getUsername());
+        FriendMessageServiceImpl.getInstance().getMessages(user.getUsername(), friend.getUsername());
     }
 
     /**
@@ -50,7 +51,6 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
         textPane1.removeAll();
         for (Message message : list) {
             String senderName = (Objects.equals(message.getSenderName(), user.getUsername())) ? user.getUsername() : friend.getUsername();
-//            Date time = new Date(String.valueOf(message.getSendTime()));
             String content = message.getContent();
             ChatBubble chatBubble = new ChatBubble(senderName, message.getSendTime(), content);
             textPane1.add(chatBubble);
