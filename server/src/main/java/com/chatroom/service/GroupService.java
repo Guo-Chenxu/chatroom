@@ -52,5 +52,5 @@ public interface GroupService {
      * @param groupName 群聊名
      * @return 好友列表
      */
-    List<String> getUsersInGroup(String groupName);
+    List<String> getGroupInfo(String groupName);
 }

@@ -90,9 +90,11 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<String> getUsersInGroup(String groupName) {
+    public List<String> getGroupInfo(String groupName) {
         List<String> res = groupUserRelationMapper.getUsersByGroupName(groupName);
-        res.add(groupMapper.getByGroupName(groupName).getLeaderName());
+        Group g = groupMapper.getByGroupName(groupName);
+        res.add(g.getLeaderName());
+        res.add(String.valueOf(g.getLevel()));
         return res;
     }
 }

@@ -11,7 +11,7 @@ import com.chatroom.utils.GroupChatViewManage;
 import com.chatroom.view.ChatView;
 import com.chatroom.view.FriendAddRequest;
 import com.chatroom.view.GroupChatView;
-import com.chatroom.view.ShowGroupMember;
+import com.chatroom.view.ShowGroupInfo;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -119,9 +119,9 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             GroupChatView groupChatView = GroupChatViewManage.getGroupChatView(groupName);
                             groupChatView.showGroupList((ArrayList<Message>) groupMessages);
                             break;
-                        case MessageType.GET_USERS_IN_GROUP:
-                            List<String> groupMembers = JSON.parseArray(msg.getContent(), String.class);
-                            new ShowGroupMember(groupMembers);
+                        case MessageType.GET_GROUP_INFO:
+                            List<String> info = JSON.parseArray(msg.getContent(), String.class);
+                            new ShowGroupInfo(info);
                             break;
                         case MessageType.DELETE_FRIEND:
                             break;

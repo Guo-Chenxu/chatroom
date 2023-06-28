@@ -205,10 +205,10 @@ public class ServerConnectClientThread implements Runnable {
                         flag = groupService.addGroup(msg.getReceiverName(), msg.getSenderName());
                         sendError(flag, res);
                         break;
-                    case MessageType.GET_USERS_IN_GROUP:
+                    case MessageType.GET_GROUP_INFO:
                         log.info(new Date() + " 用户 " + msg.getSenderName() + " 获取群聊 " + msg.getReceiverName() + " 的所有成员");
-                        List<String> users = groupService.getUsersInGroup(msg.getReceiverName());
-                        res.setContent(JSON.toJSONString(users));
+                        List<String> info = groupService.getGroupInfo(msg.getReceiverName());
+                        res.setContent(JSON.toJSONString(info));
                         send(true, res);
                         break;
                     case MessageType.OFFLINE:

@@ -135,5 +135,5 @@ public interface MessageType {
     /**
      * 展示群聊成员
      */
-    String GET_USERS_IN_GROUP = "31";
+    String GET_GROUP_INFO = "31";
 }

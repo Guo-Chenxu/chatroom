@@ -35,7 +35,8 @@ public class GroupPanel extends JPanel implements MouseListener {
         groupName = new JLabel();
         groupName.setBounds(60, 10, 210, 18);
         groupName.setForeground(new Color(0, 0, 0));
-        groupName.setText(group.getGroupName()+"\r\n  Level" +group.getLevel());
+//        groupName.setText(group.getGroupName()+"\r\n  Level" +group.getLevel());
+        groupName.setText(group.getGroupName());
 
         this.add(groupName);
     }
