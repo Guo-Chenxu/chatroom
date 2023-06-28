@@ -83,7 +83,7 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                 } else {
                     switch (msg.getMessageType()) {
                         case MessageType.CHANGE_PWD:
-                            JOptionPane.showMessageDialog(this, "修改成功", "success", JOptionPane.OK_OPTION);
+                            JOptionPane.showMessageDialog(this, "密码修改成功！");
                             break;
                         case MessageType.GET_FRIENDS:
                             friends = JSON.parseArray(msg.getContent(), String.class);
@@ -124,6 +124,7 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             new ShowGroupInfo(info);
                             break;
                         case MessageType.DELETE_FRIEND:
+                            JOptionPane.showMessageDialog(this, "删除成功！");
                             break;
                         default:
                             break;
