@@ -73,8 +73,8 @@ public class GroupList extends JFrame {
      * 请求群组列表
      */
     public void updateGroupList() {
-        GroupService groupService = new GroupServiceImpl();
-        groupService.getGroups(user.getUsername());
+//        GroupService groupService = new GroupServiceImpl();
+        GroupServiceImpl.getInstance().getGroups(user.getUsername());
 
         groupList = new JPanel();
         groupList.setLayout(null);

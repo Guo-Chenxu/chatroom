@@ -14,6 +14,12 @@ import static com.chatroom.entity.MessageType.GET_FRIENDS;
  */
 public class FriendsServiceImpl implements FriendsService {
 
+    private static FriendsService friendService = new FriendsServiceImpl();
+
+    public static FriendsService getInstance() {
+        return friendService;
+    }
+
     @Override
     public void getFriendList(String username) {
         Message message = new Message(username, "", new Date(), GET_FRIENDS);

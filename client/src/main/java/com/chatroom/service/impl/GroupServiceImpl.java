@@ -16,6 +16,12 @@ import static com.chatroom.entity.MessageType.GET_GROUPS;
  */
 public class GroupServiceImpl implements GroupService {
 
+    private static GroupService groupService = new GroupServiceImpl();
+
+    public static GroupService getInstance() {
+        return groupService;
+    }
+
     @Override
     public void getGroups(String username) {
         Message message = new Message(username, "", new Date(), GET_GROUPS, true);

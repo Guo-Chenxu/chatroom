@@ -39,10 +39,10 @@ public class FriendAddRequest extends JFrame {
                 // 处理同意按钮点击事件
                 JOptionPane.showMessageDialog(FriendAddRequest.this, "您同意了好友申请");
 
-                FriendsService friendsService = new FriendsServiceImpl();
+//                FriendsService friendsService = new FriendsServiceImpl();
 
                 System.out.println(username + "   " + friendName);
-                friendsService.addAgree(username, friendName);
+                FriendsServiceImpl.getInstance().addAgree(username, friendName);
 
                 dispose(); // 关闭窗口
             }

@@ -95,7 +95,7 @@ public class ClientConnectServerThread extends JFrame implements Runnable {
                             new FriendAddRequest(msg.getSenderName(), msg.getReceiverName());
                             break;
                         case MessageType.ADD_AGREE:
-                            new FriendsServiceImpl().getFriendList(username);
+                            FriendsServiceImpl.getInstance().getFriendList(username);
                             break;
                         case MessageType.COMMON_MESSAGE:
                             String senderName = msg.getSenderName();

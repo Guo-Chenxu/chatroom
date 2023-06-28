@@ -1,5 +1,8 @@
 package com.chatroom.view;
 
+import com.chatroom.entity.User;
+import com.chatroom.service.impl.UserServiceImpl;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,8 +11,11 @@ import java.awt.event.ActionListener;
 /**
  * @author unknown
  */
-public class Forget extends JFrame implements ActionListener {
-    public Forget() {
+public class ChangPassword extends JFrame implements ActionListener {
+    private User user;
+
+    public ChangPassword(User user) {
+        this.user = user;
         initComponents();
     }
 
@@ -37,7 +43,7 @@ public class Forget extends JFrame implements ActionListener {
         button1.addActionListener(this);
 
         // 创建最上方的JLabel
-        JLabel jlbTop = new JLabel("忘记密码", JLabel.CENTER);
+        JLabel jlbTop = new JLabel("修改密码", JLabel.CENTER);
         jlbTop.setFont(new Font("", Font.BOLD, 18));
         jlbTop.setBounds(0, 0, 400, 30);
         jlbTop.setForeground(Color.white);
@@ -88,7 +94,8 @@ public class Forget extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        // todo 修改密码, 直接调用下面的方法即可,参数是 用户名 密码
+//        UserServiceImpl.getInstance().changePassword();
     }
 
     private Boolean check(String qq, String op, String p, String ap) {

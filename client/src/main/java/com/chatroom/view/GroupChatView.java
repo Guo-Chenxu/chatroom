@@ -60,8 +60,8 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
 
     //获取群聊聊天记录
     public void getGroupChatList() {
-        MessageService groupMessageService = new GroupMessageServiceImpl();
-        groupMessageService.getMessages(user.getUsername(), group.getGroupName());
+//        MessageService groupMessageService = new GroupMessageServiceImpl();
+        GroupMessageServiceImpl.getInstance().getMessages(user.getUsername(), group.getGroupName());
 
     }
 
@@ -285,8 +285,8 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
             if (!textPane2.getText().equals("")) {
                 String text = textPane2.getText();
                 System.out.println(text);
-                MessageService GroupMessageService = new GroupMessageServiceImpl();
-                GroupMessageService.sendMessage(user.getUsername(), group.getGroupName(), text);
+//                MessageService GroupMessageService = new GroupMessageServiceImpl();
+                GroupMessageServiceImpl.getInstance().sendMessage(user.getUsername(), group.getGroupName(), text);
                 ChatBubble chatBubble = new ChatBubble(user.getUsername(), new Date(), text);
                 textPane1.add(chatBubble);
                 textPane1.updateUI();
@@ -299,13 +299,13 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
 
         } else if (source == button6) {
             //退群按钮
-            GroupService groupService = new GroupServiceImpl();
-            groupService.leaveGroup(user.getUsername(), group.getGroupName());
+//            GroupService groupService = new GroupServiceImpl();
+            GroupServiceImpl.getInstance().leaveGroup(user.getUsername(), group.getGroupName());
             this.dispose();
         } else if (source == button7) {
             //查看群聊信息
-            GroupService groupService = new GroupServiceImpl();
-            groupService.getGroupInfo(user.getUsername(), group.getGroupName());
+//            GroupService groupService = new GroupServiceImpl();
+            GroupServiceImpl.getInstance().getGroupInfo(user.getUsername(), group.getGroupName());
         }
     }
 

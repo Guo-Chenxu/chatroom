@@ -198,33 +198,33 @@ public class Login extends JFrame implements ActionListener {
         contentPane.add(jlbFaceLogin);
 
         // 忘记密码
-        jlbForget = new JLabel("<html><u>" + "忘记密码" + "</u></html>");
-        jlbForget.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));//设置鼠标样式
-        jlbForget.setBounds(windowsWedth - 90, 220, 200, 30);
-        jlbForget.setForeground(new Color(3, 37, 108));
-        jlbForget.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                new Forget();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        contentPane.add(jlbForget);
+//        jlbForget = new JLabel("<html><u>" + "忘记密码" + "</u></html>");
+//        jlbForget.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));//设置鼠标样式
+//        jlbForget.setBounds(windowsWedth - 90, 220, 200, 30);
+//        jlbForget.setForeground(new Color(3, 37, 108));
+//        jlbForget.addMouseListener(new MouseListener() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                new ChangPassword();
+//            }
+//
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//            }
+//
+//            @Override
+//            public void mouseReleased(MouseEvent e) {
+//            }
+//
+//            @Override
+//            public void mouseEntered(MouseEvent e) {
+//            }
+//
+//            @Override
+//            public void mouseExited(MouseEvent e) {
+//            }
+//        });
+//        contentPane.add(jlbForget);
 
         // 处理南部登录按钮
         btnLogin = new JButton("登录");

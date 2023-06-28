@@ -88,8 +88,8 @@ public class FriendList extends JFrame {
     //向服务器请求好友列表
     public void updateFriendList() {
 
-        FriendsService friendsService = new FriendsServiceImpl();
-        friendsService.getFriendList(user.getUsername());
+//        FriendsService friendsService = new FriendsServiceImpl();
+        FriendsServiceImpl.getInstance().getFriendList(user.getUsername());
 
         friendList = new JPanel();
         friendList.setLayout(null);

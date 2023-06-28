@@ -16,9 +16,9 @@ import java.util.Date;
  **/
 public class FriendMessageServiceImpl implements MessageService {
 
-    private static FriendMessageServiceImpl friendMessageService = new FriendMessageServiceImpl();
+    private static MessageService friendMessageService = new FriendMessageServiceImpl();
 
-    public static FriendMessageServiceImpl getInstance() {
+    public static MessageService getInstance() {
         return friendMessageService;
     }
 

@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 
 public class SelectionPage extends JFrame {
 
@@ -76,6 +77,13 @@ public class SelectionPage extends JFrame {
             }
         });
 
+        JButton changePwdBtn = createButton("修改密码");
+        changePwdBtn.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                new ChangPassword(user);
+            }
+        });
+
         container.add(showFriendsBtn);
         container.add(Box.createVerticalStrut(15)); // 添加垂直空白组件
         container.add(showGroupsBtn);
@@ -85,11 +93,13 @@ public class SelectionPage extends JFrame {
         container.add(createGroupBtn);
         container.add(Box.createVerticalStrut(15)); // 添加垂直空白组件
         container.add(addFaceBtn);
+        container.add(Box.createVerticalStrut(15));
+        container.add(changePwdBtn);
 
         contentPane.add(container, BorderLayout.CENTER);
 
-        new FriendsServiceImpl().getFriendList(user.getUsername());
-        new GroupServiceImpl().getGroups(user.getUsername());
+        FriendsServiceImpl.getInstance().getFriendList(user.getUsername());
+        GroupServiceImpl.getInstance().getGroups(user.getUsername());
 
         setContentPane(contentPane);
         pack();
@@ -101,11 +111,7 @@ public class SelectionPage extends JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 super.windowClosing(windowEvent);
-                // 检查与服务器的连接
-                UserService userService = new UserServiceImpl();
-                String username = user.getUsername();
-                // 将登录消息发送至服务器
-                userService.offLine(username);
+                UserServiceImpl.getInstance().offLine(user.getUsername());
                 System.exit(0);
             }
         });

@@ -3,7 +3,6 @@ package com.chatroom.view;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.User;
 import com.chatroom.service.FriendsService;
-import com.chatroom.service.GroupService;
 import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.service.impl.GroupServiceImpl;
 import com.chatroom.utils.ThreadManage;
@@ -60,8 +59,8 @@ public class CreateGroup extends JFrame {
         containerPane.add(label3);
         label3.setBounds(new Rectangle(new Point(220, 15), label3.getPreferredSize()));
 
-        FriendsService friendsService = new FriendsServiceImpl();
-        friendsService.getFriendList(user.getUsername());
+//        FriendsService friendsService = new FriendsServiceImpl();
+        FriendsServiceImpl.getInstance().getFriendList(user.getUsername());
 
         new Thread().sleep(100);
 
@@ -103,9 +102,11 @@ public class CreateGroup extends JFrame {
                 group.setGroupName(textFieldGroupName.getText());
                 group.setUsers(selectedOptions);
 
-                GroupService groupService = new GroupServiceImpl();
-                groupService.setGroup(user.getUsername(), group);
-                new GroupServiceImpl().getGroups(user.getUsername());
+//                GroupService groupService = new GroupServiceImpl();
+                GroupServiceImpl.getInstance().setGroup(user.getUsername(), group);
+//                groupService.setGroup(user.getUsername(), group);
+//                new GroupServiceImpl().getGroups(user.getUsername());
+                GroupServiceImpl.getInstance().getGroups(user.getUsername());
                 dispose();
             }
         });

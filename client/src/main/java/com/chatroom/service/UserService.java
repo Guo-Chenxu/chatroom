@@ -65,5 +65,11 @@ public interface UserService {
      */
     void offLine(String userName);
 
-
+    /**
+     * 修改密码
+     *
+     * @param userName 用户名
+     * @param pwd      密码
+     */
+    void changePassword(String userName, String pwd);
 }

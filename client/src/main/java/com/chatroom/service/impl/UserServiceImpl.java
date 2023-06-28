@@ -29,10 +29,12 @@ public class UserServiceImpl implements UserService {
     private ObjectOutputStream output;
     private ObjectInputStream input;
 
+    private static UserService userService = new UserServiceImpl();
+
     /**
      * 初始化服务
      */
-    public void init() {
+    private void init() {
         try {
             // todo ip会变, 所以需要改
             client = new Socket("10.28.236.228", 9623);
@@ -44,6 +46,10 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             close(client, output, input);
         }
+    }
+
+    public static UserService getInstance() {
+        return userService;
     }
 
     @Override
@@ -59,6 +65,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void offLine(String userName) {
         Message message = new Message(userName, "", new Date(), OFFLINE);
+        ThreadManage.send(userName, message);
+    }
+
+    @Override
+    public void changePassword(String userName, String pwd) {
+        Message message = new Message(userName, "", new Date(), CHANGE_PWD);
         ThreadManage.send(userName, message);
     }
 
@@ -97,14 +109,6 @@ public class UserServiceImpl implements UserService {
             init();
             // 将用户信息发送服务器登录
             User user = new User(userName, pwd);
-//            Message message = new Message(LOGIN_BY_PWD);
-//            message.setContent((JSON.toJSONString(user)));
-//            output.writeObject(message);
-//            // 接收服务器返回到结果
-//            Chat chat = (Chat) input.readObject();
-//            if (!chat.getFlag()) {
-//                client.close();
-//            }
             return login(user, LOGIN_BY_PWD);
         } catch (IOException | ClassNotFoundException e) {
             close(client, output, input);
@@ -120,17 +124,6 @@ public class UserServiceImpl implements UserService {
             // 将用户信息发送服务器登录
             User user = new User(userName);
             user.setFaceId(faceId);
-//            Message message = new Message(LOGIN_BY_FACE);
-//            message.setContent((JSON.toJSONString(user)));
-//            output.writeObject(message);
-//            // 接收服务器返回到结果
-//            Chat chat = (Chat) input.readObject();
-//
-//            if (!chat.getFlag()) {
-//                client.close();
-//            }
-//
-//            return chat;
             return login(user, LOGIN_BY_FACE);
         } catch (IOException | ClassNotFoundException e) {
             close(client, output, input);

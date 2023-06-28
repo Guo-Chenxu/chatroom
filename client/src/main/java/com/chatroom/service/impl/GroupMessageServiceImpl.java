@@ -16,6 +16,12 @@ import java.util.Date;
  **/
 public class GroupMessageServiceImpl implements MessageService {
 
+    private static MessageService groupMessageService = new GroupMessageServiceImpl();
+
+    public static MessageService getInstance() {
+        return groupMessageService;
+    }
+
     @Override
     public void getMessages(String sender, String receiver) {
         Message message = new Message(sender, receiver, new Date(), MessageType.GET_GROUP_MESSAGE, true);

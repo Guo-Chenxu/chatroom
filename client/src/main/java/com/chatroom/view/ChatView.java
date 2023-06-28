@@ -269,8 +269,8 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
                 String text = textPane2.getText();
                 System.out.println(text);
                 textPane2.removeAll();
-                MessageService friendMessageService = new FriendMessageServiceImpl();
-                friendMessageService.sendMessage(user.getUsername(), friend.getUsername(), text);
+//                MessageService friendMessageService = new FriendMessageServiceImpl();
+                FriendMessageServiceImpl.getInstance().sendMessage(user.getUsername(), friend.getUsername(), text);
                 ChatBubble chatBubble = new ChatBubble(user.getUsername(), new Date(), text);
                 textPane1.add(chatBubble);
                 textPane1.updateUI();
@@ -281,8 +281,8 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
             }
         } else if (source == button5) {
             //删除好友
-            FriendsService friendsService = new FriendsServiceImpl();
-            friendsService.deleteFriend(user.getUsername(), friend.getUsername());
+//            FriendsService friendsService = new FriendsServiceImpl();
+            FriendsServiceImpl.getInstance().deleteFriend(user.getUsername(), friend.getUsername());
             this.dispose();
         }
     }

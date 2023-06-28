@@ -54,8 +54,8 @@ public class AddFriend extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = textField1.getText();
-                FriendsService friendsService = new FriendsServiceImpl();
-                friendsService.addFriend(user.getUsername(), text);
+//                FriendsService friendsService = new FriendsServiceImpl();
+                FriendsServiceImpl.getInstance().addFriend(user.getUsername(), text);
                 dispose();
             }
         });

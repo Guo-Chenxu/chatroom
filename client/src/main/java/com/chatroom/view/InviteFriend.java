@@ -48,8 +48,8 @@ public class InviteFriend extends JFrame {
         // 设置下拉多选框的位置和宽度
         comboBox1.setBounds(new Rectangle(new Point(70, 60), new Dimension(150, comboBox1.getPreferredSize().height)));
 
-        FriendsService friendsService = new FriendsServiceImpl();
-        friendsService.getFriendList(user.getUsername());
+//        FriendsService friendsService = new FriendsServiceImpl();
+        FriendsServiceImpl.getInstance().getFriendList(user.getUsername());
 
         new Thread().sleep(100);
 
@@ -80,7 +80,7 @@ public class InviteFriend extends JFrame {
                 } else {
                     System.out.println("未选择好友");
                 }
-                new GroupServiceImpl().addGroup(user.getUsername(), (String) comboBox1.getSelectedObjects()[0], group.getGroupName());
+                GroupServiceImpl.getInstance().addGroup(user.getUsername(), (String) comboBox1.getSelectedObjects()[0], group.getGroupName());
                 dispose();
             }
         });
