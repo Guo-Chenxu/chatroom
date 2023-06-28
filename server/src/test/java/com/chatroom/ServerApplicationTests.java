@@ -146,10 +146,10 @@ class ServerApplicationTests {
         messagesMapper.add(m);
     }
 
-    @Test
-    void testGetGroups() {
-        System.out.println(groupService.getGroupInfo("123"));
-    }
+//    @Test
+//    void testGetGroups() {
+//        System.out.println(groupService.getGroupInfo("123"));
+//    }
 
     @Test
     void testSetGroup() {

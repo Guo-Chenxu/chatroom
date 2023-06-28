@@ -48,6 +48,7 @@ if(密码格式是否符合要求)then(是)
     else(否)
     :修改密码失败;
 endif
+stop
 
 start
 :用户下线;
@@ -56,6 +57,7 @@ if(用户是否连接到服务端)then(是)
     else(否)
     :用户下线失败;
 endif
+stop
 
 start
 :添加人脸信息;
@@ -64,6 +66,7 @@ if(是否成功添加人脸信息)then(是)
     else(否)
     :添加人脸信息失败;
 endif
+stop
 
 start
 :删除人脸信息;
@@ -72,7 +75,6 @@ if(是否成功删除人脸信息)then(是)
     else(否)
     :删除人脸信息失败;
 endif
-
 stop
 
 

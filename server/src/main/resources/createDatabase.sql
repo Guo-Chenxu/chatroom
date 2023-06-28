@@ -1,3 +1,7 @@
+create database chat_room;
+
+use chat_room;
+
 create table chat_room.user
 (
     id         int auto_increment primary key,
