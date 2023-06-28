@@ -80,7 +80,7 @@ public class SelectionPage extends JFrame {
         JButton changePwdBtn = createButton("修改密码");
         changePwdBtn.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                new ChangPassword(user);
+                new ChangPassword();
             }
         });
 

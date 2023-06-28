@@ -26,7 +26,6 @@ public class Login extends JFrame implements ActionListener {
     private JPasswordField passWord;
     private JButton btnLogin;
     private JLabel jlbRegister;
-    private JLabel jlbForget;
     private JLabel jlbFaceLogin;
 
     public Login() {
