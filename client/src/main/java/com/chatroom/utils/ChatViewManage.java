@@ -3,12 +3,14 @@ package com.chatroom.utils;
 import com.chatroom.view.ChatView;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Ye peixin
  */
 public class ChatViewManage {
-    private static HashMap<String, ChatView> chatFrames = new HashMap<>();
+    private static Map<String, ChatView> chatFrames = new ConcurrentHashMap<>();
 
     /**
      * 私聊哈希表的添加
