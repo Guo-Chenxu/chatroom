@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+annotation Mapper
+
+interface FriendsMapper {
++int delete(String,String)
++int add(String,String)
++List<String> getByUsername(String)
+}
+
+annotation Repository{
++String value()
+}
+
+FriendsMapper .. Mapper
+FriendsMapper .. Repository
+
+@enduml

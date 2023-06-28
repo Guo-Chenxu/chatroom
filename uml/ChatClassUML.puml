@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+annotation Data
+annotation NoArgsConstructor
+annotation AllArgsConstructor
+interface Serializable
+
++class Chat {
+-{static}long serialVersionUID
+Message message
+Boolean flag
+}
+
+Serializable <|.. Chat
+Data .. Chat
+NoArgsConstructor .. Chat
+AllArgsConstructor .. Chat
+@enduml

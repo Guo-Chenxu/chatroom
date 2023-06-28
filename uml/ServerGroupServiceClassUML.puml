@@ -1,0 +1,36 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+annotation Service{
+	+String value()
+}
+
+interface GroupService{
+
+	+boolean leaveGroup(String,String)
+	+boolean setGroup(Group)
+	+List<String> getGroupsByUsername(String)
+	+boolean addGroup(String,String)
+	+List<String> getGroupinfo(String)
+
+}
+
+class GroupServiceImpl {
+
+	-{static}String REG
+	GroupMapper groupMapper
+	UserService userService
+	UserMapper userMapper
+	GroupUserRelationMapper groupUserRelationMapper
+==
+	+boolean leaveGroup(String,String)
+	+boolean setGroup(Group)
+	+List<String> getGroupsByUsername(String)
+	+boolean addGroup(String,String)
+	+List<String> getGroupinfo(String)
+
+}
+
+GroupServiceImpl ..|> GroupService
+GroupServiceImpl ..Service
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface UserService{
++void mystop()
++Chat loginByFace(String,String)
++void changePassword(String,String)
++Socket getClient()
++Chat loginByPwd(String,String)
++Chat register(String,String)
++void addFace(String,String)
++void offLine(String)
+}
+
+class UserServiceImpl {
+-{static}UserService userService
+-Socket client
+-ObjectOutputStream output
+-ObjectInputStream input
+==
+-void init()
++{static}UserService getinstance()
++void changePassword(String,String)
++void addFace(String,String)
++Socket getClient()
++void mystop()
++Chat loginByPwd(String,String)
++Chat register(String,String)
++Chat loginByFace(String,String)
++void offLine(String,String)
+-void close(Closeable[])
+-Chat login(User,String)
+}
+
+UserServiceImpl ..|> UserService
+@enduml

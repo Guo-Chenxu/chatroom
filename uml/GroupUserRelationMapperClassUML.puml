@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+annotation Mapper
+
+interface GroupUserRelationMapper {
++int getByGroupAndUser(String,String)
++int add(String,String)
++int delete(String,String)
++List<String> getGroupsByUsername(String)
++int getGroupCounts(String)
++List<String> getUsersByGroupName(String)
+}
+
+annotation Repository{
++String value()
+}
+
+GroupUserRelationMapper .. Mapper
+GroupUserRelationMapper .. Repository
+
+@enduml

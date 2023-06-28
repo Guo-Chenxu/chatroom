@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+annotation Data
+interface Serializable
+
++class Friends {
+- {static}long serialVersionUID
+- Integer id
+- String friendName
+- String username
+}
+
+Serializable <|.. Friends
+Data .. Friends
+
+@enduml

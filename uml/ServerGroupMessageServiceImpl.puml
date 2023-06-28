@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+annotation Service{
+	+String value()
+}
+
+interface GroupMessageService{
++List<Message> getNotReadMessage(User)
++int deleteExpireMessage(long)
++boolean sendMessage(Message)
++Message addRequest(Message)
++List<Message> getMessageList(String,String)
+}
+
+class GroupMessageServiceImpl {
+GroupUserRelationMapper groupUserRelationMapper
+MessageMapper messageMapper
+==
++boolean sendMessage(Message)
++List<Message> getMessageList(String,String)
++int deleteExpireMessage(long)
+}
+
+GroupMessageServiceImpl ..|> GroupMessageService
+GroupMessageServiceImpl .. Service
+@enduml

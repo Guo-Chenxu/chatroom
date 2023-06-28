@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+annotation FunctionalInterface
+
+class ConnectController {
+FriendMessageService friendMessageService
+UserService userService
+-{static} Logger log
+-boolean loop
+-ObjectInputStream input
+-ObjectOutputStream output
+-ServerSocket server
+==
+-void loginFail(User,Socket)
++void myStop()
+-void close(Closeable[])
++void run()
+void loginSuccess(User , Socket)
+}
+
+annotation Component{
++String value()
+}
+
+annotation Runnable{
++void run()
+}
+
+ConnectController .. Component
+ConnectController ..|> Runnable
+Runnable .. FunctionalInterface
+@enduml

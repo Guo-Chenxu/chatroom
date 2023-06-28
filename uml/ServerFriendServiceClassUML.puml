@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface FriendsService{
++boolean addAgree(String,String)
++boolean removeFriend(String,String)
++List<String> getFriendList(String)
+}
+
+class FriendsServiceImpl {
+-FriendsMapper friendsMapper
+==
++boolean addAgree(String,String)
++boolean removeFriend(String,String)
++List<String> getFriendList(String)
+}
+
+annotation Service{
++String value()
+}
+
+FriendsServiceImpl .. Service
+FriendsServiceImpl ..|> FriendsService
+@enduml

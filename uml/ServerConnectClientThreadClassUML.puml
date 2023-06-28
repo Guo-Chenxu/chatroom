@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+annotation FunctionalInterface
+
+interface Runnable{
+	+void run()
+}
+
+class ServerConnectClientThread {
+-FriendService friendService
+-GroupService groupService
+-String username
+-FriendMessageService friendMessageService
+-boolean loop
+-UserService userService
+-Socket client
+-{static}Logger log
+-GroupMessageService groupMessageService
+==
++void myStop()
++Socket getClient()
++void send(Boolean,Message)
++void run()
+-void sendError(Boolean,Message)
+}
+
+ServerConnectClientThread ..|> Runnable
+Runnable .. FunctionalInterface
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface FriendMessageService{
++boolean sendMessage(Message)
++List<Message> getMessageList(String,String)
++Message addRequest(Message)
++List<Message> getNotReadMessages(User)
+}
+
+class FriendsMessageServiceImpl {
+MessageMapper messageMapper
+==
++boolean sendMessage(Message)
++List<Message> getMessageList(String,String)
++Message addRequest(Message)
++List<Message> getNotReadMessages(User)
+}
+
+annotation Service{
++String value()
+}
+
+FriendsMessageServiceImpl ..|> FriendMessageService
+FriendsMessageServiceImpl .. Service
+@enduml

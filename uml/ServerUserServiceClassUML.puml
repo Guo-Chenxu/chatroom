@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+
+interface UserService{
+
++boolean loginByFace(User)
++boolean loginByPwd(User)
++boolean changePassword(String,String)
++boolean addFace(User)
++boolean deleteFace(String)
++boolean register(User)
++boolean offline(String)
+
+}
+
+class UserServiceImpl {
+-{static}String REG
+UserMapper userMapper
+GroupMapper groupMapper
+==
++boolean loginByFace(User)
++boolean loginByPwd(User)
++boolean changePassword(String,String)
++boolean addFace(User)
++boolean deleteFace(String)
++boolean register(User)
++boolean offline(String)
+}
+
+UserServiceImpl ..|> UserService
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+annotation Data
+
+interface Serializable
+
++class GroupUserRelation {
+- {static}long serialVersionUID
+- Integer id
+- String groupName
+- String username
+}
+
+Serializable <|.. GroupUserRelation
+Data .. GroupUserRelation
+
+@enduml

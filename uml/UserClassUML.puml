@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+annotation Data
+interface Serializable
+
++class User {
+-String password
+-Integer id
+-{static}long serialVersionUID
+-String username
+-String avatarId
+-String faceId
+}
+
+Serializable <|.. User
+Data .. User
+@enduml

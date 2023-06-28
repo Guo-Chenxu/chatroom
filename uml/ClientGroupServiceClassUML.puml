@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface GroupService{
++void setGroup(String,Group)
++void getGroups(String)
++void leaveGroup(String,String)
++void addGroup(String,String,String)
++void getGroupInfo(String,String)
+}
+
+class GroupServiceImpl {
+-{static}GroupService groupService
+==
++{static}GroupService getInstance()
++void setGroup(String,Group)
++void getGroups(String)
++void leaveGroup(String,String)
++void addGroup(String,String,String)
++void getGroupInfo(String,String)
+}
+
+GroupServiceImpl ..|> GroupService
+@enduml
