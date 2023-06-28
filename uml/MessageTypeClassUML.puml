@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface MessageType {
++String LOGIN_BY_PWD
++String USER_ONLINE
++String REGISTER
++String CHANGE_PWD
++String INFO_ERROR
++String GET_FRIENDS
++String GET_GROUPS
++String ADD_FRIEND
++String DELETE_FRIEND
++String ADD_AGREE
++String COMMON_MESSAGE
++String GROUP_MESSAGE
++String FILE_MESSAGE
++String GET_FRIEND_MESSAGE
++String USER_OFFLINE
++String OFFLINE
++String LOGIN_SUCCESS
++String LOGIN_FAIL
++String LOGIN_BY_FACE
++String ADD_FACE
++String UPDATE_FACE
++String DELETE_FACE
++String GET_GROUP_MESSAGE
++String SET_GROUP
++String LEAVE_GROUP
++String DELETE_GROUP
++String ADD_GROUP
++String GET_OFFLINE_MESSAGE
++String GET_FRIENDS_ADD
++String REGISTER_SUCCESS
++String REGISTER_FAIL
++String GET_GROUP_INFO
+}
+
+@enduml
