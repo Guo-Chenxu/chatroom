@@ -22,11 +22,11 @@ public class Chat implements Serializable {
     /**
      * 操作是否成功
      */
-    Boolean flag;
+    private Boolean flag;
     /**
      * 具体信息内容
      */
-    Message message;
+    private Message message;
 
     public Chat(Boolean flag) {
         this.flag = flag;
