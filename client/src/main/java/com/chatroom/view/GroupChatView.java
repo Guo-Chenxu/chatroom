@@ -3,8 +3,6 @@ package com.chatroom.view;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.User;
-import com.chatroom.service.GroupService;
-import com.chatroom.service.MessageService;
 import com.chatroom.service.impl.GroupMessageServiceImpl;
 import com.chatroom.service.impl.GroupServiceImpl;
 import com.chatroom.utils.GroupChatViewManage;
@@ -19,6 +17,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * @author Ye peixin
@@ -104,8 +103,11 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
     }
 
     private void initComponents() {
+
+        String a = "tx" + (new Random().nextInt(52) + 3948);
+
         panel1 = new JPanel();
-        label1 = new Avatar(user.getAvatarId(), 60, 60);
+        label1 = new Avatar(a, 60, 60);
         label2 = new JLabel();
         label3 = new JLabel();
         scrollPane1 = new JScrollPane();

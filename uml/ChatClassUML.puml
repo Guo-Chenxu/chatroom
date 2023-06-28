@@ -8,8 +8,8 @@ interface Serializable
 
 +class Chat {
 -{static}long serialVersionUID
-Message message
-Boolean flag
+-Message message
+-Boolean flag
 }
 
 Serializable <|.. Chat

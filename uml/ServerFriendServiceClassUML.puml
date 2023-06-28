@@ -8,7 +8,7 @@ interface FriendsService{
 }
 
 class FriendsServiceImpl {
--FriendsMapper friendsMapper
+#FriendsMapper friendsMapper
 ==
 +boolean addAgree(String,String)
 +boolean removeFriend(String,String)

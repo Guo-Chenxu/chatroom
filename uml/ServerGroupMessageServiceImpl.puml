@@ -14,8 +14,8 @@ interface GroupMessageService{
 }
 
 class GroupMessageServiceImpl {
-GroupUserRelationMapper groupUserRelationMapper
-MessageMapper messageMapper
+#GroupUserRelationMapper groupUserRelationMapper
+#MessageMapper messageMapper
 ==
 +boolean sendMessage(Message)
 +List<Message> getMessageList(String,String)

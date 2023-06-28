@@ -7,7 +7,7 @@ interface MessageService{
 }
 
 class GroupMessageServiceImpl {
--{static} MessageService groupMessageService()
+-{static} MessageService groupMessageService
 ==
 +{static} MessageService getInstance()
 +void sendMessage(String,String,String)

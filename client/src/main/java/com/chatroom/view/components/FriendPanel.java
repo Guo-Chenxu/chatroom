@@ -1,13 +1,14 @@
 package com.chatroom.view.components;
 
+import com.chatroom.entity.User;
 import com.chatroom.utils.ChatViewManage;
-import com.chatroom.entity.*;
 import com.chatroom.view.ChatView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Random;
 
 /**
  * @author Ye peixin
@@ -34,8 +35,9 @@ public class FriendPanel extends JPanel implements MouseListener {
         this.addMouseListener(this);
 
         // 头像
-//        avatar = new Avatar(friend.getAvatarId(), 40, 40);
-//        avatar.setBounds(10, 10, 40, 40);
+        String a = "tx" + (new Random().nextInt(52) + 3948);
+        avatar = new Avatar(a, 40, 40);
+        avatar.setBounds(10, 10, 40, 40);
 
         // 昵称
         nickname = new JLabel();
@@ -43,9 +45,10 @@ public class FriendPanel extends JPanel implements MouseListener {
         nickname.setForeground(new Color(0, 0, 0));
         nickname.setText(friend.getUsername());
 
-//        this.add(avatar);
+        this.add(avatar);
         this.add(nickname);
     }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         // 检测鼠标右键单击
@@ -56,6 +59,7 @@ public class FriendPanel extends JPanel implements MouseListener {
 //            ChatViewManage.addChatFrame(friend.getQq(), chatView);
         }
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
 

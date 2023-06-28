@@ -1,14 +1,15 @@
 package com.chatroom.view.components;
 
-import com.chatroom.utils.GroupChatViewManage;
 import com.chatroom.entity.Group;
 import com.chatroom.entity.User;
+import com.chatroom.utils.GroupChatViewManage;
 import com.chatroom.view.GroupChatView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Random;
 
 /**
  * @author Ye peixin
@@ -18,9 +19,10 @@ public class GroupPanel extends JPanel implements MouseListener {
     private final int panelWidth = 280;
     private JLabel groupName;
     private User user;
+    private JLabel avatar;
     private Group group;
 
-    public GroupPanel(User user, Group group){
+    public GroupPanel(User user, Group group) {
         this.user = user;
         this.group = group;
 
@@ -31,6 +33,11 @@ public class GroupPanel extends JPanel implements MouseListener {
         this.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(220, 220, 220)));
         this.addMouseListener(this);
 
+        // 头像
+        String a = "tx" + (new Random().nextInt(52) + 3948);
+        avatar = new Avatar(a, 40, 40);
+        avatar.setBounds(10, 10, 40, 40);
+
         //群聊名称
         groupName = new JLabel();
         groupName.setBounds(60, 10, 210, 18);
@@ -38,17 +45,19 @@ public class GroupPanel extends JPanel implements MouseListener {
 //        groupName.setText(group.getGroupName()+"\r\n  Level" +group.getLevel());
         groupName.setText(group.getGroupName());
 
+        this.add(avatar);
         this.add(groupName);
     }
 
     @Override
-    public void mouseClicked(MouseEvent e){
+    public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
             GroupChatView groupChatView = new GroupChatView(user, group);
             System.out.println(groupChatView);
             GroupChatViewManage.addGroupChatView(group.getGroupName(), groupChatView);
         }
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
 

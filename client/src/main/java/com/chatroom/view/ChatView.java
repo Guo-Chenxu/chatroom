@@ -2,8 +2,6 @@ package com.chatroom.view;
 
 import com.chatroom.entity.Message;
 import com.chatroom.entity.User;
-import com.chatroom.service.FriendsService;
-import com.chatroom.service.MessageService;
 import com.chatroom.service.impl.FriendMessageServiceImpl;
 import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.utils.ChatViewManage;
@@ -19,6 +17,7 @@ import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Random;
 
 
 /**
@@ -79,7 +78,6 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
      */
     public void receiveChat(Message msg) {
         String senderName = Objects.equals(msg.getSenderName(), user.getUsername()) ? user.getUsername() : friend.getUsername();
-//        Date time = new Date(String.valueOf(msg.getSendTime()));
         String content = msg.getContent();
         ChatBubble chatBubble = new ChatBubble(senderName, msg.getSendTime(), content);
         textPane1.add(chatBubble);
@@ -89,8 +87,10 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
 
     private void initComponents() {
 
+        String a = "tx" + (new Random().nextInt(52) + 3948);
+
+        label1 = new Avatar(a, 60, 60);
         panel1 = new JPanel();
-        label1 = new Avatar(friend.getAvatarId(), 60, 60);
         label2 = new JLabel();
         label3 = new JLabel();
         scrollPane1 = new JScrollPane();

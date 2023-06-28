@@ -17,8 +17,8 @@ interface UserService{
 
 class UserServiceImpl {
 -{static}String REG
-UserMapper userMapper
-GroupMapper groupMapper
+#UserMapper userMapper
+#GroupMapper groupMapper
 ==
 +boolean loginByFace(User)
 +boolean loginByPwd(User)

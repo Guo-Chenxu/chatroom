@@ -4,8 +4,8 @@
 annotation FunctionalInterface
 
 class ConnectController {
-FriendMessageService friendMessageService
-UserService userService
+#FriendMessageService friendMessageService
+#UserService userService
 -{static} Logger log
 -boolean loop
 -ObjectInputStream input
@@ -16,7 +16,7 @@ UserService userService
 +void myStop()
 -void close(Closeable[])
 +void run()
-void loginSuccess(User , Socket)
+-void loginSuccess(User , Socket)
 }
 
 annotation Component{

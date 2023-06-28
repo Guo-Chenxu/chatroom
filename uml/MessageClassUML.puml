@@ -3,21 +3,19 @@
 
 annotation Data
 interface Serializable
-interface Cloneable
 
 +class Message {
 -{static}long serialVersionUID
-Boolean isRead
-Boolean isGroupMessage
-String messageType
-String receiverName
-String senderName
-String content
-Date sendTime
-Integer id
+-Boolean isRead
+-Boolean isGroupMessage
+-String messageType
+-String receiverName
+-String senderName
+-String content
+-Date sendTime
+-Integer id
 }
 
 Serializable <|.. Message
 Data .. Message
-Cloneable <|.. Message
 @enduml

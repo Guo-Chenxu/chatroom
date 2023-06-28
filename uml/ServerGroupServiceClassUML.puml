@@ -11,23 +11,23 @@ interface GroupService{
 	+boolean setGroup(Group)
 	+List<String> getGroupsByUsername(String)
 	+boolean addGroup(String,String)
-	+List<String> getGroupinfo(String)
+	+List<String> getGroupInfo(String)
 
 }
 
 class GroupServiceImpl {
 
 	-{static}String REG
-	GroupMapper groupMapper
-	UserService userService
-	UserMapper userMapper
-	GroupUserRelationMapper groupUserRelationMapper
+	#GroupMapper groupMapper
+	#UserService userService
+	#UserMapper userMapper
+	#GroupUserRelationMapper groupUserRelationMapper
 ==
 	+boolean leaveGroup(String,String)
 	+boolean setGroup(Group)
 	+List<String> getGroupsByUsername(String)
 	+boolean addGroup(String,String)
-	+List<String> getGroupinfo(String)
+	+List<String> getGroupInfo(String)
 
 }
 

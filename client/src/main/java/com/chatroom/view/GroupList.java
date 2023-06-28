@@ -2,9 +2,9 @@ package com.chatroom.view;
 
 import com.chatroom.entity.Group;
 import com.chatroom.entity.User;
-import com.chatroom.service.GroupService;
 import com.chatroom.service.impl.GroupServiceImpl;
 import com.chatroom.utils.ThreadManage;
+import com.chatroom.view.components.Avatar;
 import com.chatroom.view.components.GroupPanel;
 
 import javax.swing.*;
@@ -37,18 +37,28 @@ public class GroupList extends JFrame {
     private User user;
 
     public GroupList(User user) {
+        setTitle("群聊列表");
         this.user = user;
         this.setSize(windowsWedth, windowsHeight);
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         //窗口面板
         container = this.getContentPane();
         container.setLayout(null);
+        //群组头像
+        JLabel jlbPhoto = new Avatar(user.getAvatarId(), 80, 80);
+        jlbPhoto.setBounds(20, 22, 80, 80);
+        container.add(jlbPhoto);
         //用户昵称
         JLabel jlbName = new JLabel(user.getUsername());
         jlbName.setForeground(Color.white);
         jlbName.setFont(new Font("", Font.BOLD, 18));
         jlbName.setBounds(120, 30, 140, 20);
         container.add(jlbName);
+        //头像
+        String a = "tx" + (new Random().nextInt(52) + 3948);
+        JLabel jlbPhoto1 = new Avatar(a, 80, 80);
+        jlbPhoto1.setBounds(20, 22, 80, 80);
+        container.add(jlbPhoto1);
         //上半部分背景
         JLabel jlbBackground = new JLabel();
         jlbBackground.setBackground(new Color(3, 37, 108));

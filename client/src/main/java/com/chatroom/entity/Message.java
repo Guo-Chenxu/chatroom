@@ -14,7 +14,7 @@ import java.util.Date;
  * @version: 1.0
  **/
 @Data
-public class Message implements Serializable, Cloneable {
+public class Message implements Serializable {
     private static final long serialVersionUID = 1740985094875904L;
 
     private Integer id;

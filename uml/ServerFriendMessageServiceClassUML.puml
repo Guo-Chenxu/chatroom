@@ -9,7 +9,7 @@ interface FriendMessageService{
 }
 
 class FriendsMessageServiceImpl {
-MessageMapper messageMapper
+#MessageMapper messageMapper
 ==
 +boolean sendMessage(Message)
 +List<Message> getMessageList(String,String)
