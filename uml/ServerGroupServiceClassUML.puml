@@ -18,10 +18,9 @@ interface GroupService{
 class GroupServiceImpl {
 
 	-{static}String REG
-	#GroupMapper groupMapper
-	#UserService userService
-	#UserMapper userMapper
-	#GroupUserRelationMapper groupUserRelationMapper
+	-GroupMapper groupMapper
+	-UserMapper userMapper
+	-GroupUserRelationMapper groupUserRelationMapper
 ==
 	+boolean leaveGroup(String,String)
 	+boolean setGroup(Group)

@@ -7,7 +7,6 @@ import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
 import com.chatroom.service.FriendMessageService;
-import com.chatroom.service.GroupMessageService;
 import com.chatroom.service.UserService;
 import com.chatroom.utils.ThreadManage;
 import org.slf4j.Logger;
@@ -42,9 +41,9 @@ public class ConnectController implements Runnable {
     private boolean loop;
 
     @Resource
-    UserService userService;
+    private UserService userService;
     @Resource
-    FriendMessageService friendMessageService;
+    private FriendMessageService friendMessageService;
 
     private static final Logger log = LoggerFactory.getLogger(ConnectController.class);
 

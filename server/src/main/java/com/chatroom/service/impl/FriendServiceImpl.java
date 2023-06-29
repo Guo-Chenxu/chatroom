@@ -1,12 +1,7 @@
 package com.chatroom.service.impl;
 
-import com.chatroom.entity.Message;
 import com.chatroom.mapper.FriendsMapper;
-import com.chatroom.mapper.MessageMapper;
-import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.FriendService;
-import com.chatroom.service.UserService;
-import com.chatroom.utils.ThreadManage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +19,7 @@ import java.util.List;
 public class FriendServiceImpl implements FriendService {
 
     @Resource
-    FriendsMapper friendsMapper;
+    private FriendsMapper friendsMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

@@ -8,8 +8,8 @@ interface FriendMessageService{
 +List<Message> getNotReadMessages(User)
 }
 
-class FriendsMessageServiceImpl {
-#MessageMapper messageMapper
+class FriendMessageServiceImpl {
+-MessageMapper messageMapper
 ==
 +boolean sendMessage(Message)
 +List<Message> getMessageList(String,String)
@@ -21,6 +21,6 @@ annotation Service{
 +String value()
 }
 
-FriendsMessageServiceImpl ..|> FriendMessageService
-FriendsMessageServiceImpl .. Service
+FriendMessageServiceImpl ..|> FriendMessageService
+FriendMessageServiceImpl .. Service
 @enduml

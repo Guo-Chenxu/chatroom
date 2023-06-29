@@ -23,10 +23,10 @@ import javax.annotation.Resource;
 public class UserServiceImpl implements UserService {
 
     @Resource
-    GroupMapper groupMapper;
+    private GroupMapper groupMapper;
 
     @Resource
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     /**
      * 正则匹配, 6-20位字母数字下划线组合, 必须以字母开头

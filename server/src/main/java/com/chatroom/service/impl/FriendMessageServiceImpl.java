@@ -1,10 +1,8 @@
 package com.chatroom.service.impl;
 
 import com.chatroom.entity.Message;
-import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
 import com.chatroom.mapper.MessageMapper;
-import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.FriendMessageService;
 import com.chatroom.utils.ThreadManage;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,7 @@ import java.util.List;
 @Service
 public class FriendMessageServiceImpl implements FriendMessageService {
     @Resource
-    MessageMapper messageMapper;
+    private MessageMapper messageMapper;
 
     @Override
     public List<Message> getNotReadMessages(User user) {

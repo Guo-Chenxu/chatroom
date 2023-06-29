@@ -4,17 +4,13 @@ import com.alibaba.fastjson2.JSON;
 import com.chatroom.entity.Message;
 import com.chatroom.entity.MessageType;
 import com.chatroom.entity.User;
-import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.GroupUserRelationMapper;
 import com.chatroom.mapper.MessageMapper;
-import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.GroupMessageService;
 import com.chatroom.utils.ThreadManage;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.annotation.security.DeclareRoles;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -29,9 +25,9 @@ import java.util.List;
 @Service
 public class GroupMessageServiceImpl implements GroupMessageService {
     @Resource
-    MessageMapper messageMapper;
+    private MessageMapper messageMapper;
     @Resource
-    GroupUserRelationMapper groupUserRelationMapper;
+    private GroupUserRelationMapper groupUserRelationMapper;
 
     /**
      * 群聊天用未读消息提醒

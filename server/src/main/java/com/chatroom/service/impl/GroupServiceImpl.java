@@ -5,7 +5,6 @@ import com.chatroom.mapper.GroupMapper;
 import com.chatroom.mapper.GroupUserRelationMapper;
 import com.chatroom.mapper.UserMapper;
 import com.chatroom.service.GroupService;
-import com.chatroom.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,13 +23,11 @@ import java.util.List;
 public class GroupServiceImpl implements GroupService {
 
     @Resource
-    GroupMapper groupMapper;
+    private GroupMapper groupMapper;
     @Resource
-    GroupUserRelationMapper groupUserRelationMapper;
+    private GroupUserRelationMapper groupUserRelationMapper;
     @Resource
-    UserMapper userMapper;
-    @Resource
-    UserService userService;
+    private UserMapper userMapper;
 
     /**
      * 正则匹配, 6-20位字母数字下划线组合, 必须以字母开头
