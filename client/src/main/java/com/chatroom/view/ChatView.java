@@ -17,7 +17,6 @@ import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Random;
 
 
 /**
@@ -87,9 +86,7 @@ public class ChatView extends JFrame implements ActionListener, WindowListener {
 
     private void initComponents() {
 
-        String a = "tx" + (new Random().nextInt(52) + 3948);
-
-        label1 = new Avatar(a, 60, 60);
+        label1 = new Avatar(Avatar.getPath(), 60, 60);
         panel1 = new JPanel();
         label2 = new JLabel();
         label3 = new JLabel();

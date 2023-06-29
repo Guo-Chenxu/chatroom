@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Random;
 
 /**
  * @author Ye peixin
@@ -35,8 +34,7 @@ public class FriendPanel extends JPanel implements MouseListener {
         this.addMouseListener(this);
 
         // 头像
-        String a = "tx" + (new Random().nextInt(52) + 3948);
-        avatar = new Avatar(a, 40, 40);
+        avatar = new Avatar(Avatar.getPath(), 40, 40);
         avatar.setBounds(10, 10, 40, 40);
 
         // 昵称

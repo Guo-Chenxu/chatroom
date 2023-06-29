@@ -2,7 +2,6 @@ package com.chatroom.view;
 
 import com.chatroom.entity.Message;
 import com.chatroom.entity.User;
-import com.chatroom.service.FriendsService;
 import com.chatroom.service.impl.FriendsServiceImpl;
 import com.chatroom.utils.ThreadManage;
 import com.chatroom.view.components.Avatar;
@@ -13,7 +12,6 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author Ye peixin
@@ -46,8 +44,7 @@ public class FriendList extends JFrame {
         container = this.getContentPane();
         container.setLayout(null);
         //用户头像
-        String a = "tx" + (new Random().nextInt(52) + 3948);
-        JLabel jlbPhoto = new Avatar(a, 80, 80);
+        JLabel jlbPhoto = new Avatar(Avatar.getPath(), 80, 80);
         jlbPhoto.setBounds(20, 22, 80, 80);
         container.add(jlbPhoto);
         //用户昵称

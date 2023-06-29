@@ -17,7 +17,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 
 /**
  * @author Ye peixin
@@ -104,10 +103,8 @@ public class GroupChatView extends JFrame implements ActionListener, WindowListe
 
     private void initComponents() {
 
-        String a = "tx" + (new Random().nextInt(52) + 3948);
-
         panel1 = new JPanel();
-        label1 = new Avatar(a, 60, 60);
+        label1 = new Avatar(Avatar.getPath(), 60, 60);
         label2 = new JLabel();
         label3 = new JLabel();
         scrollPane1 = new JScrollPane();

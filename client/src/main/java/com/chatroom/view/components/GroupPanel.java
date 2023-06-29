@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Random;
 
 /**
  * @author Ye peixin
@@ -34,15 +33,13 @@ public class GroupPanel extends JPanel implements MouseListener {
         this.addMouseListener(this);
 
         // 头像
-        String a = "tx" + (new Random().nextInt(52) + 3948);
-        avatar = new Avatar(a, 40, 40);
+        avatar = new Avatar(Avatar.getPath(), 40, 40);
         avatar.setBounds(10, 10, 40, 40);
 
         //群聊名称
         groupName = new JLabel();
         groupName.setBounds(60, 10, 210, 18);
         groupName.setForeground(new Color(0, 0, 0));
-//        groupName.setText(group.getGroupName()+"\r\n  Level" +group.getLevel());
         groupName.setText(group.getGroupName());
 
         this.add(avatar);

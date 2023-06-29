@@ -45,7 +45,7 @@ public class GroupList extends JFrame {
         container = this.getContentPane();
         container.setLayout(null);
         //群组头像
-        JLabel jlbPhoto = new Avatar(user.getAvatarId(), 80, 80);
+        JLabel jlbPhoto = new Avatar(Avatar.getPath(), 80, 80);
         jlbPhoto.setBounds(20, 22, 80, 80);
         container.add(jlbPhoto);
         //用户昵称
@@ -54,11 +54,11 @@ public class GroupList extends JFrame {
         jlbName.setFont(new Font("", Font.BOLD, 18));
         jlbName.setBounds(120, 30, 140, 20);
         container.add(jlbName);
-        //头像
-        String a = "tx" + (new Random().nextInt(52) + 3948);
-        JLabel jlbPhoto1 = new Avatar(a, 80, 80);
-        jlbPhoto1.setBounds(20, 22, 80, 80);
-        container.add(jlbPhoto1);
+//        //头像
+//        String a = "tx" + (new Random().nextInt(52) + 3948);
+//        JLabel jlbPhoto1 = new Avatar(a, 80, 80);
+//        jlbPhoto1.setBounds(20, 22, 80, 80);
+//        container.add(jlbPhoto1);
         //上半部分背景
         JLabel jlbBackground = new JLabel();
         jlbBackground.setBackground(new Color(3, 37, 108));
